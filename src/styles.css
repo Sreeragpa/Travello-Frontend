@@ -2,3 +2,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* :root {
+    --primary: 246, 244, 248;
+    --secondary: 255, 255, 255;
+} */
+
+.light{
+    --primary: 246, 244, 248;
+    --secondary: 255, 255, 255;
+
+    --travello-notify: 4, 187, 223
+}
+
+
+.dark{
+    --primary: 23, 23, 23;
+    --secondary: 33, 33, 33;
+
+    --travello_notify: 4, 187, 223
+}
+
+.dark-logo{
+    filter: invert(100%); 
+}
+
+.dark-bg{
+  filter:blur(1px)  invert(100) !important;
+}
+
+
+/* @media (prefers-color-scheme: dark) {
+ :root {
+    --primary: 23, 23, 23;
+    --secondary: 33, 33, 33;
+} 
+} */

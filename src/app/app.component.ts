@@ -11,6 +11,7 @@ import { initFlowbite } from 'flowbite';
 })
 export class AppComponent implements OnInit{
   title = 'Travello-Frontend';
+  darkmode: boolean = false;
   ngOnInit(): void {
     initFlowbite();
   }

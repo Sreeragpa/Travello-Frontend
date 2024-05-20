@@ -1,1 +1,3 @@
-export const environment = {};
+export const environment = {
+    geoapifyKey:"177668e9d9044d7b839472dd492b20d3"
+};

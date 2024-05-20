@@ -1,0 +1,20 @@
+
+
+<div class="bg-secondary w-100 h-auto rounded-xl py-5 px-5">
+    <div class="post-profile mb-3 flex gap-2 items-center">
+        <div>
+            <img class="w-10 h-10 rounded-full" src="../../../../assets/images/IMG_9238.jpg" alt="Rounded avatar">
+        </div>
+        <div class=" flex flex-col">
+           <span class="font-semibold dark:text-white"> {{postdata.user?.username}}</span>
+           <span class="dark:text-white text-xs">{{postdata.place}}</span>
+        </div>
+
+    </div>
+    <div class="image-container">
+        <img [src]="postdata.images[0]" alt="" >
+    </div>
+    <div>
+        <div class="dark:text-white">{{postdata.caption}}</div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div [class.dark]="darkmode" class="authpage-component w-screen h-screen" [class.dark-bg]="darkmode" > 
+</div>
+
+<div class="absolute w-screen" >
+  <div class="authpage-content flex flex-col justify-center items-center pt-12 " [class.dark-logo]="darkmode">
+    <img class="w-40"  src="../../../assets/images/travelloLogo.svg"  alt="">
+    <span class="font-semibold dark:text-white ">Find your Perfect Destinations</span>
+    <!-- <h1 class="gradient-text font-bold">Hello!</h1> -->
+
+  </div>
+  <div class="max-w-md m-auto shadow-md mt-3 rounded-3xl">
+  @if(isPresent=="/signin"){
+    @if (!isOtpSend) {
+      <app-signin-form (formdata)="signin($event)" [error]="signinerror"></app-signin-form>
+    }@else {
+      <app-otp-form formtype="signup" email={{email}} (formData)="verifyOtp($event)" [error]="otpError"></app-otp-form>
+    }
+  }@else if(isPresent=="/signup"){
+    @if (!isOtpSend) {
+      <app-signup-form (fromData)="signup($event)" [error]="signupError"></app-signup-form>
+
+    }@else {
+      <app-otp-form formtype="signup"  email={{email}} (formData)="verifyOtp($event)"></app-otp-form>
+    }
+  } 
+  </div>
+  
+</div>
+
