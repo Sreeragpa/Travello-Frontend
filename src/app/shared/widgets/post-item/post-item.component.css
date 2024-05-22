@@ -1,6 +1,6 @@
 .image-container {
-    width: 520px; /* Allow container to take full width */
-    height: 620px;  /* Allow container to adjust height based on image */
+    width: 520px; 
+    /* height: 620px;   */
     position: relative;
     padding-bottom: calc(1350px / 1080px * 100%); 
 }
@@ -20,7 +20,7 @@
 @media (max-width:640px){
     .image-container{
         width: 380px; /* Allow container to take full width */
-        height: 520px;
+        /* height: 520px; */
     }
 }
 

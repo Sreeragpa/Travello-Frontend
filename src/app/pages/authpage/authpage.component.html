@@ -9,6 +9,7 @@
 
   </div>
   <div class="max-w-md m-auto shadow-md mt-3 rounded-3xl">
+    
   @if(isPresent=="/signin"){
     @if (!isOtpSend) {
       <app-signin-form (formdata)="signin($event)" [error]="signinerror"></app-signin-form>

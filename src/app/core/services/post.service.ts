@@ -24,12 +24,35 @@ export class PostService {
   } 
 
   getAllPosts(){
-    return this.http.get<any  >(this.apiUrl + '/get-post', {
+    return this.http.get<any >(this.apiUrl + '/get-post', {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
       withCredentials: true 
     });
+  }
+
+  likePost(postid: string){
+    return this.http.post<any>(this.apiUrl + '/like',
+    {postid},
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+        withCredentials: true 
+      });
+    
+  }
+
+  unlikePost(postid: string){
+    return this.http.post<any>(this.apiUrl + '/unlike',
+    {postid},
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+        withCredentials: true 
+      });
   }
 
   private getHttpOptions(): { headers: HttpHeaders } {

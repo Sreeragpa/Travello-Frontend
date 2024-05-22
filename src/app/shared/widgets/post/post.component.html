@@ -1,5 +1,5 @@
 <div class="flex gap-6 flex-col">
     @for (post of posts; track post._id) {
-        <app-post-item [postdata]="post"></app-post-item>
+        <app-post-item [postdata]="post" (likeButton)="likePost($event)" (unlikeButton)="unlikePost($event)"></app-post-item>
     }
 </div>

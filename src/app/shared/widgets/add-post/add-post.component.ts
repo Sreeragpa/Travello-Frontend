@@ -9,6 +9,7 @@ import { PostService } from '../../../core/services/post.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { ToastService, ToastType } from '../../../core/services/toast.service';
+import { IPost } from '../../../core/models/post.models';
 
 @Component({
   selector: 'app-add-post',
@@ -156,11 +157,13 @@ export class AddPostComponent {
       return
     }
     
-    const data = {
+    const data: IPost = {
       images: this.croppedImages,
       caption:this.caption,
       location:this.selectedPlace.geometry,
-      place:this.selectedPlace.properties.formatted
+      place:this.selectedPlace.properties.formatted,
+      likes: 0,
+      createdAt:new Date()
     }
     console.log(data);
     this.isLoading = true

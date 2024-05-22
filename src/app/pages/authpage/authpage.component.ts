@@ -6,13 +6,39 @@ import { OtpFormComponent } from "../../shared/widgets/otp-form/otp-form.compone
 import { ISignup, Ilogin } from '../../core/models/auth.models';
 import { AuthService } from '../../core/services/auth.service';
 import { catchError, of } from 'rxjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { animate, animation, state, style, transition, trigger, useAnimation } from '@angular/animations';
+
+
 
 @Component({
     selector: 'app-authpage',
     standalone: true,
     templateUrl: './authpage.component.html',
     styleUrl: './authpage.component.css',
-    imports: [RouterOutlet, SigninFormComponent, SignupFormComponent, OtpFormComponent]
+    imports: [RouterOutlet, SigninFormComponent, SignupFormComponent, OtpFormComponent],
+    animations:[
+      trigger('openClose', [
+        // ...
+        state('open', style({
+          height: '200px',
+          opacity: 1,
+          backgroundColor: 'yellow'
+        })),
+        state('closed', style({
+          height: '100px',
+          opacity: 0.8,
+          backgroundColor: 'blue'
+        })),
+        transition('open => closed', [
+          animate('1s')
+        ]),
+        transition('closed => open', [
+          animate('0.5s')
+        ]),
+      ]),
+    ]
 })
 export class AuthpageComponent {
   darkmode: boolean = false;
@@ -25,6 +51,10 @@ export class AuthpageComponent {
   signinerror: Boolean = false;
   signupError!: string
   otpError!: string
+  isOpen = true;
+    toggle() {
+    this.isOpen = !this.isOpen;
+  }
 
   signin(data: Ilogin){
     this.isLoading = true

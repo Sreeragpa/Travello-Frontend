@@ -12,9 +12,30 @@
 
     </div>
     <div class="image-container">
-        <img [src]="postdata.images[0]" alt="" >
+        <!-- <img [src]="postdata.images[0]" alt="" > -->
+    <swiper-container navigation="true" pagination="true"  >
+        @for (image of postdata.images; track postdata) {
+            <swiper-slide>
+            <img [src]="image" alt="" >
+            </swiper-slide>
+        }
+    </swiper-container>
     </div>
-    <div>
+    <div class="flex flex-col p-2">
+        <div>
+            <span class="font-medium text-sm dark:text-white">{{postdata.likes}} Likes</span>
+        </div>
+        <div class="space-x-2">
+            @if (postdata.isLiked) {
+                <i class="fa-solid fa-heart text-xl cursor-pointer" (click)="unlike(postdata._id)" style="color: #fe0606; "></i>
+            }@else {
+                <i class="fa-regular fa-heart text-xl cursor-pointer" (click)="like(postdata._id)" style="color: #000000;"></i>
+            }
+            <i class="fa-solid fa-share text-xl cursor-pointer" style="color: #000000;"></i>
+        </div>
         <div class="dark:text-white">{{postdata.caption}}</div>
+        <div class="dark:text-white text-xs">{{postdata.createdAt | dateFormat}}</div>
     </div>
 </div>
+
+

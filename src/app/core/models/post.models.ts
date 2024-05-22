@@ -10,5 +10,8 @@ export interface IPost{
         coordinates: [number, number]; // [longitude, latitude]
     };
     place: string,
-    user?:IUserBasic
+    user?:IUserBasic,
+    isLiked?: boolean,
+    likes: number,
+    createdAt: Date
 }
