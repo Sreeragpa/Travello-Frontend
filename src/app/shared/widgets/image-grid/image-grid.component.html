@@ -2,7 +2,6 @@
 
 <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
     @for (item of imgData; track imgData) {
-      
         <div class="relative cursor-pointer">
             <img class="h-auto max-w-full rounded-lg" [src]="item.images[0]" alt="">
             <div class="absolute bottom-0 rounded-lg bg-black flex items-center justify-center gap-1 p-2">
@@ -10,50 +9,6 @@
                 <span class="font-medium text-white ">{{item.likes}}</span>
             </div>
         </div>
+        
     }
-    <!-- <div class="">
-        <img class="h-auto max-w-full rounded-lg" src="../../../../assets/images/IMG_9238.jpg" alt="">
-    </div>
-    <div class="">
-        <img class="h-auto max-w-full rounded-lg" src="../../../../assets/images/IMG_9238.jpg" alt="">
-    </div>
-    <div class="">
-        <img class="h-auto max-w-full rounded-lg" src="../../../../assets/images/IMG_9238.jpg" alt="">
-    </div>
-    <div class="">  
-        <img class="h-auto max-w-full rounded-lg" src="../../../../assets/images/IMG_9238.jpg" alt="">
-    </div>
-    <div class="">
-        <img class="h-auto max-w-full rounded-lg" src="../../../../assets/images/IMG_9238.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg" alt="">
-    </div>
-    <div>
-        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg" alt="">
-    </div> -->
 </div>

@@ -12,25 +12,24 @@
         <div>Followers: {{followCount.followersCount}}</div>
         <div>Following: {{followCount.followingCount}}</div>
     </div>
-    <div class="flex gap-4 items-center justify-center my-4 relative">
-        <div class=" flex flex-col cursor-pointer items-center transition-all" (click)="changeNav('posts')">
-            <span>Posts</span>
-            <!-- <div class="underline-item bg-black rounded-md" [class.opacity-0]="nav=='trips'">
-            </div> -->
-    
+    <div class="flex flex-col  items-center justify-center my-4 ">
+        <div class=" flex cursor-pointer items-center transition-all gap-6 relative" >
+            <span (click)="changeNav('posts')">Posts</span>
+            <span (click)="changeNav('trips')">Trips</span>
+            <div #underline class=" flex underline-test bg-black rounded-md" ></div>
         </div>
-        <div class=" flex flex-col cursor-pointer items-center transition-none" (click)="changeNav('trips')">
-            <span>Trips</span>
-            <!-- <div class="underline-item bg-black rounded-md" [class.opacity-0]="nav=='posts'">
-            </div> -->
-
-        </div>
-        <div #underline class="underline-test bg-black rounded-md" ></div>
-       
     </div>
 
     <div class="w-full">
-        <app-image-grid [imgData]="posts"></app-image-grid>
+        @if (nav=='posts') {
+            @if (isLoading) {
+                <app-image-grid-skeleton></app-image-grid-skeleton>
+            }@else {
+                <app-image-grid [imgData]="posts"></app-image-grid>
+            }
+        }@else {
+          Trips
+        }
     </div>
 
 </div>

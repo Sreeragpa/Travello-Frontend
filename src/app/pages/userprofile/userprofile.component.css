@@ -22,7 +22,7 @@
 .underline-test {
     position: absolute;
     bottom: -4px; /* Adjust based on your design */
-    left: 0;
+    left: 10px;
     height: 4px; /* Adjust based on your design */
     width: 18px;
 

@@ -3,18 +3,19 @@ import { ImageGridComponent } from "../../shared/widgets/image-grid/image-grid.c
 import { PostService } from '../../core/services/post.service';
 import { IPost } from '../../core/models/post.models';
 import { FollowService } from '../../core/services/follow.service';
+import { ImageGridSkeletonComponent } from "../../shared/widgets/image-grid-skeleton/image-grid-skeleton.component";
 
 @Component({
     selector: 'app-userprofile',
     standalone: true,
     templateUrl: './userprofile.component.html',
     styleUrl: './userprofile.component.css',
-    imports: [ImageGridComponent]
+    imports: [ImageGridComponent, ImageGridSkeletonComponent]
 })
 export class UserprofileComponent {
     posts!: IPost[]
     isLoading: boolean = true
-    nav:string = 'trips'
+    nav:string = 'posts'
     followCount!: {followingCount:number,followersCount: number} 
     @ViewChild('underline') underline!: ElementRef;
     constructor(private postService:PostService, private followService: FollowService){}
@@ -24,7 +25,7 @@ export class UserprofileComponent {
             if(res){
                 setTimeout(()=>{
                     this.isLoading = false
-                },1000)
+                },1500)
                this.posts = res.data
             }
         })
@@ -49,7 +50,7 @@ export class UserprofileComponent {
         if (this.nav === 'posts') {
           this.underline.nativeElement.style.transform = 'translateX(0%)';
         } else if (this.nav === 'trips') {
-          this.underline.nativeElement.style.transform = 'translateX(250%)';
+          this.underline.nativeElement.style.transform = 'translateX(320%)';
         }
       }
 }
