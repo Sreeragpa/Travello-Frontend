@@ -1,6 +1,6 @@
 
 
-<div class="bg-secondary w-100 h-auto rounded-xl py-5 px-5">
+<div class="bg-secondary w-100 h-auto rounded-2xl py-5 px-5 ">
     <div class="post-profile mb-3 flex gap-2 items-center">
         <div>
             <img class="w-10 h-10 rounded-full" src="../../../../assets/images/IMG_9238.jpg" alt="Rounded avatar">
@@ -9,9 +9,16 @@
            <span class="font-semibold dark:text-white"> {{postdata.user?.username}}</span>
            <span class="dark:text-white text-xs">{{postdata.place}}</span>
         </div>
+        <div class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
+            @if (postdata.isFollowing) {
+              <span (click)="unfollow(postdata.creator_id)">Unfollow</span>
+            }@else{
+                <span (click)="follow(postdata.creator_id)">Follow</span>
+            }
+        </div>
 
     </div>
-    <div class="image-container">
+    <div class="image-container" (dblclick)="like(postdata._id)">
         <!-- <img [src]="postdata.images[0]" alt="" > -->
     <swiper-container navigation="true" pagination="true"  >
         @for (image of postdata.images; track postdata) {

@@ -13,5 +13,6 @@ export interface IPost{
     user?:IUserBasic,
     isLiked?: boolean,
     likes: number,
-    createdAt: Date
+    createdAt: Date,
+    isFollowing?: boolean
 }

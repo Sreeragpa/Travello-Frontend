@@ -1,0 +1,20 @@
+.skeleton-div{
+    width: 560px;
+    height: 849px;
+}
+
+.skeleton-img{
+    width: 520px;
+    height: 750px;
+}
+
+@media (max-width: 640px){
+    .skeleton-div{
+        width: 380px;
+        height: auto;
+    }
+    .skeleton-img{
+        width: 340px;
+        height: 600px;
+    }
+}

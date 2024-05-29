@@ -10,13 +10,14 @@ import { AuthService } from '../../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { ToastService, ToastType } from '../../../core/services/toast.service';
 import { IPost } from '../../../core/models/post.models';
+import { ImgUploadComponent } from "../img-upload/img-upload.component";
 
 @Component({
-  selector: 'app-add-post',
-  standalone: true,
-  imports: [CommonModule,FormsModule],
-  templateUrl: './add-post.component.html',
-  styleUrl: './add-post.component.css'
+    selector: 'app-add-post',
+    standalone: true,
+    templateUrl: './add-post.component.html',
+    styleUrl: './add-post.component.css',
+    imports: [CommonModule, FormsModule, ImgUploadComponent]
 })
 export class AddPostComponent {
   @ViewChild('selectedimage',{static: true}) imageRef!: ElementRef<HTMLImageElement>
@@ -58,26 +59,43 @@ export class AddPostComponent {
   }
 
 
-  onFile(event: any){
+  // onFile(event: any){
+  //   console.log("file added");
+  //   this.cropActive = true;
+  //   const file = event.target.files[0];
+
+  //   if (!file) {
+  //     return;
+  //   }
+
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => {
+  //     if (this.imageRef) {  // Check if imageRef is initialized
+  //       const image = this.imageRef.nativeElement;
+  //       image.src = reader.result as string;
+  //       this.initCropper(image);
+  //     } else {
+  //       console.error("Image element not found"); // Handle case where element is not ready
+  //     }
+  //   };
+    
+  // }
+
+  onFile(imgFile: string){
     console.log("file added");
     this.cropActive = true;
-    const file = event.target.files[0];
-
-    if (!file) {
+ 
+    if (!imgFile) {
       return;
     }
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
       if (this.imageRef) {  // Check if imageRef is initialized
         const image = this.imageRef.nativeElement;
-        image.src = reader.result as string;
+        image.src = imgFile;
         this.initCropper(image);
       } else {
         console.error("Image element not found"); // Handle case where element is not ready
       }
-    };
     
   }
 

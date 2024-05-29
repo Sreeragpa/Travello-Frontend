@@ -23,6 +23,15 @@ export class PostService {
     });
   } 
 
+  getUserPosts(){
+    return this.http.get<any>(this.apiUrl + '/get-userpost',{
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true 
+    })
+  }
+
   getAllPosts(){
     return this.http.get<any >(this.apiUrl + '/get-post', {
       headers: new HttpHeaders({
@@ -45,14 +54,14 @@ export class PostService {
   }
 
   unlikePost(postid: string){
-    return this.http.post<any>(this.apiUrl + '/unlike',
-    {postid},
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        }),
-        withCredentials: true 
-      });
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: { postid },
+      withCredentials: true
+    };
+    return this.http.delete<any>(this.apiUrl + '/unlike',options);
   }
 
   private getHttpOptions(): { headers: HttpHeaders } {

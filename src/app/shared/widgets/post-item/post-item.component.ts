@@ -16,6 +16,8 @@ export class PostItemComponent {
   @Input({required:true}) postdata!: IPost;
   @Output() likeButton: EventEmitter<string> = new EventEmitter()
   @Output() unlikeButton: EventEmitter<string> = new EventEmitter()
+  @Output() followButton: EventEmitter<string> = new EventEmitter()
+  @Output() unfollowButton: EventEmitter<string> = new EventEmitter()
 
   like(postid: string | undefined){
     this.likeButton.emit(postid as string)
@@ -23,5 +25,12 @@ export class PostItemComponent {
 
   unlike(postid: string | undefined){
     this.unlikeButton.emit(postid as string)
+  }
+
+  follow(followingid: string | undefined){
+    this.followButton.emit(followingid as string)
+  }
+  unfollow(followingid: string | undefined){
+    this.unfollowButton.emit(followingid as string)
   }
 }

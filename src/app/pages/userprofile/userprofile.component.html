@@ -1,0 +1,36 @@
+<div class="bg-secondary w-1/2 profile-main p-10 rounded-xl ">
+    <div class="flex  gap-5">
+        <div class="profile-img-container bg-primary rounded-full">
+
+        </div>
+        <div class="mt-4 text-sm dark:text-white">
+            <div class="font-medium">Sreerag PA</div>
+            <div>Exploring new horizons</div>
+        </div>
+    </div>
+    <div class="flex justify-center gap-10 font-bold dark:text-white">
+        <div>Followers: {{followCount.followersCount}}</div>
+        <div>Following: {{followCount.followingCount}}</div>
+    </div>
+    <div class="flex gap-4 items-center justify-center my-4 relative">
+        <div class=" flex flex-col cursor-pointer items-center transition-all" (click)="changeNav('posts')">
+            <span>Posts</span>
+            <!-- <div class="underline-item bg-black rounded-md" [class.opacity-0]="nav=='trips'">
+            </div> -->
+    
+        </div>
+        <div class=" flex flex-col cursor-pointer items-center transition-none" (click)="changeNav('trips')">
+            <span>Trips</span>
+            <!-- <div class="underline-item bg-black rounded-md" [class.opacity-0]="nav=='posts'">
+            </div> -->
+
+        </div>
+        <div #underline class="underline-test bg-black rounded-md" ></div>
+       
+    </div>
+
+    <div class="w-full">
+        <app-image-grid [imgData]="posts"></app-image-grid>
+    </div>
+
+</div>

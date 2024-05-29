@@ -1,5 +1,11 @@
 <div class="flex gap-6 flex-col">
-    @for (post of posts; track post._id) {
-        <app-post-item [postdata]="post" (likeButton)="likePost($event)" (unlikeButton)="unlikePost($event)"></app-post-item>
+    @if (isLoading) {
+
+        <app-post-item-skeleton></app-post-item-skeleton>
+
+    }@else{
+        @for (post of posts; track post._id) {
+            <app-post-item [postdata]="post" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)" (likeButton)="likePost($event)" (unlikeButton)="unlikePost($event) "></app-post-item>
+        }
     }
 </div>

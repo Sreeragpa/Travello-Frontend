@@ -6,6 +6,7 @@ import { PostComponent } from './shared/widgets/post/post.component';
 import { TripComponent } from './shared/widgets/trip/trip.component';
 import { AddPostComponent } from './shared/widgets/add-post/add-post.component';
 import { authGuard } from './core/guards/auth.guard';
+import { UserprofileComponent } from './pages/userprofile/userprofile.component';
 
 export const routes: Routes = [
     {
@@ -14,6 +15,7 @@ export const routes: Routes = [
             {path:'posts',component:PostComponent},
             {path:'trips',component:TripComponent},
             {path:'addpost',component:AddPostComponent},
+            {path:'profile',component:UserprofileComponent},
         ]
     },
     {

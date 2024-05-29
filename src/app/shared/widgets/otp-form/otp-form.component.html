@@ -8,7 +8,7 @@
             }
         </h3>
     </div>
-    <form class="max-w-80 mx-auto" [formGroup]="otpForm">
+    <form class="max-w-80 mx-auto" [formGroup]="otpForm" (ngSubmit)="onSubmit()">
     <div class="mb-5 mt-3">
       <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">OTP is sent to {{email}}</label>
       <p class="text-gray-900 dark:text-white text-xs">Expires in {{otpTimer}}</p>
@@ -26,7 +26,7 @@
       </div>
 
     <div class="text-center">
-        <button type="button" [disabled]="!otpFormValid" (click)="onSubmit()" class="text-white bg-black hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Verify</button>
+        <button type="submit" [disabled]="!otpFormValid" class="text-white bg-black hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Verify</button>
     </div>
     <div class="text-center mt-8">
     </div>
