@@ -18,6 +18,7 @@ export class PostItemComponent {
   @Output() unlikeButton: EventEmitter<string> = new EventEmitter()
   @Output() followButton: EventEmitter<string> = new EventEmitter()
   @Output() unfollowButton: EventEmitter<string> = new EventEmitter()
+  @Output() shareButton: EventEmitter<string> = new EventEmitter()
 
   like(postid: string | undefined){
     this.likeButton.emit(postid as string)
@@ -32,5 +33,9 @@ export class PostItemComponent {
   }
   unfollow(followingid: string | undefined){
     this.unfollowButton.emit(followingid as string)
+  }
+
+  onShare(postid:string | undefined){
+    this.shareButton.emit(postid)
   }
 }

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastService, ToastType } from '../../../core/services/toast.service';
 import { IPost } from '../../../core/models/post.models';
 import { ImgUploadComponent } from "../img-upload/img-upload.component";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-add-post',
@@ -30,7 +31,7 @@ export class AddPostComponent {
   private searchvalue = new Subject<string>();
   isLoading: Boolean = false
 
-  constructor(private mapService: MapService, private postService: PostService,private authSerive: AuthService, private toastService:ToastService){
+  constructor(private mapService: MapService, private postService: PostService,private authSerive: AuthService, private toastService:ToastService, private router: Router){
 
   }
 
@@ -187,7 +188,8 @@ export class AddPostComponent {
     this.isLoading = true
     this.postService.createPost(data).subscribe((res)=>{
         this.isLoading = false
-        this.toastService.showToast("Post Added",ToastType.Success)
+        this.toastService.showToast("Post Added",ToastType.Success);
+        this.router.navigate(['posts'])
     })
   }
 

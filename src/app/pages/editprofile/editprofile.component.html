@@ -1,0 +1,57 @@
+<div class="bg-secondary w-auto profile-main p-10 rounded-xl relative">
+    <div class="flex flex-col items-center relative">
+        <!-- <div class="absolute top-3 left-0.5 " (click)="togglePassword()">
+                <i class="fa-solid fa-angle-left text-lg cursor-pointer p-2" style="color: #000000;"></i>
+        </div> -->
+        <div class="profile-img-container bg-primary rounded-full">
+            <img [src]="user.profileimg " alt="" class="rounded-full">
+        </div>
+        <label for="dropzone-file">
+            
+            <div class="text-blue-700 font-medium cursor-pointer">
+                Change Profile
+            </div>
+            <input id="dropzone-file" type="file" class="hidden" (change)="onFile($event)">
+        </label>
+
+    </div>
+    <div>
+
+        <app-editprofile-form [user]="user" (changeProfile)="onChangeProfile($event)" (changePassword)="onChangePassword($event)"></app-editprofile-form>
+        <div class="max-w-md mx-auto relative">
+        
+        </div>
+    </div>
+
+    <!-- <div class="mymodal bg-primary p-52">
+        kjhuhifsd
+    </div> -->
+
+        <button #toggleButton data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="block " type="button">
+        </button>
+        
+        <div #popupModal id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <button type="button" class="absolute top-3 end-2.5 z-10 text-white bg-red-500 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="p-4 md:p-5 text-center space-y-5">
+                        <div>
+                            <img class="cropped-image" id="image" alt="Selected Image" #selectedimage>
+                        </div>
+
+                        <button (click)="onuploadProfile()" data-modal-hide="popup-modal" type="button" class="text-white  bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                            Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+
+</div>

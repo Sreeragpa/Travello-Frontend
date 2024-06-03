@@ -1,3 +1,6 @@
 .test{
     border-radius: 20px;
 }
+.error-message {
+    min-height: 1.5em; /* Adjust the height as needed */
+}

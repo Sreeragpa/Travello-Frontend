@@ -41,6 +41,15 @@ export class PostService {
     });
   }
 
+  getSinglePost(postid: string){
+    return this.http.get<any >(this.apiUrl + `/get-post/${postid}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true 
+    });
+  }
+
   likePost(postid: string){
     return this.http.post<any>(this.apiUrl + '/like',
     {postid},
@@ -63,6 +72,7 @@ export class PostService {
     };
     return this.http.delete<any>(this.apiUrl + '/unlike',options);
   }
+
 
   private getHttpOptions(): { headers: HttpHeaders } {
     return {

@@ -1,44 +1,52 @@
-<div class="bg-secondary  sm:py-8 sm:px-4 py-16 px-2 rounded-3xl">
+<div class="bg-secondary  sm:py-8 sm:px-4 py-12 px-2 rounded-3xl">
     <div class="text-center font-semibold dark:text-white">
         <h3 class="text-xl">SignUp</h3>
     </div>
     <form class="max-w-80 mx-auto" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <div class="mb-5">
+    <div class="mb-2">
       <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
       <input type="username" id="username" name="username" 
       class="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 " 
       formControlName="username" 
       required />
-      @if((signupForm.get('username')?.hasError('required') || signupForm.get('username')?.hasError('minlength')) && signupForm.get('username')?.touched){
-        <p class="m-0 text-sm text-red-600 dark:text-red-500">Invalid Username</p>
-      }
+      <div class="error-message">
+        @if((signupForm.get('username')?.hasError('required') || signupForm.get('username')?.hasError('minlength')) && signupForm.get('username')?.touched){
+          <p class="m-0 text-sm text-red-600 dark:text-red-500">Invalid Username</p>
+        }
+      </div>
     </div>
-    <div class="mb-5">
+    <div class="mb-2">
       <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
       <input type="email" id="email" name="email" formControlName="email"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@gmail.com" required />
-      @if ( (signupForm.get('email')?.hasError('email')|| signupForm.get('email')?.hasError('required')) && signupForm.get('email')?.touched) {
-        <p class="m-0 text-sm text-red-600 dark:text-red-500">Invalid Email</p>
-      }
+      <div class="error-message">
+        @if ( (signupForm.get('email')?.hasError('email')|| signupForm.get('email')?.hasError('required')) && signupForm.get('email')?.touched) {
+          <p class="m-0 text-sm text-red-600 dark:text-red-500">Invalid Email</p>
+        }
+      </div>
     </div>
-    <div class="mb-5">
+    <div class="mb-2">
       <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
       <input type="password" id="password" name="password" formControlName="password"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-      @if ((signupForm.get('password')?.hasError('required') || signupForm.get('password')?.hasError('minlength'))&& signupForm.get('password')?.touched) {
-        <p class="m-0 text-sm text-red-600 dark:text-red-500">Min 8 charcters required</p>
-      }
+      <div class="error-message">
+        @if ((signupForm.get('password')?.hasError('required') || signupForm.get('password')?.hasError('minlength'))&& signupForm.get('password')?.touched) {
+          <p class="m-0 text-sm text-red-600 dark:text-red-500">Min 8 charcters required</p>
+        }
+      </div>
     </div>
-    <div class="mb-5">
+    <div class="mb-2">
       <label for="confirmpassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
       <input type="password" id="confirmpassword" name="confirmpassword" formControlName="confirmpassword"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-      @if ((signupForm.get('confirmpassword')?.hasError('passwordsDontMatch') || signupForm.get('confirmpassword')?.hasError('required')) && signupForm.get('confirmpassword')?.touched) {
-        <p class="m-0 text-sm text-red-600 dark:text-red-500">Passwords don't match</p>
-      }
-      @if (error) {
-        <p class="m-0 text-sm text-red-600 dark:text-red-500">{{error}}</p>
-      }
+      <div class="error-message">
+        @if ((signupForm.get('confirmpassword')?.hasError('passwordsDontMatch') || signupForm.get('confirmpassword')?.hasError('required')) && signupForm.get('confirmpassword')?.touched) {
+          <p class="m-0 text-sm text-red-600 dark:text-red-500">Passwords don't match</p>
+        }
+        @if (error) {
+          <p class="m-0 text-sm text-red-600 dark:text-red-500">{{error}}</p>
+        }
+      </div>
     </div>
     <div class="text-center">
         <button type="submit" class="text-white bg-black hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SignUp</button>

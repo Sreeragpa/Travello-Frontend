@@ -9,7 +9,6 @@ import { IPlaceSuggestion } from '../models/mapService.models';
 })
 export class MapService {
   private apiUrl = 'https://api.geoapify.com/v1/geocode';
-  // /autocomplete?text=Mosco&apiKey=177668e9d9044d7b839472dd492b20d3
   constructor(private http:HttpClient) {
 
    }

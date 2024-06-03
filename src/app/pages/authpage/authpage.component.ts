@@ -51,6 +51,7 @@ export class AuthpageComponent {
   signinerror: Boolean = false;
   signupError!: string
   otpError!: string
+  test: any
   isOpen = true;
     toggle() {
     this.isOpen = !this.isOpen;
@@ -64,6 +65,7 @@ export class AuthpageComponent {
         this.authService.login(data)
         .pipe(
           catchError(error=>{
+            this.test=error
             this.signinerror = true
             if(error.error.message == "INVALID_CREDENTIALS"){
               console.log("INVALID_CREDENTIALS");

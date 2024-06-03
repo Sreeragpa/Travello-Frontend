@@ -38,7 +38,7 @@
             }@else {
                 <i class="fa-regular fa-heart text-xl cursor-pointer" (click)="like(postdata._id)" style="color: #000000;"></i>
             }
-            <i class="fa-solid fa-share text-xl cursor-pointer" style="color: #000000;"></i>
+            <i class="fa-solid fa-share text-xl cursor-pointer text-black " (click)="onShare(postdata._id)" ></i>
         </div>
         <div class="dark:text-white">{{postdata.caption}}</div>
         <div class="dark:text-white text-xs">{{postdata.createdAt | dateFormat}}</div>

@@ -1,35 +1,63 @@
-<div class="bg-secondary w-1/2 profile-main p-10 rounded-xl ">
-    <div class="flex  gap-5">
-        <div class="profile-img-container bg-primary rounded-full">
+<div class="bg-secondary h-auto profile-main p-10 rounded-xl ">
+    <div class="flex justify-between gap-5 items-center ">
 
+        <!-- Profile Details -->
+        <div>
+            <div class="profile-img-container bg-primary rounded-full">
+                <img [src]="user.profileimg" alt="" class="rounded-full">
+            </div>
+            <div class="mt-4 text-sm dark:text-white">
+                <div class="font-medium">{{user.name}}</div>
+                <div>{{user.bio}}</div>
+            </div>
         </div>
-        <div class="mt-4 text-sm dark:text-white">
-            <div class="font-medium">Sreerag PA</div>
-            <div>Exploring new horizons</div>
+        <!-- /Profile Details -->
+
+
+        <!-- Settings -->
+        <div class="relative">
+            <div>
+                <i class="settings-icon fa-solid fa-gear cursor-pointer text-xl" style="color: #0a0a0a;" (click)="toggleSettings()" [class.active]="toggleStatus"></i>
+            </div>
+            <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2" [class.active]="toggleStatus" #settings_menu >
+                <a routerLink="/edit-profile">
+                    <span class="cursor-pointer p-1 hover:text-gray-600">Edit Profile</span>
+                </a>
+                <hr class="w-full">
+                <span class="cursor-pointer p-1 hover:text-gray-600" (click)="onLogout()">Logout</span>
+            </div>
         </div>
+        <!-- /Settings -->
+
+      
+
+
     </div>
     <div class="flex justify-center gap-10 font-bold dark:text-white">
         <div>Followers: {{followCount.followersCount}}</div>
         <div>Following: {{followCount.followingCount}}</div>
     </div>
+
+    <!-- Trips & Posts -->
     <div class="flex flex-col  items-center justify-center my-4 ">
-        <div class=" flex cursor-pointer items-center transition-all gap-6 relative" >
+        <div class=" flex cursor-pointer items-center transition-all gap-6 relative">
             <span (click)="changeNav('posts')">Posts</span>
             <span (click)="changeNav('trips')">Trips</span>
-            <div #underline class=" flex underline-test bg-black rounded-md" ></div>
+            <div #underline class=" flex underline-test bg-black rounded-md"></div>
         </div>
     </div>
 
     <div class="w-full">
         @if (nav=='posts') {
-            @if (isLoading) {
-                <app-image-grid-skeleton></app-image-grid-skeleton>
-            }@else {
-                <app-image-grid [imgData]="posts"></app-image-grid>
-            }
+        @if (isLoading) {
+        <app-image-grid-skeleton></app-image-grid-skeleton>
         }@else {
-          Trips
+        <app-image-grid [imgData]="posts"></app-image-grid>
+        }
+        }@else {
+        Trips
         }
     </div>
+    <!-- /Trips & Posts -->
 
 </div>

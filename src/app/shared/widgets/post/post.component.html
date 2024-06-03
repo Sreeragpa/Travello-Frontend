@@ -5,7 +5,14 @@
 
     }@else{
         @for (post of posts; track post._id) {
-            <app-post-item [postdata]="post" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)" (likeButton)="likePost($event)" (unlikeButton)="unlikePost($event) "></app-post-item>
+            <app-post-item
+             [postdata]="post" 
+            (followButton)="followAccount($event)" 
+            (unfollowButton)="unfollowAccount($event)" 
+            (likeButton)="likePost($event)" 
+            (unlikeButton)="unlikePost($event) "
+            (shareButton)="copyLink($event)">
+            </app-post-item>
         }
     }
 </div>

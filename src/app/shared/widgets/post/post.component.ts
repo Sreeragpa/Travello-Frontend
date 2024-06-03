@@ -6,6 +6,8 @@ import { IResponse } from '../../../core/models/httpResponse.models';
 import { FollowService } from '../../../core/services/follow.service';
 import { Subject, debounceTime, switchMap } from 'rxjs';
 import { PostItemSkeletonComponent } from "../post-item-skeleton/post-item-skeleton.component";
+import { ActivatedRoute } from '@angular/router';
+import { ToastService, ToastType } from '../../../core/services/toast.service';
 
 @Component({
     selector: 'app-post',
@@ -19,18 +21,37 @@ export class PostComponent {
      isLoading: boolean = true
      private likeSubject = new Subject<string>();
      private unlikeSubject = new Subject<string>();
+    postid!: string;
 
-    constructor(private postService: PostService, private followService: FollowService){}
+    constructor(private postService: PostService, private followService: FollowService,private route: ActivatedRoute,private toastService: ToastService){}
     ngOnInit() {
-        this.postService.getAllPosts().subscribe((res)=>{
-            console.log(res);
-            if(res){
-                setTimeout(()=>{
-                    this.isLoading = false
-                },1000)
-               this.posts = res.data
-            }
-        })
+        this.route.paramMap.subscribe((params)=>{
+            this.postid = params.get('id')!
+          })
+          if(this.postid){
+            console.log(this.postid);
+            this.postService.getSinglePost(this.postid).subscribe((res)=>{
+                console.log(res);
+                if(res){
+                    setTimeout(()=>{
+                        this.isLoading = false
+                    },1000)
+                   this.posts = res.data
+                }
+            })
+            
+          }else{
+            this.postService.getAllPosts().subscribe((res)=>{
+                console.log(res);
+                if(res){
+                    setTimeout(()=>{
+                        this.isLoading = false
+                    },1000)
+                   this.posts = res.data
+                }
+            })
+          }
+   
 
         this.likeSubject.pipe(
             debounceTime(300),
@@ -113,4 +134,13 @@ export class PostComponent {
             }
         })
     }
+    copyLink(postId: string) {
+        const link = `${window.location.origin}/posts/${postId}`;
+        navigator.clipboard.writeText(link).then(() => {
+          this.toastService.showToast('Link copied to clipboard!', ToastType.Success);
+        }).catch(err => {
+          this.toastService.showToast('Failed to copy link', ToastType.Failure);
+          console.error('Could not copy text: ', err);
+        });
+      }
 }

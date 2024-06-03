@@ -12,14 +12,19 @@ import { of, switchMap } from 'rxjs';
 export class MytoastComponent {
   type!: ToastType | null
   message!: string | null
+  toastAnimation: boolean = false
   constructor(private toastService: ToastService){}
   ngOnInit() {
     this.toastService.getToaster.subscribe(data=>{
       this.message = data.message;
       this.type = data.type
       setTimeout(()=>{
+        this.toastAnimation = true
+      },600)
+      setTimeout(()=>{
         this.message = null;
-        this.type = null
+        this.type = null;
+        this.toastAnimation = false
       },3000)
     })
   }

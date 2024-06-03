@@ -38,10 +38,10 @@ export class AuthService {
       );
   }
 
+  logout(){
+    return this.http.post(this.apiUrl + '/logout','')
+  }
 
-
-
-  
   private getHttpOptions(): { headers: HttpHeaders } {
     return {
       headers: new HttpHeaders({

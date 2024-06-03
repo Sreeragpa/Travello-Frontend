@@ -1,0 +1,9 @@
+.passworddiv {
+    opacity: 0;
+    transition: all 1s;
+}
+
+
+.passworddiv.active {
+    opacity: 1;
+}

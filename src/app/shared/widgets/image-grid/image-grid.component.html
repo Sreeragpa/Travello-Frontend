@@ -2,13 +2,15 @@
 
 <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
     @for (item of imgData; track imgData) {
-        <div class="relative cursor-pointer">
-            <img class="h-auto max-w-full rounded-lg" [src]="item.images[0]" alt="">
-            <div class="absolute bottom-0 rounded-lg bg-black flex items-center justify-center gap-1 p-2">
-                <i class="fa-regular fa-heart" style="color: #ffffff;"></i>
-                <span class="font-medium text-white ">{{item.likes}}</span>
+        <a [routerLink]="['/posts',item._id]">
+            <div class="relative cursor-pointer" [class.active]="item._id">
+                <img class="h-auto max-w-full rounded-lg" [src]="item.images[0]" alt="" >
+                <div class="absolute bottom-0 rounded-lg bg-black flex items-center justify-center gap-1 p-2">
+                    <i class="fa-regular fa-heart" style="color: #ffffff;"></i>
+                    <span class="font-medium text-white ">{{item.likes}}</span>
+                </div>
             </div>
-        </div>
+        </a>
         
     }
 </div>

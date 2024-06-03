@@ -29,6 +29,25 @@
     transition: transform 0.3s ease-in-out; /* Smooth transition */
   }
 
+  .settings-menu {
+    opacity: 0;
+    transform: translateY(-10px); /* Translate menu up initially */
+    transition: all 0.2s ease-in-out; /* Animation properties */
+  }
+  
+  .settings-menu.active {
+    opacity: 1;
+    transform: translateY(0); /* Animate menu down on visibility */
+} 
+
+.settings-icon {
+  transform: rotate(0deg);
+   transition: all 0.2s ease-in-out; 
+}
+.settings-icon.active {
+  transform: rotate(20deg);
+}
+
 @media (max-width:640px) {
     .profile-main{
         width: 90vw;
@@ -38,3 +57,4 @@
         height: 80px
     }
 }
+

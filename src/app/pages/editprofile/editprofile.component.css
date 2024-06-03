@@ -1,0 +1,32 @@
+.profile-img-container{
+    width: 180px;
+    height: 180px;
+}
+
+.profile-main{
+    width: 65vw;
+    height: 87vh;
+}
+
+.mymodal {
+    position: absolute; /* Ensures the modal is positioned relative to its parent */
+    top: 50%; /* Vertical centering */
+    left: 50%; /* Horizontal centering */
+    transform: translate(-50%, -50%); /* More efficient centering approach */
+
+    flex: 1; /* Optional: Fills remaining space in the parent (if applicable) */
+    justify-content: center; /* Optional: Aligns modal content horizontally within itself */
+    align-items: center; /* Optional: Aligns modal content vertically within itself */
+  }
+
+  
+@media (max-width:640px) {
+    .profile-main{
+        width: 90vw;
+    }
+    .profile-img-container{
+        width: 140px;
+        height: 140px
+    }
+}
+

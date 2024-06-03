@@ -18,6 +18,7 @@
     }
   }@else if(isPresent=="/signup"){
     @if (!isOtpSend) {
+    
       <app-signup-form (fromData)="signup($event)" [error]="signupError"></app-signup-form>
 
     }@else {
