@@ -63,7 +63,6 @@ export class EditprofileFormComponent {
       console.log(this.editForm.get('profiledetails')?.valid);
       console.log(this.editForm.get('profiledetails')?.value);
 
-      console.log();
       
 
       if(this.editForm.get('profiledetails')?.valid){

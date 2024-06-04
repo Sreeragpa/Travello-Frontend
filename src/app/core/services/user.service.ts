@@ -21,4 +21,8 @@ export class UserService {
     const data = {currentPassword,newPassword}
     return this.http.put<any>(this.apiUrl+"/update-password",data)
   }
+
+  updateProfile(data: any){
+    return this.http.put<any>(this.apiUrl + '/update-profile',data)
+  }
 } 
