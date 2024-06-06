@@ -21,27 +21,21 @@
             </div>
             <!-- Modal body -->
             <div class="p-4 md:p-5 space-y-4 overflow-y-auto max-h-80">
-                <div class="post-profile mb-3 flex gap-2 items-center">
-                    <div>
-                        <img class="w-10 h-10 rounded-full" src="../../../../assets/images/IMG_9238.jpg"
-                            alt="Rounded avatar">
-                    </div>
-                    <div class=" flex flex-col">
-                        <span class="font-semibold text-sm dark:text-white"> hehe Superbb</span>
-                        <span class="dark:text-white text-xs">9:45pm</span>
-                    </div>
-                </div>
-                <div class="post-profile mb-3 flex gap-2 items-center">
-                    <div>
-                        <img class="w-10 h-10 rounded-full" src="../../../../assets/images/IMG_9238.jpg"
-                            alt="Rounded avatar">
-                    </div>
-                    <div class=" flex flex-col">
-                        <span class="font-semibold text-sm dark:text-white"> hehe Superbb</span>
-                        <span class="dark:text-white text-xs">9:45pm</span>
-                    </div>
-                </div>
-        
+                @for (comment of comments; track comment._id) {          
+                    <div class="post-profile mb-3 flex gap-2 items-center">
+                        <div>
+                            <img class="w-10 h-10 rounded-full" [src]="comment.user[0].profileimg"
+                                alt="Rounded avatar">
+                        </div>
+                        <div class=" flex flex-col">
+                            <div class=" text-sm dark:text-white space-x-1">
+                                 <span class="font-semibold">{{comment.user[0].username}}</span>
+                                 <span class="font-medium">{{comment.content}}</span>
+                            </div>
+                            <span class="dark:text-white text-xs">{{comment.createdAt | dateFormat}}</span>
+                        </div>
+                    </div>  
+                }
 
             </div>
             <!-- Modal footer -->
@@ -60,10 +54,10 @@
                             </svg>
                             <span class="sr-only">Add emoji</span>
                         </button>
-                        <input id="chat" rows="1" cols="2"
+                        <input id="chat" rows="1" cols="2" [(ngModel)]="commentContent" name="content"
                             class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Add Comment">
-                        <button type="submit"
+                        <button type="button" (click)="addComment()"
                             class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
                             <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
