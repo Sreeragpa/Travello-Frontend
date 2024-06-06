@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.min.css';
-import { MapService } from '../../../core/services/map.service';
+import { MapService } from '../../core/services/map.service';
 import { Subject, debounceTime, distinctUntilChanged, of, switchMap, tap } from 'rxjs';
-import { Feature, IPlaceSuggestion } from '../../../core/models/mapService.models';
-import { PostService } from '../../../core/services/post.service';
-import { AuthService } from '../../../core/services/auth.service';
+import { Feature, IPlaceSuggestion } from '../../core/models/mapService.models';
+import { PostService } from '../../core/services/post.service';
+import { AuthService } from '../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
-import { ToastService, ToastType } from '../../../core/services/toast.service';
-import { IPost } from '../../../core/models/post.models';
-import { ImgUploadComponent } from "../img-upload/img-upload.component";
+import { ToastService, ToastType } from '../../core/services/toast.service';
+import { IPost } from '../../core/models/post.models';
+import { ImgUploadComponent } from "../../shared/widgets/img-upload/img-upload.component";
 import { Router } from '@angular/router';
 
 @Component({
@@ -186,12 +186,18 @@ export class AddPostComponent {
     }
     console.log(data);
     this.isLoading = true
-    this.postService.createPost(data).subscribe((res)=>{
+    this.postService.createPost(data).subscribe({
+      next:(res)=>{
         this.isLoading = false
         this.toastService.showToast("Post Added",ToastType.Success);
         this.router.navigate(['posts'])
-    })
+    },
+    error:(err)=>{
+      this.toastService.showToast("Something Wrong Happened",ToastType.Failure)
+    }
+  })
   }
+
 
 
 

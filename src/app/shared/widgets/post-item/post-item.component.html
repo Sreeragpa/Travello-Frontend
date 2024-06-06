@@ -9,13 +9,15 @@
            <span class="font-semibold dark:text-white"> {{postdata.user?.username}}</span>
            <span class="dark:text-white text-xs">{{postdata.place}}</span>
         </div>
-        <div class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
-            @if (postdata.isFollowing) {
-              <span (click)="unfollow(postdata.creator_id)">Unfollow</span>
-            }@else{
-                <span (click)="follow(postdata.creator_id)">Follow</span>
-            }
-        </div>
+        @if(!postdata.same_user) {
+            <div class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
+                @if (postdata.isFollowing) {
+                  <span (click)="unfollow(postdata.creator_id)">Unfollow</span>
+                }@else{
+                    <span (click)="follow(postdata.creator_id)">Follow</span>
+                }
+            </div>
+        }
 
     </div>
     <div class="image-container" (dblclick)="like(postdata._id)">
@@ -32,13 +34,23 @@
         <div>
             <span class="font-medium text-sm dark:text-white">{{postdata.likes}} Likes</span>
         </div>
-        <div class="space-x-2">
-            @if (postdata.isLiked) {
-                <i class="fa-solid fa-heart text-xl cursor-pointer" (click)="unlike(postdata._id)" style="color: #fe0606; "></i>
-            }@else {
-                <i class="fa-regular fa-heart text-xl cursor-pointer" (click)="like(postdata._id)" style="color: #000000;"></i>
-            }
-            <i class="fa-solid fa-share text-xl cursor-pointer text-black " (click)="onShare(postdata._id)" ></i>
+        <div class="flex justify-between">
+            <div class="flex gap-2">
+                @if (postdata.isLiked) {
+                    <i class="fa-solid fa-heart text-xl cursor-pointer " (click)="unlike(postdata._id)" style="color: #fe0606; "></i>
+                }@else {
+                    <i class="fa-regular fa-heart text-xl cursor-pointer transition-all active:scale-125" (click)="like(postdata._id)" style="color: #000000;"></i>
+                }
+                <i class="fa-regular fa-comment text-xl cursor-pointer text-black dark:text-gray-400" (click)="onComment(postdata._id)" ></i>
+                <i class="fa-solid fa-share text-xl cursor-pointer text-black dark:text-gray-400" (click)="onShare(postdata._id)" ></i>
+            </div>
+            <div>
+                @if (postdata.isSaved) {
+                    <i class="fa-solid fa-bookmark text-xl cursor-pointer text-black dark:text-gray-400"  (click)="onUnsave(postdata._id)"></i>
+                }@else {
+                    <i class="fa-regular fa-bookmark text-xl cursor-pointer text-black dark:text-gray-400" (click)="onSave(postdata._id)" ></i>
+                }
+            </div>
         </div>
         <div class="dark:text-white">{{postdata.caption}}</div>
         <div class="dark:text-white text-xs">{{postdata.createdAt | dateFormat}}</div>

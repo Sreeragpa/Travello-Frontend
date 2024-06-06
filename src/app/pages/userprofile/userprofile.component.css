@@ -1,6 +1,7 @@
 .profile-main{
     width: 65vw;
-    height: 87vh;
+    min-height: 87vh;
+    height: auto;
 }
 
 .profile-img-container{

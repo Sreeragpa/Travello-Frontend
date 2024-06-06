@@ -17,9 +17,11 @@
         <!-- Settings -->
         <div class="relative">
             <div>
-                <i class="settings-icon fa-solid fa-gear cursor-pointer text-xl" style="color: #0a0a0a;" (click)="toggleSettings()" [class.active]="toggleStatus"></i>
+                <i class="settings-icon fa-solid fa-gear cursor-pointer text-xl" style="color: #0a0a0a;"
+                    (click)="toggleSettings()" [class.active]="toggleStatus"></i>
             </div>
-            <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2" [class.active]="toggleStatus" #settings_menu >
+            <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2"
+                [class.active]="toggleStatus" #settings_menu>
                 <a routerLink="/edit-profile">
                     <span class="cursor-pointer p-1 hover:text-gray-600">Edit Profile</span>
                 </a>
@@ -29,7 +31,7 @@
         </div>
         <!-- /Settings -->
 
-      
+
 
 
     </div>
@@ -43,19 +45,18 @@
         <div class=" flex cursor-pointer items-center transition-all gap-6 relative">
             <span (click)="changeNav('posts')">Posts</span>
             <span (click)="changeNav('trips')">Trips</span>
+            <span (click)="changeNav('saved')">Saved</span>
             <div #underline class=" flex underline-test bg-black rounded-md"></div>
         </div>
     </div>
 
     <div class="w-full">
         @if (nav=='posts') {
-        @if (isLoading) {
-        <app-image-grid-skeleton></app-image-grid-skeleton>
-        }@else {
-        <app-image-grid [imgData]="posts"></app-image-grid>
-        }
-        }@else {
-        Trips
+                <app-image-grid [imgData]="posts" [isLoading]="postLoading"></app-image-grid>
+        }@else if(nav=="trips") {
+            Trips
+        }@else{
+            <app-image-grid [imgData]="savedPosts" [isLoading]="savedLoading"></app-image-grid>
         }
     </div>
     <!-- /Trips & Posts -->

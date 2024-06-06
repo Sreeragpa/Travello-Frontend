@@ -15,13 +15,7 @@ export class FollowService {
   }
 
   unfollowAccount(followingid: string):Observable<any>{
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      body: { followingid },
-      withCredentials: true
-    };
+    const options = {body: { followingid }};
     return this.http.delete<any>(this.apiUrl + '/unfollow',options)
   }
 

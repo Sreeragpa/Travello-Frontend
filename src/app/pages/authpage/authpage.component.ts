@@ -9,6 +9,7 @@ import { catchError, of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { animate, animation, state, style, transition, trigger, useAnimation } from '@angular/animations';
+import { ToastService, ToastType } from '../../core/services/toast.service';
 
 
 
@@ -43,7 +44,7 @@ import { animate, animation, state, style, transition, trigger, useAnimation } f
 export class AuthpageComponent {
   darkmode: boolean = false;
   isOtpSend: boolean = false;
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private toastService: ToastService) {}
   background: string[] = ['/login', '/register'];
   isPresent: string = this.router.url;
   email: string = '';
@@ -103,6 +104,7 @@ export class AuthpageComponent {
     .subscribe(res => {
       if (res.status === 'success') {
         this.isOtpSend = true;
+        this.toastService.showToast("OTP Sent Successfully",ToastType.Normal)
       }
     });
     

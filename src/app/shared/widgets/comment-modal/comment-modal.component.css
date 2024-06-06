@@ -1,0 +1,25 @@
+.comment-modal {
+    opacity: 0;
+    display: none; /* Hide the modal element */
+    transition: all 0.3s ease-in-out;
+}
+
+.comment-modal.show-modal {
+    opacity: 1;
+    display: flex; /* Show the modal element */
+    pointer-events: auto; /* Enable clicks on modal when it's visible */
+    background-color: rgba(0, 0, 0, 0.342);
+
+    
+}
+
+.modal-item{
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(-50px);
+}
+.modal-item.anim{
+    opacity: 1;
+    transform: translateY(0px);
+
+}

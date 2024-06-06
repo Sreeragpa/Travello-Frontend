@@ -14,5 +14,18 @@ export interface IPost{
     isLiked?: boolean,
     likes: number,
     createdAt: Date,
-    isFollowing?: boolean
+    isFollowing?: boolean,
+    same_user?:boolean,
+    isSaved?: boolean
+}
+
+export interface IPostLike{
+    post_id: string,
+    user_id: string
+}
+
+export interface ISaves{
+    user_id: string,
+    post_id: string
+    
 }

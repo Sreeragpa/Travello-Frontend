@@ -8,6 +8,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
 import IUser from '../../core/models/user.models';
+import { ToastService, ToastType } from '../../core/services/toast.service';
 
 @Component({
     selector: 'app-userprofile',
@@ -19,37 +20,50 @@ import IUser from '../../core/models/user.models';
 export class UserprofileComponent {
     user!: IUser
     posts!: IPost[]
-    isLoading: boolean = true
+    savedPosts!: IPost[]
+    postLoading: boolean = true
+    tripLoading: boolean = true
+    savedLoading: boolean = true
     nav:string = 'posts'
     followCount!: {followingCount:number,followersCount: number} 
     toggleStatus: boolean = false
     @ViewChild('underline') underline!: ElementRef;
     @ViewChild('settings_menu') settingsmenu!: ElementRef
-    constructor(private postService:PostService, private followService: FollowService, private authService: AuthService,private userService:UserService, private router: Router){}
+    constructor(private postService:PostService, private followService: FollowService, private authService: AuthService,private userService:UserService, private router: Router, private toastService: ToastService){}
     ngOnInit() {
         this.postService.getUserPosts().subscribe((res)=>{
             console.log(res);
             if(res){
-                setTimeout(()=>{
-                    this.isLoading = false
-                },1500)
                this.posts = res.data
+               setTimeout(()=>{
+                this.postLoading = false
+            },1500)
             }
         })
 
-        this.followService.getFollowCount().subscribe((res)=>{
-            if(res){
-                console.log(res);
-                
-                this.followCount = res.data
+        this.followService.getFollowCount().subscribe({
+            next:(res)=>{
+                if(res){
+                    console.log(res);
+                    
+                    this.followCount = res.data ||  {followingCount:0,followersCount: 0} 
+                }
+            },
+            error:(err)=>{
+                this.toastService.showToast("Error",ToastType.Failure)
             }
         })
 
-        this.userService.getUser().subscribe((res)=>{
-            if(res){
-                console.log(res);
-                
-                this.user = res.data
+        this.userService.getUser().subscribe({
+            next:(res)=>{
+                if(res){
+                    console.log(res);
+                    
+                    this.user = res.data
+                }
+            },
+            error:(err)=>{
+                this.toastService.showToast("Error",ToastType.Failure)
             }
         })
     }
@@ -57,6 +71,17 @@ export class UserprofileComponent {
     changeNav(nav: string){
         this.nav = nav
         this.updateUnderlinePosition();
+        if(nav=="saved"){
+            this.postService.getSavedPost().subscribe({
+                next:(res)=>{
+                    this.savedPosts = res.data;
+                    this.savedLoading = false;
+                },
+                error:(err)=>{
+                    console.log(err);
+                }
+            })
+        }
     }
 
     updateUnderlinePosition() {
@@ -66,6 +91,9 @@ export class UserprofileComponent {
           this.underline.nativeElement.style.transform = 'translateX(0%)';
         } else if (this.nav === 'trips') {
           this.underline.nativeElement.style.transform = 'translateX(320%)';
+        }else{
+          this.underline.nativeElement.style.transform = 'translateX(650%)';
+
         }
       }
 

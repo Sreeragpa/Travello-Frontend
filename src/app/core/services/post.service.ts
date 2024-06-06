@@ -1,9 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IPost } from '../models/post.models';
+import { IPost, IPostLike } from '../models/post.models';
 import { environment } from '../../../environments/environment.development';
 import { Observable, catchError, map, of } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { IResponse } from '../models/httpResponse.models';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,72 +17,45 @@ export class PostService {
   private apiUrl: string = `${environment.backendDomain}/api/posts`
 
   createPost(data: IPost):Observable<IPost>{
-    // return this.http.post<IPost>(this.apiUrl + '/add-post',data,this.getHttpOptions())
-    return this.http.post<IPost>(this.apiUrl + '/add-post', data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      withCredentials: true // Include credentials (cookies) with the request
-    });
+    return this.http.post<IPost>(this.apiUrl + '/add-post', data);
   } 
 
   getUserPosts(){
-    return this.http.get<any>(this.apiUrl + '/get-userpost',{
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      withCredentials: true 
-    })
+    return this.http.get<IResponse<IPost[]>>(this.apiUrl + '/get-userpost')
   }
 
   getAllPosts(){
-    return this.http.get<any >(this.apiUrl + '/get-post', {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      withCredentials: true 
-    });
+    return this.http.get<IResponse<IPost[]>>(this.apiUrl + '/get-post');
   }
 
   getSinglePost(postid: string){
-    return this.http.get<any >(this.apiUrl + `/get-post/${postid}`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      withCredentials: true 
-    });
+    return this.http.get<IResponse<IPost[]>>(this.apiUrl + `/get-post/${postid}`);
   }
 
   likePost(postid: string){
-    return this.http.post<any>(this.apiUrl + '/like',
-    {postid},
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        }),
-        withCredentials: true 
-      });
-    
+    return this.http.post<any>(this.apiUrl + '/like',{postid});
   }
 
   unlikePost(postid: string){
     const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
       body: { postid },
-      withCredentials: true
     };
-    return this.http.delete<any>(this.apiUrl + '/unlike',options);
+    return this.http.delete<IResponse<IPostLike>>(this.apiUrl + '/unlike',options);
   }
 
-
-  private getHttpOptions(): { headers: HttpHeaders } {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+  savePost(postid: string){
+    console.log('jee');
+    
+    return this.http.put<any>(this.apiUrl + '/save-post',{postid});
+  }
+  unsavePost(postid: string){
+    console.log('jee');
+    
+    return this.http.delete<any>(`${this.apiUrl}/unsave-post/${postid}`);
+  }
+  
+  getSavedPost(){
+    return this.http.get<IResponse<IPost[]>>(`${this.apiUrl}/saved-post`);
   }
 
  
