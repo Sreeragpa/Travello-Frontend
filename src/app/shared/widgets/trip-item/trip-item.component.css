@@ -1,0 +1,25 @@
+.img-container {
+    width: 100% ;
+    /* height: 10%; */
+    /* height: 620px;   */
+    /* padding-bottom: calc(1350px / 1080px * 100%);  */
+}
+
+.image-container img {
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+}
+
+.trip-item{
+    width: 40vw;
+}
+
+@media (max-width:640px){
+    .trip-item{
+        width: 85vw; /* Allow container to take full width */
+        /* height: 520px; */
+    }
+}

@@ -16,6 +16,20 @@
     line-height: 1rem;
 }
 
+/* .likes:hover + .liked-users-modal,
+.liked-users-modal:hover {
+    display: block;
+} */
+
+.liked-users-modal {
+    /* display: none; */
+    /* Your styles for the modal */
+}
+
+/* 
+.likes:hover .liked-users-modal {
+    display: flex;
+} */
 
 @media (max-width:640px){
     .image-container{

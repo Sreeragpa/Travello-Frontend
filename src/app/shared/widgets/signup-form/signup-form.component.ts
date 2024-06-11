@@ -24,6 +24,7 @@ export class SignupFormComponent {
       confirmpassword: new FormControl('',[Validators.required,Validators.minLength(8),confirmPasswordValidator])  //Validators.pattern("[a-zA-Z ]*")
     })
 
+
   }
 
   onSubmit(){

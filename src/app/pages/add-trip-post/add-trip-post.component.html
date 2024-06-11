@@ -1,0 +1,28 @@
+<div class="w-screen">
+    <!-- <nav class="m-auto flex justify-center items-center w-80 bg-secondary mb-5 rounded-2xl h-10 transition-all relative">
+        <div class=" rounded-2xl
+         text-white w-1/2 h-full flex items-center 
+         justify-center font-semibold transition-bg cursor-pointer"
+         [ngClass]="{' text-white': nav === 'post'}"
+         (click)="changeNav('post')">
+         <span class="absolute z-20">Add Post </span>
+        </div>
+        <div class=" rounded-2xl 
+        text-black w-1/2 h-full flex items-center 
+        justify-center font-semibold transition-bg cursor-pointer"
+        [ngClass]="{' text-white': nav === 'trip'}"
+        (click)="changeNav('trip')">
+         <span class="absolute z-20">Add Trip</span>
+        </div>
+        <div class="bg-black absolute w-1/2 h-full left-0 rounded-2xl transition-all transform"  
+        [ngClass]="{'translate-x-0': nav === 'post','translate-x-full': nav==='trip'}" >
+
+        </div>
+    </nav> -->
+    <app-slide-nav [navNames]="navItems" (navChange)="changeNav($event)"></app-slide-nav>
+    @if (nav=="Post") {
+        <app-add-post></app-add-post>
+    }@else {
+        <app-add-trip></app-add-trip>
+    }
+</div>

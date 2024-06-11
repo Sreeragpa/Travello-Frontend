@@ -19,3 +19,8 @@ export default interface IUser {
     profileimg?: string;
     bio: string
   }
+  export interface ILikedUser{
+    _id:string,
+    username: string,
+    isMutualFollow: boolean,
+}

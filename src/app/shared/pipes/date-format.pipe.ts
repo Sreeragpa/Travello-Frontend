@@ -15,7 +15,7 @@ export class DateFormatPipe implements PipeTransform {
     } else if (isYesterday(date)) {
       return 'Yesterday';
     } else {
-      return format(date, 'yyyy-MM-dd hh:mm:ss a'); // Default format
+      return format(date, 'yyyy-MM-dd hh:mm a'); // Default format
     }
   }
   

@@ -31,6 +31,7 @@
   }
 
   .settings-menu {
+    
     opacity: 0;
     transform: translateY(-10px); /* Translate menu up initially */
     transition: all 0.2s ease-in-out; /* Animation properties */

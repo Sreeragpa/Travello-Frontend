@@ -1,4 +1,4 @@
-import { IUserBasic } from "./user.models";
+import { ILikedUser, IUserBasic } from "./user.models";
 
 export interface IPost{
     _id?: string,
@@ -16,7 +16,8 @@ export interface IPost{
     createdAt: Date,
     isFollowing?: boolean,
     same_user?:boolean,
-    isSaved?: boolean
+    isSaved?: boolean,
+    likedUsers?: ILikedUser[]
 }
 
 export interface IPostLike{

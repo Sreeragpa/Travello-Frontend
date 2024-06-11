@@ -31,7 +31,7 @@ export class CommentModalComponent {
         this.commentAnimation = true
         },200)
         this.postid = res
-        console.log('rese');
+
         
         this.commentService.getPostComments(this.postid).subscribe({
           next:(res)=>{
