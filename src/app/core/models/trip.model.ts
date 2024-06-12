@@ -29,9 +29,17 @@ export interface ITrip {
     creator?:IUser;
     createdAt?: Date;
     updatedAt?: Date;
+    istripfull?: boolean;
+    isuserfollowing?: boolean
   }
 
   export interface ITripForm{
     title: string, members: number, description: string, start: Date, end: Date
+  }
+
+  export interface IJoinTrip{
+    recipient: string,
+    type: string,
+    tripid: string
   }
   

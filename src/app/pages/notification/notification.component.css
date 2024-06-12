@@ -1,0 +1,12 @@
+.notification-main{
+    width: 65vw;
+    min-height: 87vh;
+    height: auto;
+}
+
+@media (max-width:640px) {
+    .notification-main{
+        width: 90vw;
+    }
+
+}

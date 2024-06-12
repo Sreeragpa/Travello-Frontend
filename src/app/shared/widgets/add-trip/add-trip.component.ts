@@ -155,7 +155,7 @@ export class AddTripComponent {
       ,
       memberlimit: formValues.members
     };
-
+    this.isLoading = true
     console.log(tripData);
 
     this.tripService.addTrip(tripData).subscribe({
@@ -168,7 +168,7 @@ export class AddTripComponent {
       },
       error:(err)=>{
         console.log(err);
-        
+        this.isLoading = false
         this.toastService.showToast("Something Wrong Happened",ToastType.Failure)
       }
     })

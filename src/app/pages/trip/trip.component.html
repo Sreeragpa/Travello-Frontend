@@ -2,7 +2,7 @@
     <app-slide-nav [navNames]="navItems" (navChange)="onNavChange($event)"></app-slide-nav>
     <div class="flex gap-2 flex-col">
         @for (trip of trips; track trip._id) {
-            <app-trip-item [tripData]="trip"></app-trip-item>
+            <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)"></app-trip-item>
         }
  
     </div>

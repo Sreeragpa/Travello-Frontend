@@ -20,7 +20,7 @@ export const routes: Routes = [
             {path:'posts',component:PostComponent},
             {path:'posts/:id',component:PostComponent},
             // {path:'trips',component:TripComponent},
-            {path:'addpost',component:AddTripPostComponent},
+            {path:'create',component:AddTripPostComponent},
             {path:'profile',component:UserprofileComponent},
             {path:'edit-profile',component:EditprofileComponent},
             {path:'search',component:SearchComponent},

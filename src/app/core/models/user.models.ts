@@ -1,3 +1,5 @@
+import { ITrip } from "./trip.model";
+
 export interface IUserBasic{
     username: string,
     id: string
@@ -17,10 +19,12 @@ export default interface IUser {
     notifications?: string[]; 
     password?: string;
     profileimg?: string;
-    bio: string
+    bio: string;
+    
   }
   export interface ILikedUser{
     _id:string,
     username: string,
     isMutualFollow: boolean,
+    
 }
