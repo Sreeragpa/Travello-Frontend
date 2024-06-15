@@ -226,7 +226,11 @@ export class AddTripComponent {
     this.cropActive = false;
     
     if (this.cropperInstance) {
-      const canvas = this.cropperInstance.getCroppedCanvas();
+      // const canvas = this.cropperInstance.getCroppedCanvas();
+      const canvas = this.cropperInstance.getCroppedCanvas({
+        width: 1060,
+        height: 706
+    });
       if (canvas instanceof HTMLCanvasElement) {
         const dataUrl = canvas.toDataURL('image/jpeg');
         this.croppedImages.push(dataUrl)
@@ -262,43 +266,6 @@ export class AddTripComponent {
     console.log(this.destination);
     this.suggestions=[]
      
-  }
-
-  onUpload(){
-    console.log('hellooo');
-    if(!this.startingPoint){
-      this.toastService.showToast("Enter Location",ToastType.Failure)
-    }
-    // if(!this.croppedImages.length){
-    //   this.toastService.showToast("Image not Added",ToastType.Failure)
-    // }
-    console.log('capt',this.caption);
-    if(!this.startingPoint || !this.caption || this.croppedImages.length===0){
-      console.log('validation er');
-      
-      return
-    }
-    
-    const data: IPost = {
-      images: this.croppedImages,
-      caption:this.caption,
-      location:this.startingPoint.geometry,
-      place:this.startingPoint.properties.formatted,
-      likes: 0,
-      createdAt:new Date()
-    }
-    console.log(data);
-    this.isLoading = true
-  //   this.postService.createPost(data).subscribe({
-  //     next:(res)=>{
-  //       this.isLoading = false
-  //       this.toastService.showToast("Post Added",ToastType.Success);
-  //       this.router.navigate(['posts'])
-  //   },
-  //   error:(err)=>{
-  //     this.toastService.showToast("Something Wrong Happened",ToastType.Failure)
-  //   }
-  // })
   }
 
 

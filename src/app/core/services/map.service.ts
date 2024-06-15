@@ -3,17 +3,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { IPlaceSuggestion } from '../models/mapService.models';
+import { API_URLS } from '../constants/apiurl.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
-  private apiUrl = 'https://api.geoapify.com/v1/geocode';
+  private apiUrl = API_URLS.MAP.BASE;
   constructor(private http:HttpClient) {
 
    }
 
    autoComplete(text: string): Observable<IPlaceSuggestion>{
-    return this.http.get<IPlaceSuggestion>(this.apiUrl + `/autocomplete?text=${text}&apiKey=${environment.geoapifyKey}`)
+    return this.http.get<IPlaceSuggestion>(`${this.apiUrl}${API_URLS.MAP.AUTO_COMPLETE(text,environment.geoapifyKey)}`)
    }  
 }

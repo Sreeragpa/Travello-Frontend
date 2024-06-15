@@ -1,0 +1,19 @@
+.img-container{
+    width: 100%;
+    height: 100%;
+    
+}
+
+.img-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.glass-effect {
+    background-color: rgba(141, 141, 141, 0.3); /* Adjust the alpha (fourth value) for opacity */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Transparent border */
+}
+

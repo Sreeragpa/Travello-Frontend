@@ -59,6 +59,9 @@
             </div>
         </div>
         <div class="dark:text-white">{{postdata.caption}}</div>
+        @if (postdata.comments.length) {
+            <div class="dark:text-white">{{postdata.comments.length}} comments</div>
+        }
         <div class="dark:text-white text-xs">{{postdata.createdAt | dateFormat}}</div>
     <div class=" absolute z-10 top-[-10rem] left-2" [class.hidden]="!isLikeHover" >
         <div class="liked-users-modal  bg-gray-300 p-5  rounded-lg w-40 max-h-40 overflow-y-auto"

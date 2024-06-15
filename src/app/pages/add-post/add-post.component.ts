@@ -131,7 +131,11 @@ export class AddPostComponent {
     this.cropActive = false;
     
     if (this.cropperInstance) {
-      const canvas = this.cropperInstance.getCroppedCanvas();
+      // const canvas = this.cropperInstance.getCroppedCanvas();
+      const canvas = this.cropperInstance.getCroppedCanvas({
+        width: 520,
+        height: 650
+    });
       if (canvas instanceof HTMLCanvasElement) {
         const dataUrl = canvas.toDataURL('image/jpeg');
         this.croppedImages.push(dataUrl)
@@ -153,12 +157,8 @@ export class AddPostComponent {
   }
 
   selectPlace(placeId: string){
-    console.log(placeId);
     this.selectedPlace = this.suggestions.find(value=>value.properties.place_id == placeId);
-    console.log(this.selectedPlace);
     this.suggestions=[]
-
-     
   }
 
   onUpload(){
@@ -166,9 +166,7 @@ export class AddPostComponent {
     if(!this.selectedPlace){
       this.toastService.showToast("Enter Location",ToastType.Failure)
     }
-    // if(!this.croppedImages.length){
-    //   this.toastService.showToast("Image not Added",ToastType.Failure)
-    // }
+
     console.log('capt',this.caption);
     if(!this.selectedPlace || !this.caption || this.croppedImages.length===0){
       console.log('validation er');

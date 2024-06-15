@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NotificationService } from '../../core/services/notification.service';
 import { INotification } from '../../core/models/notification.model';
 import { TripService } from '../../core/services/trip.service';
+import { NOTIFICATION_TYPE } from '../../core/enums/notification.enums';
 
 @Component({
   selector: 'app-notification',
@@ -13,7 +14,7 @@ import { TripService } from '../../core/services/trip.service';
 export class NotificationComponent {
   constructor(private notificationService: NotificationService,private tripService: TripService){}
   notifications!:INotification[];
-
+  notificationType = NOTIFICATION_TYPE
   ngOnInit() {
     this.notificationService.getNotification().subscribe({
       next:(res)=>{

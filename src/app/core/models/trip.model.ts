@@ -36,6 +36,9 @@ export interface ITrip {
   export interface ITripForm{
     title: string, members: number, description: string, start: Date, end: Date
   }
+  export interface ITripEditForm{
+    title: string, members: number, description: string,imageUrl: string
+  }
 
   export interface IJoinTrip{
     recipient: string,

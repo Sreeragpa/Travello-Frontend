@@ -4,29 +4,23 @@ import { AuthService } from '../services/auth.service';
 import { catchError, map, of, tap } from 'rxjs';
 
 export const homeGuard: CanActivateFn = (route, state) => {
-  const router = inject(Router)
-  const authService = inject(AuthService)
-  
-  console.log("hehe");
-  
-    // const isLoggedIn = localStorage.getItem('userToken') !== null;
-    authService.isAuthenticated().pipe(
-      tap(isAuthenticated => {
-        console.log(isAuthenticated);
-        
-        if (!isAuthenticated) {
-          console.log('not');
-          
-          router.navigate(['/signin']); 
-          return false;
-        }
-        console.log('yesss');
+  const router = inject(Router);
+  const authService = inject(AuthService);
 
-        return true;
-      })
-    ).subscribe()
-      console.log('hiii');
-      
+  console.log('hehe');
 
-    return true;
+  return authService.isAuthenticated().pipe(
+    tap((isAuthenticated) => {
+      if (!isAuthenticated) {
+        router.navigate(['/signin']);
+      }
+    }),
+    map((isAuthenticated) => isAuthenticated),
+    catchError((error) => {
+      router.navigate(['/signin']);
+      return of(false);
+    })
+  );
+
+
 };

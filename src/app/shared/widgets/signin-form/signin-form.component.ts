@@ -23,7 +23,6 @@ export class SigninFormComponent {
   }
   
   onSubmit(){
-
     if(this.signinForm.valid){
       const logindata:Ilogin = this.signinForm.value
       this.formdata.emit(logindata)

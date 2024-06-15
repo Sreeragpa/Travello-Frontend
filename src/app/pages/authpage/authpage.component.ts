@@ -102,7 +102,7 @@ export class AuthpageComponent {
       })
     )
     .subscribe(res => {
-      if (res.status === 'success') {
+      if (res && res.status === 'success') {
         this.isOtpSend = true;
         this.toastService.showToast("OTP Sent Successfully",ToastType.Normal)
       }

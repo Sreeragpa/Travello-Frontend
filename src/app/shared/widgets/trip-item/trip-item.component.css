@@ -17,6 +17,19 @@
     width: 40vw;
 }
 
+.settings-menu {
+    visibility: hidden; 
+    opacity: 0;
+    transform: translateY(-10px); /* Translate menu up initially */
+    transition: all 0.2s ease-in-out; /* Animation properties */
+  }
+  
+  .settings-menu.active {
+    visibility: visible; 
+    opacity: 1;
+    transform: translateY(0); /* Animate menu down on visibility */
+} 
+
 @media (max-width:640px){
     .trip-item{
         width: 85vw; /* Allow container to take full width */

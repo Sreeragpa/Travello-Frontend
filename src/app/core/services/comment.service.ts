@@ -4,13 +4,14 @@ import { environment } from '../../../environments/environment.development';
 import { IComment } from '../models/comment.model';
 import { HttpClient } from '@angular/common/http';
 import { IResponse } from '../models/httpResponse.models';
+import { API_URLS } from '../constants/apiurl.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CommentService {
-  private apiUrl: string = `${environment.backendDomain}/api/comment`
+  private apiUrl: string = `${environment.backendDomain}${API_URLS.COMMENT.BASE}`
   
   constructor(private http: HttpClient) { }
   private toggleComment$ = new Subject<string>()
@@ -28,10 +29,10 @@ export class CommentService {
 
 
   getPostComments(postid: string):Observable<IResponse<IComment[]>>{
-    return this.http.get<IResponse<IComment[]>>(`${this.apiUrl}/get-comment/${postid}`)
+    return this.http.get<IResponse<IComment[]>>(`${this.apiUrl}${API_URLS.COMMENT.GET_COMMENT(postid)}`)
   }
 
   addComment(postid: string, content: string):Observable<IResponse<IComment>>{
-    return this.http.post<IResponse<IComment>>(`${this.apiUrl}/add-comment`,{postid,content})
+    return this.http.post<IResponse<IComment>>(`${this.apiUrl}${API_URLS.COMMENT.ADD_COMMENT}`,{postid,content})
   }
 }

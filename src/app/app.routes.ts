@@ -11,15 +11,17 @@ import { SearchComponent } from './pages/search/search.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import { AddTripPostComponent } from './pages/add-trip-post/add-trip-post.component';
 import { TripComponent } from './pages/trip/trip.component';
+import { EditTripComponent } from './shared/widgets/edit-trip/edit-trip.component';
 
 export const routes: Routes = [
     {
-        path: "", component:HomepageComponent,canActivate:[homeGuard],
+        path: "", component:HomepageComponent,canActivateChild:[homeGuard],
         children:[
             {path:'',component:TripComponent},
             {path:'posts',component:PostComponent},
             {path:'posts/:id',component:PostComponent},
-            // {path:'trips',component:TripComponent},
+            {path:'trips/:id',component:TripComponent},
+            {path:'edit-trip/:id',component:EditTripComponent},
             {path:'create',component:AddTripPostComponent},
             {path:'profile',component:UserprofileComponent},
             {path:'edit-profile',component:EditprofileComponent},

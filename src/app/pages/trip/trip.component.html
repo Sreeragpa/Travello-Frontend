@@ -1,9 +1,15 @@
 <div class="w-screen">
-    <app-slide-nav [navNames]="navItems" (navChange)="onNavChange($event)"></app-slide-nav>
+    @if (!tripid) {
+        <app-slide-nav [navNames]="navItems" (navChange)="onNavChange($event)"></app-slide-nav>
+    }
     <div class="flex gap-2 flex-col">
-        @for (trip of trips; track trip._id) {
-            <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)"></app-trip-item>
-        }
+       @if (isLoading) {
+         <app-trip-item-skeleton></app-trip-item-skeleton>
+       }@else {   
+           @for (trip of trips; track trip._id) {
+               <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)"></app-trip-item>
+           }
+       }
  
     </div>
 </div>

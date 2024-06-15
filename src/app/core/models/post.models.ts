@@ -17,7 +17,8 @@ export interface IPost{
     isFollowing?: boolean,
     same_user?:boolean,
     isSaved?: boolean,
-    likedUsers?: ILikedUser[]
+    likedUsers?: ILikedUser[],
+    comments?:any,
 }
 
 export interface IPostLike{

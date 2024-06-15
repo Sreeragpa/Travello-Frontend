@@ -1,21 +1,35 @@
-<div class="trip-item bg-secondary m-auto h-auto rounded-2xl  relative">
-    <div class="user-details py-4 px-4 flex  gap-2 items-center ">
-        <div >
-            <img class="w-10 h-10 rounded-full" src="../../../../assets/images/IMG_9238.jpg" alt="Rounded avatar">
-        </div>
-        <div class=" flex flex-col">
-            <span class="font-semibold dark:text-white"> {{tripData.creator?.name}}</span>
-            <span class="dark:text-white text-xs">{{postdata.place}}</span>
-        </div>
-        @if(!tripData.issameuser) {
-        <div class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
-            @if (tripData.isuserfollowing) {
-            <span (click)="unfollow(tripData.creator_id)">Unfollow</span>
-            }@else{
-            <span (click)="follow(tripData.creator_id)">Follow</span>
+<div class="trip-item bg-secondary m-auto h-auto rounded-2xl  relative" (click)="toggleOff()">
+    <div class="user-details py-4 px-4 flex items-center justify-between" (click)="preventClose($event)">
+        <div class="flex items-center gap-2">
+            <div >
+                <img class="w-10 h-10 rounded-full" src="../../../../assets/images/IMG_9238.jpg" alt="Rounded avatar">
+            </div>
+            <div class=" flex flex-col">
+                <span class="font-semibold dark:text-white"> {{tripData.creator?.name}}</span>
+                <span class="dark:text-white text-xs">{{postdata.place}}</span>
+            </div>
+            @if(!tripData.issameuser) {
+            <div class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
+                @if (tripData.isuserfollowing) {
+                <span (click)="unfollow(tripData.creator_id)">Unfollow</span>
+                }@else{
+                <span (click)="follow(tripData.creator_id)">Follow</span>
+                }
+            </div>
             }
         </div>
-        }
+    
+        <div class="relative  cursor-pointer p-2 " (click)="toggleSettings()" >
+            <i class="fa-solid fa-ellipsis-vertical text-lg text-black dark:text-white" ></i>
+            
+        <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2" 
+        [class.active]="toggleStatus" #settings_menu (click)="preventClose($event)">
+        <a [routerLink]="['/edit-trip',tripData._id]">
+            <span class="cursor-pointer p-1 hover:text-gray-600">Edit</span>
+        </a>
+    
+    </div>
+        </div>
 
     </div>
     <div class="img-container">
@@ -28,7 +42,7 @@
                 <i class="fa-solid fa-location-dot"></i>
                 From: {{tripData.startingPoint.name}} <br> to {{tripData.destination.name}}
             </span>
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2 ">
                 <span class="text-sm p-1.5 rounded-xl border-2 border-sky-300 w-fit shadow-md  ">
                     <i class="fa-solid fa-calendar" ></i>
                     Date: {{tripData.startDate | date}} to {{tripData.endDate | date}}
@@ -70,4 +84,5 @@
         </div>
 
     </div>
+  
 </div>
