@@ -12,7 +12,7 @@ import IUser from '../models/user.models';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient,private cookieService: CookieService) { }
+  constructor(private http: HttpClient) { }
   private apiUrl: string = `${environment.backendDomain}${API_URLS.AUTH.BASE}`
   private authToken: string | null = null;
 
