@@ -26,12 +26,14 @@ export class NotificationComponent {
         
       }
     })
+
   }
 
   onAccept(notificationid: string,memberid: string, tripid: string){
     this.tripService.acceptTripRequest(notificationid,memberid,tripid).subscribe({
       next:(res)=>{
         console.log(res);
+        this.notificationService.decrementNotification()
         
       },
       error:(err)=>{
@@ -41,5 +43,22 @@ export class NotificationComponent {
     })
     console.log(notificationid,memberid,tripid);
     
+  }
+
+  onMarkAsread(notificationid: string){
+    this.notificationService.markAsRead(notificationid).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.notificationService.decrementNotification()
+
+        const id = res.data._id;
+        this.notifications = this.notifications.filter((notification)=>{
+          return notification._id!=id
+        })
+      },
+      error:(err)=>{
+
+      }
+    })
   }
 }

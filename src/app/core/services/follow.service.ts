@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { API_URLS } from '../constants/apiurl.constants';
 import { IResponse } from '../models/httpResponse.models';
 import IFollow, { IFollowCount } from '../models/follow.models';
-import { IfStmt } from '@angular/compiler';
+import { SocketioService } from './socketio.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,15 @@ export class FollowService {
 
   private apiUrl: string = `${environment.backendDomain}${API_URLS.FOLLOW.BASE}`
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private socketioService: SocketioService
+
+  ) { }
 
   followAccount(followingid: string):Observable<IResponse<IFollow>>{
     return this.http.post<IResponse<IFollow>>(`${this.apiUrl}${API_URLS.FOLLOW.FOLLOW}`,{followingid})
+
   }
 
   unfollowAccount(followingid: string):Observable<IResponse<IFollow>>{

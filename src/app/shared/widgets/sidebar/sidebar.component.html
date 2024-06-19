@@ -95,12 +95,90 @@
 
 
     <!-- Notifications -->
-    <div  routerLinkActive="active" routerLink="notification" data-tooltip-target="notify-tooltip-right" data-tooltip-placement="right" class ="side-item cursor-pointer hover:scale-110 transition-all" [class.ml-3]="currentUrl=='/notifications'"  (click)="changeURL('/notifications')">
+    <div  routerLinkActive="active" routerLink="notification" data-tooltip-target="notify-tooltip-right" data-tooltip-placement="right" class ="side-item relative cursor-pointer hover:scale-110 transition-all" [class.ml-3]="currentUrl=='/notifications'"  (click)="changeURL('/notifications')">
         <i class="fa-solid fa-bell text-3xl" style="color: #000000;"></i>
+        @if (notificationCount) {
+            <div class="absolute top-0.5 inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -bottom-3 -end-3 dark:border-gray-900">
+                {{notificationCount}}
+            </div>
+        }
     </div>
     <div id="notify-tooltip-right" role="tooltip" class="absolute transition-opacity z-10 invisible  inline-block px-3 py-2 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
         Notifications
         <div class="tooltip-arrow" data-popper-arrow></div>
     </div>
+   
 
+</div>
+
+<!-- Mobile Bar -->
+
+<div class="fixed z-50 w-full h-16 max-w-sm -translate-x-1/2  sm:hidden bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
+    <div class="grid h-full max-w-sm grid-cols-5 mx-auto text-3xl text-black">
+        <!-- Trip -->
+        <button data-tooltip-target="tooltip-home" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+            <div routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{ exact: true }"  data-tooltip-target="trip-tooltip-right" data-tooltip-placement="right" class="side-item cursor-pointer hover:scale-110 transition-all" (click)="changeURL('/')" >
+                <i class="fa-solid fa-compass"></i>
+        </div>
+            <span class="sr-only">Discover Trips</span>
+        </button>
+        <div id="tooltip-home" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Home
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <!-- Post -->
+        <button data-tooltip-target="tooltip-wallet" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+            <div routerLinkActive="active" routerLink="/posts"  data-tooltip-target="post-tooltip-right" data-tooltip-placement="right" class="side-item cursor-pointer hover:scale-110 transition-all"  [class.ml-3]="currentUrl=='/posts'"  (click)="changeURL('/posts')">
+                <i class="fa-solid fa-camera-retro"></i>
+            </div>
+            <span class="sr-only">Posts</span>
+        </button>
+        <div id="tooltip-wallet" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Posts
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <!-- Create -->
+        <div class="flex items-center justify-center">
+            <button data-tooltip-target="tooltip-wallet" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                <div routerLinkActive="active" routerLink="create"  data-tooltip-target="add-tooltip-right" data-tooltip-placement="right" class="side-item cursor-pointer hover:scale-110 transition-all">
+                    <i class="fa-solid fa-plus" ></i>
+            
+                </div>
+                <span class="sr-only">Create</span>
+            </button>
+        </div>
+        <div id="tooltip-new" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Create
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <button data-tooltip-target="tooltip-settings" type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+            <div routerLinkActive="active" routerLink="search" data-tooltip-target="search-tooltip-right" data-tooltip-placement="right" class="side-item cursor-pointer hover:scale-110 transition-all" [class.ml-3]="currentUrl=='/search'"  (click)="changeURL('/search')">
+     
+            
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                
+         
+        </div>
+        </button>
+        <div id="tooltip-settings" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Search
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <button data-tooltip-target="tooltip-profile" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+            <div  routerLinkActive="active" routerLink="notification" data-tooltip-target="notify-tooltip-right" data-tooltip-placement="right" class ="side-item relative cursor-pointer hover:scale-110 transition-all" [class.ml-3]="currentUrl=='/notifications'"  (click)="changeURL('/notifications')">
+                <i class="fa-solid fa-bell"></i>
+                @if (notificationCount) {
+                    <div class="absolute top-0.5 inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -bottom-3 -end-3 dark:border-gray-900">
+                        {{notificationCount}}
+                    </div>
+                }
+            </div>
+            <span class="sr-only">Notification</span>
+        </button>
+        <div id="tooltip-profile" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Profile
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+    </div>
 </div>

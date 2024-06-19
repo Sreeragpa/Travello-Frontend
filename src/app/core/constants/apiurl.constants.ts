@@ -21,7 +21,8 @@ export const API_URLS = {
         SIGNUP: '/signup',
         VERIFY_OTP: '/verify-otp',
         CHECK_AUTH: '/check-auth',
-        LOGOUT: '/logout'
+        LOGOUT: '/logout',
+        GET_TOKEN:'/token'
     },
 
     COMMENT: {
@@ -44,7 +45,9 @@ export const API_URLS = {
 
     NOTIFICATION: {
       BASE: '/api/notification',
-      GET_NOTIFICATION: '/get-notification'
+      GET_NOTIFICATION: '/get-notification',
+      GET_COUNT: '/count',
+      MARK_AS_READ: '/mark-read'
     },
 
     TRIPS: {

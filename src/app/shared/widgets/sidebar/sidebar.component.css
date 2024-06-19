@@ -13,12 +13,13 @@ a {
     transition: all 0.5s;
     padding: 5px;
     transform: translateX(0px);
+    
 
 }
 .side-item.active{
-    transform: translateX(8px);
+    /* transform: translateX(8px); */
     background-color: rgba(0, 68, 255, 0.288);
-    padding: 5px;
+    /* padding: 5px; */
     border-radius: 10px;
     /* filter: blur(2px); */
 }

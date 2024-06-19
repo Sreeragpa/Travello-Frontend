@@ -20,6 +20,8 @@ export class AuthService {
     return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.AUTH.SIGNIN}`, data)
       .pipe(
         tap(response =>{
+          console.log(response.data);
+          
           const token = response.data;
           if(token){
             this.authToken = token;
@@ -51,7 +53,9 @@ export class AuthService {
   }
 
   getAuthToken() {
-    return this.authToken;
+    return this.http.get<IResponse<string>>(`${this.apiUrl}${API_URLS.AUTH.GET_TOKEN}`)
+    
+    // return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.AUTH.LOGOUT}`,'')
   }
 
 
