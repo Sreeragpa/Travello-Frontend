@@ -6,6 +6,7 @@ import { API_URLS } from '../constants/apiurl.constants';
 import { IResponse } from '../models/httpResponse.models';
 import IFollow, { IFollowCount } from '../models/follow.models';
 import { SocketioService } from './socketio.service';
+import IUser from '../models/user.models';
 
 
 @Injectable({
@@ -33,5 +34,9 @@ export class FollowService {
 
   getFollowCount(): Observable<IResponse<IFollowCount>>{
     return this.http.get<IResponse<IFollowCount>>(`${this.apiUrl}${API_URLS.FOLLOW.GET_FOLLOW_COUNT}`)
+  }
+
+  searchFollowingUsers(searchValue: string):Observable<IResponse<IUser[]>>{
+    return this.http.get<IResponse<IUser[]>>(`${this.apiUrl}${API_URLS.FOLLOW.GET_FOLLOWING_USERS}?search=${searchValue}`)
   }
 }

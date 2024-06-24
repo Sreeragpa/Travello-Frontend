@@ -2,12 +2,13 @@ import { ITrip } from "./trip.model";
 
 export interface IUserBasic{
     username: string,
-    id: string
+    id: string,
+    profileimg: string
 }
 
 
 export default interface IUser {
-    id: string
+    _id: string
     username: string;
     name: string
     email: string;
@@ -26,5 +27,6 @@ export default interface IUser {
     _id:string,
     username: string,
     isMutualFollow: boolean,
+    profileimg: string
     
 }

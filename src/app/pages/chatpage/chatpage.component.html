@@ -1,0 +1,41 @@
+<div class="bg-secondary h-auto chat-main p-10 rounded-xl">
+    <div>
+        <form class="flex items-center max-w-sm mx-auto">
+            <label for="simple-search" class="sr-only">Search</label>
+            <div class="relative w-full">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <i class="fa-solid fa-search text-gray-500 dark:text-gray-400"></i>
+                </div>
+                <input type="text" id="simple-search" (keyup)="onSearch($event)"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search Chat" required />
+            </div>
+
+        </form>
+        <div class="w-auto sm:w-2/3 m-auto flex flex-col justify-center mt-4  gap-2">
+            
+
+            @for (searchResult of searchResults; track searchResult._id) {
+                <div class="bg-primary flex justify-between rounded-lg p-3 text-sm sm:text-md cursor-pointer">
+                    <div class="flex gap-2 items-center">
+                        <div>
+                            <img class="w-11 h-11 sm:w-12 sm:h-12 rounded-full" [src]="searchResult.profileimg" alt="" srcset="">
+                        </div>
+                        <div class="flex flex-col">
+                            <span>{{searchResult.name}}</span>
+                            <span class="font-semibold"></span>
+                        </div>
+                    </div>
+                    <div>
+                        9:18pm
+                    </div>
+                </div>
+            }
+      
+
+
+        </div>
+
+    </div>
+
+</div>

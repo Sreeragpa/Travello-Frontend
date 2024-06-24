@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { IPost } from '../../../core/models/post.models';
 import {CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
@@ -15,6 +15,17 @@ import { LikesWithMutualPipe } from '../../pipes/likes-with-mutual.pipe';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PostItemComponent {
+  @ViewChild('popover') popovers!: ElementRef<HTMLDivElement>
+hidePopover() {
+  this.popovers.nativeElement.style.visibility = 'invisible';
+  this.popovers.nativeElement.style.opacity = '0';
+  console.log(this.popovers.nativeElement,"nativeveee");
+  
+}
+showPopover() {
+  this.popovers.nativeElement.style.visibility = 'visible';
+  this.popovers.nativeElement.style.opacity = '1';
+}
   constructor(private commentService: CommentService){}
   @Input({required:true}) postdata!: IPost;
   @Output() likeButton: EventEmitter<string> = new EventEmitter()

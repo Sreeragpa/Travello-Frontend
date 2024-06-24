@@ -35,7 +35,8 @@ export const API_URLS = {
       BASE: '/api/follow',
       FOLLOW: '/follow',
       UNFOLLOW: '/unfollow',
-      GET_FOLLOW_COUNT: '/count'
+      GET_FOLLOW_COUNT: '/count',
+      GET_FOLLOWING_USERS: '/following'
     },
 
     MAP: {

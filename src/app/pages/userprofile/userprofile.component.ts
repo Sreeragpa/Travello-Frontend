@@ -110,6 +110,9 @@ export class UserprofileComponent {
   
 
   changeNav(nav: string) {
+    // this.savedLoading = true;
+    // this.postLoading = true;
+
     this.nav = nav;
     this.updateUnderlinePosition();
     if (nav == 'saved') {
@@ -135,6 +138,8 @@ export class UserprofileComponent {
             }
         })
         
+    }else{
+      this.postLoading = false;
     }
   }
 

@@ -1,0 +1,42 @@
+.chat-main {
+    width: 65vw;
+    min-height: 70vh;
+    height: 70vh;
+
+}
+
+.myline {
+    line-height: 1.2rem;
+}
+
+.chat-items{
+    height: 85%;
+}
+
+/* .chatbubble {
+    max-width: 75%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin: 5px 0;
+    display: inline-block;
+    word-wrap: break-word;
+} */
+.right {
+    justify-content: flex-end;
+}
+
+.left {
+    justify-items: start;
+}
+.chatbubble .item{
+    max-width: 65%;
+    display: inline-block;
+    word-wrap: break-word;
+}
+
+@media (max-width:640px) {
+    .chat-main {
+        width: 90vw;
+    }
+
+}

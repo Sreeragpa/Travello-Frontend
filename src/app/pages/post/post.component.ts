@@ -39,7 +39,9 @@ export class PostComponent {
                     setTimeout(() => {
                         this.isLoading = false
                     }, 1000)
-                    this.posts = res.data
+                    this.posts = res.data;
+                    console.log(this.posts);
+                    
                 }
             })
 

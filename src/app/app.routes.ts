@@ -12,6 +12,8 @@ import { NotificationComponent } from './pages/notification/notification.compone
 import { AddTripPostComponent } from './pages/add-trip-post/add-trip-post.component';
 import { TripComponent } from './pages/trip/trip.component';
 import { EditTripComponent } from './shared/widgets/edit-trip/edit-trip.component';
+import { ChatpageComponent } from './pages/chatpage/chatpage.component';
+import { SinglechatComponent } from './pages/singlechat/singlechat.component';
 
 export const routes: Routes = [
     {
@@ -26,7 +28,9 @@ export const routes: Routes = [
             {path:'profile',component:UserprofileComponent},
             {path:'edit-profile',component:EditprofileComponent},
             {path:'search',component:SearchComponent},
-            {path:'notification',component:NotificationComponent}
+            {path:'notification',component:NotificationComponent},
+            {path:'chats',component:ChatpageComponent},
+            {path:'test',component:SinglechatComponent}
         ]
     },
     {
