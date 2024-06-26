@@ -26,10 +26,16 @@ export class PostService {
     );
   }
 
-  getUserPosts() {
-    return this.http.get<IResponse<IPost[]>>(
-      `${this.apiUrl}${API_URLS.POSTS.GET_USER_POSTS}`
-    );
+  getUserPosts(profileid: string) {
+    if(profileid){
+      return this.http.get<IResponse<IPost[]>>(
+        `${this.apiUrl}${API_URLS.POSTS.GET_PROFILE_POSTS(profileid)}`
+      );
+    }else{
+      return this.http.get<IResponse<IPost[]>>(
+        `${this.apiUrl}${API_URLS.POSTS.GET_USER_POSTS}`
+      );
+    }
   }
 
   getAllPosts() {
@@ -77,9 +83,16 @@ export class PostService {
     );
   }
 
-  getPostCount() {
-    return this.http.get<IResponse<{ count: number }>>(
-      `${this.apiUrl}${API_URLS.POSTS.GET_POST_COUNT}`
-    );
+  getPostCount(profileid?: string) {
+    if(profileid){
+      return this.http.get<IResponse<{ count: number }>>(
+        `${this.apiUrl}${API_URLS.POSTS.GET_PROFILE_POST_COUNT(profileid)}`
+      );
+    }else{
+      return this.http.get<IResponse<{ count: number }>>(
+        `${this.apiUrl}${API_URLS.POSTS.GET_POST_COUNT}`
+      );
+    }
+   
   }
 }

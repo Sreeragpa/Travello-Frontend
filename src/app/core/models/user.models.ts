@@ -15,12 +15,11 @@ export default interface IUser {
     hostedTrips?: string[]; 
     posts?: string[]; 
     chats?: string[];
-    // followers?: string[]; 
-    // following?: string[]; 
     notifications?: string[]; 
     password?: string;
     profileimg?: string;
     bio: string;
+    isFollowing: boolean
     
   }
   export interface ILikedUser{

@@ -60,7 +60,7 @@ export class EditTripComponent {
         next:(res)=>{
           console.log(res);
           this.prevData = res.data[0];
-      
+          this.croppedImages.push(this.prevData.imageUrl as string)
           this.createForm();
         },
         error:(err)=>{

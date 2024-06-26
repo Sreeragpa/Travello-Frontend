@@ -32,8 +32,12 @@ export class FollowService {
     return this.http.delete<IResponse<IFollow>>(`${this.apiUrl}${API_URLS.FOLLOW.UNFOLLOW}`,options)
   }
 
-  getFollowCount(): Observable<IResponse<IFollowCount>>{
-    return this.http.get<IResponse<IFollowCount>>(`${this.apiUrl}${API_URLS.FOLLOW.GET_FOLLOW_COUNT}`)
+  getFollowCount(profileid: string): Observable<IResponse<IFollowCount>>{
+    if(profileid){
+      return this.http.get<IResponse<IFollowCount>>(`${this.apiUrl}${API_URLS.FOLLOW.GET_PROFILE_FOLLOW_COUNT(profileid)}`)
+    }else{
+      return this.http.get<IResponse<IFollowCount>>(`${this.apiUrl}${API_URLS.FOLLOW.GET_FOLLOW_COUNT}`)
+    }
   }
 
   searchFollowingUsers(searchValue: string):Observable<IResponse<IUser[]>>{

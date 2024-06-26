@@ -3,6 +3,7 @@ export const API_URLS = {
       BASE: '/api/posts',
       ADD_POST: '/add-post',
       GET_USER_POSTS: '/get-userpost',
+      GET_PROFILE_POSTS: (profileid: string)=> `/get-userpost/${profileid}`,
       GET_ALL_POSTS: '/get-post',
       GET_SINGLE_POST: (postId: string) => `/get-post/${postId}`,
       LIKE_POST: '/like',
@@ -13,6 +14,7 @@ export const API_URLS = {
       POST_COUNT: '/count',
       GET_SAVED_POST: '/saved-post',
       GET_POST_COUNT: '/count',
+      GET_PROFILE_POST_COUNT: (profileid: string)=>`/count/${profileid}`,
     },
 
     AUTH: {
@@ -36,6 +38,8 @@ export const API_URLS = {
       FOLLOW: '/follow',
       UNFOLLOW: '/unfollow',
       GET_FOLLOW_COUNT: '/count',
+      GET_PROFILE_FOLLOW_COUNT: (profileid: string)=> `/count/${profileid}`,
+
       GET_FOLLOWING_USERS: '/following'
     },
 
@@ -59,16 +63,34 @@ export const API_URLS = {
       JOIN_TRIP: '/join-trip',
       ACCEPT_TRIP_REQUEST: '/accept-request',
       TRIP_COUNT: '/count',
+      PROFILE_TRIP_COUNT: (profileid: string)=>`/count/${profileid}`,
       USER_TRIPS: '/user-trips',
-      EDIT_TRIP: (tripId: string) => `/edit-trip/${tripId}`
+      USER_PROFILE_TRIPS: (profileid: string)=>`/user-trips/${profileid}`,
+      EDIT_TRIP: (tripId: string) => `/edit-trip/${tripId}`,
+      SEARCH_TRIP:(searchKey:string) => `/search-trip?search=${searchKey}`,
   },
 
   USER: {
     BASE: '/api/user',
     UPDATE_PROFILE_IMG: '/add-profileimg',
     GET_USER: '/get-user',
+    GET_USER_PROFILE:(profileid: string)=> `/get-user/${profileid}`,
     UPDATE_PASSWORD: '/update-password',
     UPDATE_PROFILE: '/update-profile',
+    SEARCH_USERS:(searchKey:string) => `/search-user?search=${searchKey}`,
+  },
+
+  CONVERSATION: {
+    BASE: '/api/conversation',
+    GET_CONVERSATION: '/get-conversation',
+    GET_SINGLE_CONVERSATION: (conversationid: string)=> `/get-conversation/${conversationid}`,
+    ADD_CONVERSATION: '/add-conversation',
+  },
+
+  MESSAGE: {
+    BASE: '/api/message',
+    GET_MESSAGE: '/get-message',
+    SEND_MESSAGE: '/send-message'
   }
 
 

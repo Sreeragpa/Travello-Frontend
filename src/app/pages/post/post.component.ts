@@ -9,15 +9,26 @@ import { PostItemSkeletonComponent } from "../../shared/widgets/post-item-skelet
 import { ActivatedRoute } from '@angular/router';
 import { ToastService, ToastType } from '../../core/services/toast.service';
 import { CommentModalComponent } from "../../shared/widgets/comment-modal/comment-modal.component";
+import { ScrollLoadDirective } from '../../shared/directives/scroll-load.directive';
+import { ChatModalComponent } from "../../shared/widgets/chat-modal/chat-modal.component";
 
 @Component({
     selector: 'app-post',
     standalone: true,
     templateUrl: './post.component.html',
     styleUrl: './post.component.css',
-    imports: [PostItemComponent, PostItemSkeletonComponent, CommentModalComponent]
+    imports: [PostItemComponent, PostItemSkeletonComponent, CommentModalComponent, ScrollLoadDirective, ChatModalComponent]
 })
 export class PostComponent {
+    chatModal: boolean = false;
+    link!: string
+    sharetoChatModal(postId?: string) {
+        this.link= `${window.location.origin}/posts/${postId}`;
+        this.chatModal = !this.chatModal
+    }
+    test($event: any) {
+        console.log($event, "$$$$");
+    }
 
     posts!: IPost[]
     isLoading: boolean = true
@@ -25,6 +36,8 @@ export class PostComponent {
     private unlikeSubject = new Subject<string>();
     postid!: string;
     iscommentVisible: boolean = false
+
+
 
     constructor(private postService: PostService, private followService: FollowService, private route: ActivatedRoute, private toastService: ToastService) { }
     ngOnInit() {
@@ -40,8 +53,9 @@ export class PostComponent {
                         this.isLoading = false
                     }, 1000)
                     this.posts = res.data;
+
                     console.log(this.posts);
-                    
+
                 }
             })
 
@@ -195,6 +209,6 @@ export class PostComponent {
     showComment(postid: string) {
         this.iscommentVisible = true
         console.log(postid);
-        
+
     }
 }

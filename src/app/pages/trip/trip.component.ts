@@ -110,8 +110,8 @@ export class TripComponent {
         
         this.tripService.getSingleTrip(this.tripid).subscribe({
             next:(res)=>{
-                this.trips = res.data
-                console.log(res);
+              console.log(res);
+              this.trips = res.data
                 setTimeout(() => {
                     this.isLoading = false;
                   }, 1000);

@@ -2,83 +2,48 @@
     <div class="chat-header">
         <div class="flex gap-2 items-center">
             <i class="fa-solid fa-angle-left text-xl cursor-pointer" routerLink="/chats"></i>
-            <img src="../../../assets/images/IMG_3844.JPG" class="w-12 h-12 rounded-full" alt="">
-            <div class="flex flex-col myline justify-center">
-                <span>Sreerag PA</span>
-                <span>Online</span>
-            </div>
+            @if (conversation) {
+                @if (conversation.memberDetails[0].profileimg) {
+                    <img [src]="conversation.memberDetails[0].profileimg" class="w-12 h-12 rounded-full bg-gray-500" alt="">
+                }@else {
+                    <img  class="w-12 h-12 rounded-full bg-gray-500" alt="">
+                    
+                }
+                <div class="flex flex-col myline justify-center">
+                    <span>{{conversation.memberDetails[0].name}}</span>
+                    <span>Online</span>
+                </div>
+            }
         </div>
     </div>
-    <div class="chat-items mt-5 flex flex-col gap-2 overflow-y-scroll px-2">
-        <div class="chatbubble flex left ">
-            <div class="item bg-primary p-2 rounded-lg">
-                <div>Hii</div>
-                <div class="text-xs">11:20pm</div>
+    <div #chatContainer class="chat-items mt-5 flex flex-col gap-2 px-2">
+        @for (message of messages; track message._id) {
+            <div class="chatbubble flex left "
+            [ngClass]="{ 'right': message.sender === currentUserId, 'left': message.sender !== currentUserId }"
+            >
+                <div class="item bg-primary p-2 rounded-lg message">
+                    <!-- <div>{{message.text | linkify}}</div> -->
+                    <p [innerHTML]="message.text | linkify"></p>
+                    <div class="text-xs">11:20pm</div>
+                </div>
             </div>
-        </div>
-        <div class="chatbubble flex right">
-            <div class="item bg-primary p-2 rounded-lg">
-                <div>Heyy</div>
-                <div class="text-xs">11:20pm</div>
-            </div>
-        </div>
-        <div class="chatbubble flex right">
-            <div class="item bg-primary p-2 rounded-lg">
-                <div>Heyy</div>
-                <div class="text-xs">11:20pm</div>
-            </div>
-        </div>
-        <div class="chatbubble flex right">
-            <div class="item bg-primary p-2 rounded-lg">
-                <div>Heyy</div>
-                <div class="text-xs">11:20pm</div>
-            </div>
-        </div>
-        <div class="chatbubble flex right">
-            <div class="item bg-primary p-2 rounded-lg">
-                <div>Heyy</div>
-                <div class="text-xs">11:20pm</div>
-            </div>
-        </div>
-        <div class="chatbubble flex right">
-            <div class="item bg-primary p-2 rounded-lg">
-                <div>Heyy</div>
-                <div class="text-xs">11:20pm</div>
-            </div>
-        </div>
-        <div class="chatbubble flex right">
-            <div class="item bg-primary p-2 rounded-lg">
-                <div>Heyy</div>
-                <div class="text-xs">11:20pm</div>
-            </div>
-        </div>
-        <div class="chatbubble flex right">
-            <div class="item bg-primary p-2 rounded-lg">
-                <div>Heyy</div>
-                <div class="text-xs">11:20pm</div>
-            </div>
-        </div>
-        <div class="chatbubble flex right">
-            <div class="item bg-primary p-2 rounded-lg">
-                <div>Heyy</div>
-                <div class="text-xs">11:20pm</div>
-            </div>
-        </div>
+        }
+
     </div>
 
 </div>
 <div class="bg-secondary mt-2 p-2 rounded-xl">
     <div>
 
-        <form>
+        <form (ngSubmit)="sendMessage()">
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Message</label>
             <div class="flex gap-2">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 </div>
-                <input type="search" id="search"
+                <input type="search" id="search" [(ngModel)]="text" name="text" autocomplete="off"
                     class="block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Message" />
-                <button type="button"
+                <button type="submit" 
                     class="text-white w-12 h-12 relative  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <i class="fa-solid fa-paper-plane text-lg absolute top-3 left-3"></i>
                 </button>

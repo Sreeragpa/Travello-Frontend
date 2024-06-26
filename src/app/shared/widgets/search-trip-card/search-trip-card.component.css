@@ -1,0 +1,19 @@
+.image-container {
+    width: 300px;
+    height: 200px; /* Adjust height as needed */
+    overflow: hidden;
+    border-radius: 8px; /* Rounded corners, adjust as needed */
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the container */
+}
+
+@media (max-width:640px){
+    .image-container{
+        width: 280px; 
+        height: 186px;
+    }
+}

@@ -18,9 +18,14 @@ export class UserService {
     return this.http.put<IResponse<IUser>>(`${this.apiUrl}${API_URLS.USER.UPDATE_PROFILE_IMG}`, { profileimg });
   }
 
-  getUser(): Observable<IResponse<IUser>> {
-    return this.http.get<IResponse<IUser>>(`${this.apiUrl}${API_URLS.USER.GET_USER}`);
+  getUser(profileid?: string): Observable<IResponse<IUser>> {
+    if(profileid){
+      return this.http.get<IResponse<IUser>>(`${this.apiUrl}${API_URLS.USER.GET_USER_PROFILE(profileid)}`);
+    }else{
+      return this.http.get<IResponse<IUser>>(`${this.apiUrl}${API_URLS.USER.GET_USER}`);
+    }
   }
+
 
   updatePassword(currentPassword: string, newPassword: string): Observable<IResponse<string>> {
     const data = { currentPassword, newPassword };
@@ -29,5 +34,9 @@ export class UserService {
 
   updateProfile(data: any): Observable<IResponse<IUser>> {
     return this.http.put<IResponse<IUser>>(`${this.apiUrl}${API_URLS.USER.UPDATE_PROFILE}`, data);
+  }
+
+  searchUsers(searchKey: string): Observable<IResponse<IUser[]>>{
+    return this.http.get<IResponse<IUser[]>>(`${this.apiUrl}${API_URLS.USER.SEARCH_USERS(searchKey)}`);
   }
 } 

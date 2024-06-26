@@ -18,22 +18,39 @@
         <!-- /Profile Details -->
 
 
-        <!-- Settings -->
-        <div class="relative">
-            <div>
-                <i class="settings-icon fa-solid fa-gear cursor-pointer text-xl" style="color: #0a0a0a;"
-                    (click)="toggleSettings()" [class.active]="toggleStatus"></i>
-            </div>
-            <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2"
-                [class.active]="toggleStatus" #settings_menu>
-                <a routerLink="/edit-profile">
-                    <span class="cursor-pointer p-1 hover:text-gray-600">Edit Profile</span>
-                </a>
-                <hr class="w-full">
-                <span class="cursor-pointer p-1 hover:text-gray-600" (click)="onLogout()">Logout</span>
-            </div>
-        </div>
-        <!-- /Settings -->
+       
+         @if(profileid && user) {
+            <!-- Follow Button -->
+             @if (user.isFollowing) {
+                <div (click)="unfollow(user._id)" class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
+                    <span >Unfollow</span>
+                </div>
+             }@else {
+                <div (click)="follow(user._id)" class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
+                    <span >Follow</span>
+                </div>
+             }
+            <!-- Follow Button -->
+           
+         }@else {
+            <!-- Settings -->
+             <div class="relative">
+                 <div>
+                     <i class="settings-icon fa-solid fa-gear cursor-pointer text-xl" style="color: #0a0a0a;"
+                         (click)="toggleSettings()" [class.active]="toggleStatus"></i>
+                 </div>
+                 <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2"
+                     [class.active]="toggleStatus" #settings_menu>
+                     <a routerLink="/edit-profile">
+                         <span class="cursor-pointer p-1 hover:text-gray-600">Edit Profile</span>
+                     </a>
+                     <hr class="w-full">
+                     <span class="cursor-pointer p-1 hover:text-gray-600" (click)="onLogout()">Logout</span>
+                 </div>
+             </div>
+             <!-- /Settings -->
+         }
+        
 
 
 
@@ -51,7 +68,9 @@
         <div class=" flex cursor-pointer items-center transition-all gap-6 relative">
             <span (click)="changeNav('posts')">Posts {{postCount}}</span>
             <span (click)="changeNav('trips')">Trips {{tripCount}}</span>
-            <span (click)="changeNav('saved')">Saved</span>
+            @if (!profileid) {
+                <span (click)="changeNav('saved')">Saved</span>
+            }
             <div #underline class=" flex underline-test bg-black rounded-md"></div>
         </div>
     </div>

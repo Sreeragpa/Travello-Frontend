@@ -1,1 +1,33 @@
-<p>search works!</p>
+<div class="search-main">
+            <div class=" w-full flex justify-center">
+                <div class="relative inset-y-0 start-8 flex items-center ps-3 pointer-events-none">
+                    <i class="fa-solid fa-search text-gray-500 dark:text-gray-400"></i>
+                </div>
+                <input type="text" id="simple-search" autocomplete="false"
+                    (keyup)="onSearch($event)"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full sm:w-1/2 ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search" required />
+            </div>
+            <div class="w-full flex justify-center">
+                <div class="nav-container text-sm sm:text-md">
+                    <div class="nav-item" [ngClass]="{'active': activeTab === tabs.profiles}" (click)="selectTab(tabs.profiles)">
+                      Profiles
+                    </div>
+                    <div class="nav-item" [ngClass]="{'active': activeTab === tabs.trips}" (click)="selectTab(tabs.trips)">
+                      Trips
+                    </div>
+                    <div class="slider" [ngStyle]="{'left': sliderPosition}"></div>
+                  </div>
+                  
+            </div>
+            <div class="w-full flex justify-center mt-5 ">
+                @if (activeTab===tabs.profiles) {
+                    <app-search-profile-card [profiles]="profiles"></app-search-profile-card>
+                }@else {
+                  <app-search-trip-card [trips]="trips"></app-search-trip-card>
+                }
+            </div>
+
+     
+
+<div>

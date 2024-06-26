@@ -1,0 +1,10 @@
+/* Add CSS to control the size of the image */
+.image-container {
+    width: 48px; /* Adjust the width and height as needed */
+    height: 48px;
+    overflow: hidden; /* Ensures the image doesn't overflow its container */
+}
+.image-container img {
+    width: 100%; /* Make sure the image fills its container */
+    height: auto; /* Maintain aspect ratio */
+}

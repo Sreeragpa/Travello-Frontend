@@ -5,7 +5,7 @@ import { IPost } from '../../core/models/post.models';
 import { FollowService } from '../../core/services/follow.service';
 import { ImageGridSkeletonComponent } from '../../shared/widgets/image-grid-skeleton/image-grid-skeleton.component';
 import { AuthService } from '../../core/services/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
 import IUser from '../../core/models/user.models';
 import { ToastService, ToastType } from '../../core/services/toast.service';
@@ -14,11 +14,11 @@ import { ITrip } from '../../core/models/trip.model';
 import { TripGridComponent } from "../../shared/widgets/trip-grid/trip-grid.component";
 
 @Component({
-    selector: 'app-userprofile',
-    standalone: true,
-    templateUrl: './userprofile.component.html',
-    styleUrl: './userprofile.component.css',
-    imports: [ImageGridComponent, ImageGridSkeletonComponent, RouterLink, TripGridComponent]
+  selector: 'app-userprofile',
+  standalone: true,
+  templateUrl: './userprofile.component.html',
+  styleUrl: './userprofile.component.css',
+  imports: [ImageGridComponent, ImageGridSkeletonComponent, RouterLink, TripGridComponent]
 })
 export class UserprofileComponent {
   user!: IUser;
@@ -33,6 +33,7 @@ export class UserprofileComponent {
   toggleStatus: boolean = false;
   postCount: number = 0;
   tripCount: number = 0;
+  profileid!: string
   @ViewChild('underline') underline!: ElementRef;
   @ViewChild('settings_menu') settingsmenu!: ElementRef;
   constructor(
@@ -42,10 +43,18 @@ export class UserprofileComponent {
     private userService: UserService,
     private router: Router,
     private toastService: ToastService,
-    private tripService: TripService
-  ) {}
+    private tripService: TripService,
+    private route: ActivatedRoute,
+   
+  ) { }
   ngOnInit() {
-    this.postService.getUserPosts().subscribe((res) => {
+    this.route.paramMap.subscribe((param) => {
+      this.profileid = param.get('id') as string ;
+      this.loadCurrentUserData();
+    });
+  }
+  loadCurrentUserData() {
+    this.postService.getUserPosts(this.profileid).subscribe((res) => {
       console.log(res);
       if (res) {
         this.posts = res.data;
@@ -55,7 +64,7 @@ export class UserprofileComponent {
       }
     });
 
-    this.followService.getFollowCount().subscribe({
+    this.followService.getFollowCount(this.profileid).subscribe({
       next: (res) => {
         if (res) {
           console.log(res);
@@ -71,7 +80,7 @@ export class UserprofileComponent {
       },
     });
 
-    this.userService.getUser().subscribe({
+    this.userService.getUser(this.profileid).subscribe({
       next: (res) => {
         if (res) {
           console.log(res);
@@ -84,7 +93,7 @@ export class UserprofileComponent {
       },
     });
 
-    this.postService.getPostCount().subscribe({
+    this.postService.getPostCount(this.profileid).subscribe({
       next: (res) => {
         console.log(res.data);
 
@@ -95,19 +104,17 @@ export class UserprofileComponent {
       },
     });
 
-    this.tripService.getTripCount().subscribe({
-        next:(res)=>{
-            this.tripCount=res.data.count
-        },
-        error:(err)=>{
-            console.log(err);
-        }
+    this.tripService.getTripCount(this.profileid).subscribe({
+      next: (res) => {
+        this.tripCount = res.data.count
+      },
+      error: (err) => {
+        console.log(err);
+      }
     })
-
-
   }
 
-  
+
 
   changeNav(nav: string) {
     // this.savedLoading = true;
@@ -125,20 +132,20 @@ export class UserprofileComponent {
           console.log(err);
         },
       });
-    }else if(nav == 'trips'){
-        console.log("trips");
-        this.tripService.getUserTrips().subscribe({
-            next:(res)=>{
-                console.log(res);
-                this.trips = res.data
-            },
-            error:(err)=>{
-                console.log(err);
-                
-            }
-        })
-        
-    }else{
+    } else if (nav == 'trips') {
+      console.log("trips");
+      this.tripService.getUserTrips(this.profileid).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.trips = res.data
+        },
+        error: (err) => {
+          console.log(err);
+
+        }
+      })
+
+    } else {
       this.postLoading = false;
     }
   }
@@ -164,5 +171,34 @@ export class UserprofileComponent {
       console.log(res);
       this.router.navigate(['/signin']);
     });
+  }
+
+  follow(userid: string){
+    this.followService.followAccount(userid).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.user.isFollowing = true
+        
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
+  }
+
+  unfollow(userid: string){
+    this.followService.unfollowAccount  (userid).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.user.isFollowing = false
+
+        
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
   }
 }

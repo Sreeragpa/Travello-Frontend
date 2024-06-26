@@ -15,6 +15,9 @@ import { LikesWithMutualPipe } from '../../pipes/likes-with-mutual.pipe';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PostItemComponent {
+test($event: Event) {
+throw new Error('Method not implemented.');
+}
   @ViewChild('popover') popovers!: ElementRef<HTMLDivElement>
 hidePopover() {
   this.popovers.nativeElement.style.visibility = 'invisible';

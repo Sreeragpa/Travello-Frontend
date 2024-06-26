@@ -14,6 +14,7 @@ import { TripComponent } from './pages/trip/trip.component';
 import { EditTripComponent } from './shared/widgets/edit-trip/edit-trip.component';
 import { ChatpageComponent } from './pages/chatpage/chatpage.component';
 import { SinglechatComponent } from './pages/singlechat/singlechat.component';
+import { PostItemComponent } from './shared/widgets/post-item/post-item.component';
 
 export const routes: Routes = [
     {
@@ -26,11 +27,12 @@ export const routes: Routes = [
             {path:'edit-trip/:id',component:EditTripComponent},
             {path:'create',component:AddTripPostComponent},
             {path:'profile',component:UserprofileComponent},
+            {path:'profile/:id',component:UserprofileComponent},
             {path:'edit-profile',component:EditprofileComponent},
             {path:'search',component:SearchComponent},
             {path:'notification',component:NotificationComponent},
             {path:'chats',component:ChatpageComponent},
-            {path:'test',component:SinglechatComponent}
+            {path:'chats/:id',component:SinglechatComponent},
         ]
     },
     {

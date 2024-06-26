@@ -1,0 +1,12 @@
+
+.share-to-chatModal {
+    transition: all 0.3s ease-in-out;
+    visibility: hidden;
+}
+.share-to-chatModal.show-modal {
+    visibility: visible;
+    opacity: 1;
+    display: flex; /* Show the modal element */
+    pointer-events: auto; /* Enable clicks on modal when it's visible */
+    background-color: rgba(0, 0, 0, 0.342);
+}

@@ -3,13 +3,21 @@
         <app-slide-nav [navNames]="navItems" (navChange)="onNavChange($event)"></app-slide-nav>
     }
     <div class="flex gap-2 flex-col">
-       @if (isLoading) {
-         <app-trip-item-skeleton></app-trip-item-skeleton>
-       }@else {   
-           @for (trip of trips; track trip._id) {
-               <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)"></app-trip-item>
-           }
-       }
+        @defer(when isLoading == false) {
+            <!-- @if (isLoading) {
+                <app-trip-item-skeleton></app-trip-item-skeleton>
+              }@else {    -->
+                  @for (trip of trips; track trip._id) {
+                      <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)"></app-trip-item>
+                  }
+              <!-- } -->
+        }@placeholder(minimum 500ms) {
+            <app-trip-item-skeleton></app-trip-item-skeleton>
+        }
+        @loading {
+            loading..
+        }
+  
  
     </div>
 </div>

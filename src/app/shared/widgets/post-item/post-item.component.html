@@ -1,4 +1,4 @@
-<div class="bg-secondary w-100 h-auto rounded-2xl py-5 px-5 relative">
+<div class="bg-secondary w-100 h-auto rounded-2xl py-5 px-5 relative" >
     <div class="post-profile mb-3 flex gap-2 items-center">
         <div>
             <img class="w-10 h-10 rounded-full" [src]="postdata.user?.profileimg" alt="Rounded avatar">
@@ -21,7 +21,7 @@
     <div class="image-container" (dblclick)="like(postdata._id)">
         <!-- <img [src]="postdata.images[0]" alt="" > -->
         <swiper-container navigation="true" pagination="true">
-            @for (image of postdata.images; track postdata) {
+            @for (image of postdata.images; track image) {
             <swiper-slide>
                 <img [src]="image" alt="">
             </swiper-slide>

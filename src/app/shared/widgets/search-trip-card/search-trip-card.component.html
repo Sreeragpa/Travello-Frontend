@@ -1,0 +1,31 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    @for (trip of trips; track trip._id) {      
+        <div class="bg-secondary rounded-xl p-2 cursor-pointer" [routerLink]="['/trips',trip._id]">
+            <div>
+                <div class="image-container">
+                    <img [src]="trip.imageUrl" alt="" srcset="">
+                </div>
+            </div>
+    
+            <div class="flex flex-col">
+                <span class="font-semibold">{{trip.title}}</span>
+                <span class="text-sm">
+                    <i class="fa-solid fa-location-dot"></i>
+                    From:{{trip.startingPoint.name}} 
+                </span>
+                <span class="text-sm">
+                    <i class="fa-solid fa-location-dot"></i>
+                    To: {{trip.destination.name}}
+                </span>
+                <span class="text-sm ">
+                   <i class="fa-solid fa-calendar" ></i>
+                   Date: 545 to 545
+               </span>
+               <span class="text-sm">
+                  <i class="fa-solid fa-person-walking-luggage" ></i>
+                  Members: 4/5
+              </span>
+            </div>
+        </div>
+    }
+</div>

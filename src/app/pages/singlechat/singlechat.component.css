@@ -10,7 +10,11 @@
 }
 
 .chat-items{
-    height: 85%;
+     height: 85%;
+    overflow-y: scroll;
+}
+.message{
+    transition: all 0.3s ease-out;
 }
 
 /* .chatbubble {
@@ -33,6 +37,11 @@
     display: inline-block;
     word-wrap: break-word;
 }
+a {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
 @media (max-width:640px) {
     .chat-main {

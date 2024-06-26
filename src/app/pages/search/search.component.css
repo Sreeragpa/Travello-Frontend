@@ -1,0 +1,41 @@
+.search-main{
+    width: 65vw;
+    min-height: 70vh;
+    height: auto;
+}
+
+.nav-container {
+    display: flex;
+    position: relative;
+    width: 200px; /* Adjust width as needed */
+    justify-content: space-between;
+  }
+  
+  .nav-item {
+    position: relative;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .slider {
+    position: absolute;
+    bottom: 0;
+    margin: 1px 25px;
+    height: 2px;
+    width: 20%; /* Adjust width as needed */
+    background-color: black;
+    transition: left 0.3s;
+  }
+  
+  .active {
+    font-weight: bold;
+  }
+  
+
+
+@media (max-width:640px) {
+    .search-main{
+        width: 90vw;
+    }
+
+}

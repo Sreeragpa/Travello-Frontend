@@ -28,6 +28,7 @@ export const componentFadeInAnimation = animation([
     imports: [SidebarComponent, RouterOutlet, HeaderComponent, MytoastComponent]
 })
 export class HomepageComponent implements OnInit,OnDestroy {
+
   constructor(private authService: AuthService,private socketIOService: SocketioService){}
   ngOnDestroy(): void {
     this.socketIOService.disconnectSocket()

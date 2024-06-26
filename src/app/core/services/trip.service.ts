@@ -39,15 +39,30 @@ export class TripService {
     return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.TRIPS.ACCEPT_TRIP_REQUEST}`, data);
   }
 
-  getTripCount(): Observable<IResponse<{ count: number }>> {
-    return this.http.get<IResponse<{ count: number }>>(`${this.apiUrl}${API_URLS.TRIPS.TRIP_COUNT}`);
+  getTripCount(profileid?: string): Observable<IResponse<{ count: number }>> {
+    if (profileid) {
+      return this.http.get<IResponse<{ count: number }>>(`${this.apiUrl}${API_URLS.TRIPS.PROFILE_TRIP_COUNT(profileid)}`);
+
+    } else {
+      return this.http.get<IResponse<{ count: number }>>(`${this.apiUrl}${API_URLS.TRIPS.TRIP_COUNT}`);
+    }
   }
 
-  getUserTrips(): Observable<IResponse<ITrip[]>> {
-    return this.http.get<IResponse<ITrip[]>>(`${this.apiUrl}${API_URLS.TRIPS.USER_TRIPS}`);
+  getUserTrips(profileid: string): Observable<IResponse<ITrip[]>> {
+    if (profileid) {
+      return this.http.get<IResponse<ITrip[]>>(`${this.apiUrl}${API_URLS.TRIPS.USER_PROFILE_TRIPS(profileid)}`);
+
+    } else {
+      return this.http.get<IResponse<ITrip[]>>(`${this.apiUrl}${API_URLS.TRIPS.USER_TRIPS}`);
+
+    }
   }
 
   updateTrip(tripid: string, data: ITripEditForm): Observable<IResponse<ITrip>> {
     return this.http.put<IResponse<ITrip>>(`${this.apiUrl}${API_URLS.TRIPS.EDIT_TRIP(tripid)}`, data);
+  }
+
+  searchTrips(searchKey: string): Observable<IResponse<ITrip[]>> {
+    return this.http.get<IResponse<ITrip[]>>(`${this.apiUrl}${API_URLS.TRIPS.SEARCH_TRIP(searchKey)}`);
   }
 }

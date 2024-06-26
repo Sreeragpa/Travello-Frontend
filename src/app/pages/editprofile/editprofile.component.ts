@@ -96,14 +96,21 @@ export class EditprofileComponent {
   }
 
   onuploadProfile() {
-    const canvas = this.cropperInstance.getCroppedCanvas();
+    // const canvas = this.cropperInstance.getCroppedCanvas();
+    const canvas = this.cropperInstance.getCroppedCanvas({
+      width: 1024,
+      height: 1024
+  });
     const dataUrl = canvas.toDataURL('image/jpeg');
     console.log(dataUrl);
     this.toastService.showToast("Uploading",ToastType.Normal)
     this.userService.updateProfileimg(dataUrl).subscribe({
       next: (res) => {
         this.user = res.data
+        
         this.toastService.showToast("Profile Picture Updated", ToastType.Success)
+        this.popupModal.nativeElement.classList.remove('flex');
+        this.popupModal.nativeElement.classList.add('hidden');
       },
       error: (err) => {
         this.toastService.showToast("Something Bad happened", ToastType.Failure)

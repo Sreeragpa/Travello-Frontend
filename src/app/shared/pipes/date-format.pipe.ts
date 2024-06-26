@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {format, formatDistanceToNow, isToday, isYesterday} from "date-fns"
+import {differenceInMonths, format, formatDistanceToNow, isToday, isYesterday} from "date-fns"
 
 @Pipe({
   name: 'dateFormat',
@@ -7,15 +7,24 @@ import {format, formatDistanceToNow, isToday, isYesterday} from "date-fns"
 })
 export class DateFormatPipe implements PipeTransform {
 
-  transform(value: Date | string,dateFormat: string = 'yyyy-MM-dd HH:mm a'): string {
+  transform(value: Date | string, dateFormat: string = 'yyyy-MM-dd HH:mm a'): string {
     const date = new Date(value);
 
+    // Handle today's date
     if (isToday(date)) {
-      return formatDistanceToNow(date, { addSuffix: true }); // 'just now', '5 minutes ago', etc.
-    } else if (isYesterday(date)) {
+      return formatDistanceToNow(date, { addSuffix: true }); 
+    } 
+    // Handle yesterday's date
+    else if (isYesterday(date)) {
       return 'Yesterday';
-    } else {
-      return format(date, 'yyyy-MM-dd hh:mm a'); // Default format
+    } 
+    // Handle dates within the last 6 months
+    else if (differenceInMonths(new Date(), date) < 6) {
+      return formatDistanceToNow(date, { addSuffix: true });
+    } 
+    // Handle dates older than 6 months
+    else {
+      return format(date, 'd MMM yyyy'); 
     }
   }
   

@@ -1,0 +1,22 @@
+<div class="space-y-2">
+    @for (profile of profiles; track profile._id) {
+        <div class="bg-secondary p-4 w-64 sm:w-96 rounded-xl cursor-pointer " [routerLink]="['/profile',profile._id]">
+            <div class="flex justify-between gap-3 items-center">
+                <div class="flex gap-2">
+                        <img [src]="profile.profileimg" class="w-12 h-12 rounded-full" alt="" srcset="">
+                        <div class="flex flex-col text-sm justify-center">
+                            <span class="font-semibold">{{profile.name}}</span>
+                            <span>{{profile.bio}}</span>
+                        </div>
+                </div>
+                <div>
+                 
+                </div>
+               
+            </div>
+        </div>
+    
+    }
+
+
+</div>

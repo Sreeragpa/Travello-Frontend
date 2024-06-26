@@ -114,7 +114,7 @@
 <!-- Mobile Bar -->
 
 <div class="fixed z-50 w-full h-16 max-w-sm -translate-x-1/2  sm:hidden bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
-    <div class="grid h-full max-w-sm grid-cols-5 mx-auto text-3xl text-black">
+    <div class="grid h-full max-w-xs grid-cols-5 mx-auto text-2xl  sm:text-3xl text-black">
         <!-- Trip -->
         <button data-tooltip-target="tooltip-home" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
             <div routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{ exact: true }"  data-tooltip-target="trip-tooltip-right" data-tooltip-placement="right" class="side-item cursor-pointer hover:scale-110 transition-all" (click)="changeURL('/')" >
