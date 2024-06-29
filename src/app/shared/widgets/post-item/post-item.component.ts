@@ -4,12 +4,13 @@ import {CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { CommentService } from '../../../core/services/comment.service';
 import { LikesWithMutualPipe } from '../../pipes/likes-with-mutual.pipe';
+import { RouterLink } from '@angular/router';
 // import { IconDefinition, fa } from '@fortawesome/fontawesome-free';
 
 @Component({
   selector: 'app-post-item',
   standalone: true,
-  imports: [DateFormatPipe,LikesWithMutualPipe],
+  imports: [DateFormatPipe,LikesWithMutualPipe,RouterLink],
   templateUrl: './post-item.component.html',
   styleUrl: './post-item.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

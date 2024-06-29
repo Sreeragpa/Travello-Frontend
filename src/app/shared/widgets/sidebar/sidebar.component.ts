@@ -5,6 +5,7 @@ import { INotification } from '../../../core/models/notification.model';
 import { NOTIFICATION_TYPE } from '../../../core/enums/notification.enums';
 import { ToastService, ToastType } from '../../../core/services/toast.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { NavbarVisibilityService } from '../../../core/services/navbar-visibility.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,11 +15,15 @@ import { NotificationService } from '../../../core/services/notification.service
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  notificationCount: number = 0
-  constructor(private router: Router,private socketioService: SocketioService,private toastService: ToastService,private notificationService: NotificationService){
-  
-    // this.currentUrl = this.router.url;
-  }
+  notificationCount: number = 0;
+  navBarVisible: boolean = true;
+  constructor(private router: Router,
+    private socketioService: SocketioService,
+    private toastService: ToastService,
+    private notificationService: NotificationService,
+    private navbarVisibiltyService: NavbarVisibilityService){
+
+  } 
 
   ngOnInit() {
     setTimeout(()=>{
@@ -62,6 +67,11 @@ export class SidebarComponent {
       }
     })
 
+    this.navbarVisibiltyService.navBarVisible$.subscribe((visible)=>{
+      console.log(visible,"vidibelel");
+      this.navBarVisible = visible;
+    })
+
 
   }
   currentUrl: string = ''
@@ -69,10 +79,9 @@ export class SidebarComponent {
   changeURL(route: string) {
     console.log(this.router.url);
     
-    // this.currentUrl = route
-    // this.router.navigate([route])
-    
   }
+
+
 
 
   

@@ -4,13 +4,29 @@
             <i class="fa-solid fa-angle-left text-xl cursor-pointer" routerLink="/chats"></i>
             @if (conversation) {
                 @if (conversation.memberDetails[0].profileimg) {
-                    <img [src]="conversation.memberDetails[0].profileimg" class="w-12 h-12 rounded-full bg-gray-500" alt="">
+                    @if (conversation.memberDetails.length>1) {
+                        <div class="flex -space-x-4 rtl:space-x-reverse">
+                            <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" [src]="conversation.memberDetails[0].profileimg" alt="">
+                            <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" [src]="conversation.memberDetails[1].profileimg" alt="">
+                            @if ((conversation.memberDetails.length-2)>0) {
+                                <a class="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800" href="#">{{conversation.memberDetails.length-2}}</a>
+                            }
+                        </div>
+                       }@else {
+                            <img [src]="conversation.memberDetails[0].profileimg" class="w-10 h-10 rounded-full" alt="">
+                       }
                 }@else {
                     <img  class="w-12 h-12 rounded-full bg-gray-500" alt="">
                     
                 }
                 <div class="flex flex-col myline justify-center">
-                    <span>{{conversation.memberDetails[0].name}}</span>
+                    <span>
+                        {{conversation.memberDetails[0].name}}
+                        @if (conversation.memberDetails.length>1) {
+                            +{{conversation.memberDetails.length-1}} People
+                        }
+
+                    </span>
                     <span>Online</span>
                 </div>
             }
@@ -18,19 +34,36 @@
     </div>
     <div #chatContainer class="chat-items mt-5 flex flex-col gap-2 px-2">
         @for (message of messages; track message._id) {
-            <div class="chatbubble flex left "
+            <div class="chatbubble flex  "
             [ngClass]="{ 'right': message.sender === currentUserId, 'left': message.sender !== currentUserId }"
-            >
+            >   @if (conversation.isGroup) {
+                <div class="m-1">
+                    <img [src]="message.senderDetails?.profileimg" class="w-10 h-10 rounded-full" alt="">
+                </div>
+                 }   
+                
                 <div class="item bg-primary p-2 rounded-lg message">
                     <!-- <div>{{message.text | linkify}}</div> -->
                     <p [innerHTML]="message.text | linkify"></p>
-                    <div class="text-xs">11:20pm</div>
+                    <div class="text-xs">{{message.createdAt  | dateFormat}} </div>
+                    <!-- {{message.createdAt | timeFormat}} -->
+                     
                 </div>
+              
             </div>
+            @if (conversation.isGroup) {           
+                <div class="flex text-sm " [ngClass]="{ 'right': message.sender === currentUserId, 'left': message.sender !== currentUserId }">
+                    <div >
+                        {{message.senderDetails?.name?.toLocaleLowerCase()}}
+                    </div>
+                </div>
+            }
+           
         }
 
     </div>
-
+    
+    <app-chat-members [class.hidden]="!membersTab"></app-chat-members>
 </div>
 <div class="bg-secondary mt-2 p-2 rounded-xl">
     <div>

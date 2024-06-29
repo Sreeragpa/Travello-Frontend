@@ -85,6 +85,7 @@ export const API_URLS = {
     GET_CONVERSATION: '/get-conversation',
     GET_SINGLE_CONVERSATION: (conversationid: string)=> `/get-conversation/${conversationid}`,
     ADD_CONVERSATION: '/add-conversation',
+    GET_UNREAD_COUNT: '/unread-conversation/count'
   },
 
   MESSAGE: {

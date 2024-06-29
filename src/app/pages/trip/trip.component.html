@@ -8,7 +8,12 @@
                 <app-trip-item-skeleton></app-trip-item-skeleton>
               }@else {    -->
                   @for (trip of trips; track trip._id) {
-                      <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)"></app-trip-item>
+                      <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)" 
+                      (followButton)="followAccount($event)" 
+                      (unfollowButton)="unfollowAccount($event)"
+                      (shareButton)="sharetoChatModal($event)"
+                      
+                      ></app-trip-item>
                   }
               <!-- } -->
         }@placeholder(minimum 500ms) {
@@ -20,4 +25,9 @@
   
  
     </div>
+
+    
+
+<!-- Chat Modal -->
+<app-chat-modal [chatvisible]="chatModal" (toggle)="sharetoChatModal()" [message]="link" title="Trip"></app-chat-modal>
 </div>

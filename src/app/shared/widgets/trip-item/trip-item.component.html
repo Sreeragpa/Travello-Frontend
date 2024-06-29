@@ -64,7 +64,7 @@
                 </span>
             </div>
             <div class="flex justify-between items-center p-2">
-                <div class=""><i class="fa-solid fa-share-nodes text-2xl" style="color: #000000;"></i></div>
+                <div class="cursor-pointer" (click)="onShare(tripData._id)"><i class="fa-solid fa-share-nodes text-2xl" style="color: #000000;"></i></div>
                 <div >
                     @if (tripData.issameuser || tripData.isuserjoined) {
                         <button disabled class="bg-black px-6 py-2 w-56 text-white rounded-md" >

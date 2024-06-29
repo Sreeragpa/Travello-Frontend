@@ -8,6 +8,9 @@ import IConversation from '../../core/models/conversation.model';
 import { Router } from '@angular/router';
 import { DateFormatPipe } from "../../shared/pipes/date-format.pipe";
 import { TextslicePipe } from "../../shared/pipes/textslice.pipe";
+import { SocketioService } from '../../core/services/socketio.service';
+import { IMessage } from '../../core/models/message.model';
+import { NavbarVisibilityService } from '../../core/services/navbar-visibility.service';
 
 @Component({
     selector: 'app-chatpage',
@@ -20,8 +23,9 @@ export class ChatpageComponent {
   private searchValue: Subject<string> = new Subject<string>();
   searchResults: IUser[] = [];
   conversations: IConversation[] = [];
-  constructor(private followService: FollowService,private conversationService: ConversationService,private router: Router){}
+  constructor(private followService: FollowService,private navbarVisibiltyService:NavbarVisibilityService,private conversationService: ConversationService,private router: Router,private socketioService: SocketioService){}
   ngOnInit() {
+    this.navbarVisibiltyService.showNavBar()
     this.searchValue.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -38,17 +42,18 @@ export class ChatpageComponent {
       }
     })
 
+    this.getCoversation()
 
-    this.conversationService.getAllConversation().subscribe({
-      next:(res)=>{
-        console.log(res);
-        this.conversations = res.data        
-      },
-      error:(err)=>{
-        console.log(err);
-        
-      }
-    })
+
+
+
+    setTimeout(() => {
+      this.socketioService.on<IMessage>('newMessageNotification').subscribe((res) => {
+        console.log(res, "socketeft");
+        this.getCoversation()
+
+      })
+    }, 100)
   }
   onSearch($event: any) {
     let query = $event.target.value;
@@ -69,6 +74,19 @@ export class ChatpageComponent {
 
   getChat(conversationid: string){
     this.router.navigate(['/chats',conversationid])
+  }
+
+  getCoversation(){
+    this.conversationService.getAllConversation().subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.conversations = res.data        
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
   }
 
 }

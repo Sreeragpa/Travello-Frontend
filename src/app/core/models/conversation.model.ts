@@ -1,3 +1,4 @@
+import { IMessage } from "./message.model";
 import IUser from "./user.models";
 
 export default interface IConversation{
@@ -9,5 +10,5 @@ export default interface IConversation{
     isGroup: boolean;
     groupName?: string;
     currentUserId?: string
-    lastMessage: string
+    latestMessage: IMessage
 }

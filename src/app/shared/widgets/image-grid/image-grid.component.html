@@ -3,7 +3,7 @@
     <app-image-grid-skeleton></app-image-grid-skeleton>
 }
     <div class="image-grid grid grid-cols-2 md:grid-cols-3 gap-2" [ngClass]="{'visible': !isLoading}">
-        @for (item of imgData; track imgData) {
+        @for (item of imgData; track item._id) {
             <a [routerLink]="['/posts',item._id]">
                 <div class="relative cursor-pointer" [class.active]="item._id">
                     <img class="h-auto max-w-full rounded-lg" [src]="item.images[0]" alt="" >

@@ -5,8 +5,9 @@ export interface IMessage{
     conversation_id: string,
     sender: string,
     text: string,
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date;
+    senderDetails?: IUser
 }
 
 export interface IMessagewithConversationInfo{

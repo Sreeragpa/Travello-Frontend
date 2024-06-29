@@ -9,20 +9,24 @@ import { TripItemSkeletonComponent } from '../../shared/widgets/trip-item-skelet
 import { ActivatedRoute } from '@angular/router';
 import { GeolocationService, IGeolocationPosition, IUserLocation } from '../../core/services/geolocation.service';
 import { map, switchMap, catchError, of } from 'rxjs';
+import { ChatModalComponent } from "../../shared/widgets/chat-modal/chat-modal.component";
 
 @Component({
-  selector: 'app-trip',
-  standalone: true,
-  templateUrl: './trip.component.html',
-  styleUrl: './trip.component.css',
-  imports: [SlideNavComponent, TripItemComponent, TripItemSkeletonComponent],
+    selector: 'app-trip',
+    standalone: true,
+    templateUrl: './trip.component.html',
+    styleUrl: './trip.component.css',
+    imports: [SlideNavComponent, TripItemComponent, TripItemSkeletonComponent, ChatModalComponent]
 })
 export class TripComponent {
+
   isLoading: boolean = true;
   trips!: ITrip[];
   navItems: string[] = ['Following', 'Nearby'];
   tripid!: string;
   userLocation!: IUserLocation
+  chatModal: boolean= false;
+  link!: string;
   constructor(
     private tripService: TripService,
     private toastService: ToastService,
@@ -46,29 +50,6 @@ export class TripComponent {
         },
       });
     } else {
-      // this.geolocationService.getCurrentPosition().subscribe({
-      //   next:(res)=>{
-      //     console.log(res);
-      //     this.userLocation.longitude = res.coords.longitude
-      //     this.userLocation.latitude = res.coords.latitude
-
-      //     this.tripService.getTrips('nearby',this.userLocation).subscribe({
-      //       next: (res) => {
-      //         console.log(res);
-              
-      //         this.trips = res.data;
-      //       },
-      //       error: (err) => {
-      //         console.log(err);
-      //       },
-      //     });
-          
-      //   },
-      //   error:(err)=>{
-      //     console.log(err);
-          
-      //   }
-      // })
 
       this.geolocationService.getCurrentPosition().pipe(
         map((position: IGeolocationPosition) => ({
@@ -181,4 +162,9 @@ export class TripComponent {
       },
     });
   }
+
+  sharetoChatModal(tripid?: string) {
+    this.link= `${window.location.origin}/trips/${tripid}`;
+    this.chatModal = !this.chatModal
+}
 }

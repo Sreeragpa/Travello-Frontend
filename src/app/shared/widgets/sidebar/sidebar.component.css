@@ -13,9 +13,22 @@ a {
     transition: all 0.5s;
     padding: 5px;
     transform: translateX(0px);
-    
-
 }
+
+.mobile-navbar {
+    opacity: 0;
+    transform: translateY(50%) translateX(-50%);
+    transition:  transform 0.3s ease-out;
+    z-index: 100; /* Adjust as needed */
+}
+
+.mobile-navbar.active {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+    z-index: 100; /* Adjust as needed */
+}
+
+
 .side-item.active{
     /* transform: translateX(8px); */
     background-color: rgba(0, 68, 255, 0.288);

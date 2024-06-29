@@ -16,6 +16,7 @@ export class ChatModalComponent {
   @Input() message: string = ''
   @Input() chatvisible: boolean = false;
   @Output() toggle: EventEmitter<boolean> = new EventEmitter()
+  @Input() title!: string
   conversations!: IConversation[];
   conversationID!: string
   constructor(private conversationService: ConversationService,private messageService: MessageService,private toastService: ToastService){}

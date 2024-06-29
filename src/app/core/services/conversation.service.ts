@@ -25,4 +25,9 @@ export class ConversationService {
   getSingleConversation(conversationid: string):Observable<IResponse<IConversation>>{
     return this.http.get<IResponse<IConversation>>(`${this.apiUrl}${API_URLS.CONVERSATION.GET_SINGLE_CONVERSATION(conversationid)}`)
   }
+
+  getUnreadConversationCount():Observable<IResponse<number>>{
+    return this.http.get<IResponse<number>>(`${this.apiUrl}${API_URLS.CONVERSATION.GET_UNREAD_COUNT}`)
+
+  }
 }

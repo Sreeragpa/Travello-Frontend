@@ -28,12 +28,16 @@ toggleOff(){
   @Output() unfollowButton: EventEmitter<string> = new EventEmitter()
   @Output() JoinButton: EventEmitter<IJoinTrip> = new EventEmitter()
   @Input({required:true}) tripData!: ITrip
+  @Output() shareButton: EventEmitter<string> = new EventEmitter()
 
   follow(followingid: string | undefined){
     this.followButton.emit(followingid as string)
   }
   unfollow(followingid: string | undefined){
     this.unfollowButton.emit(followingid as string)
+  }
+  onShare(tripid: string | undefined){
+    this.shareButton.emit(tripid)
   }
   postdata: any = {
     user: { username: "Sreerag" }

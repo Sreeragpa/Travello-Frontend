@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SidebarComponent } from '../../shared/widgets/sidebar/sidebar.component';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "../../shared/widgets/header/header.component";
 import { MytoastComponent } from "../../shared/widgets/mytoast/mytoast.component";
 import { animation, style, animate, trigger, transition, useAnimation } from '@angular/animations';
 import { AuthService } from '../../core/services/auth.service';
 import { SocketioService } from '../../core/services/socketio.service';
+import { NavbarVisibilityService } from '../../core/services/navbar-visibility.service';
 
 
 export const componentFadeInAnimation = animation([
@@ -29,7 +30,12 @@ export const componentFadeInAnimation = animation([
 })
 export class HomepageComponent implements OnInit,OnDestroy {
 
-  constructor(private authService: AuthService,private socketIOService: SocketioService){}
+  constructor(
+    private authService: AuthService,
+    private socketIOService: SocketioService,
+    private navbarVisibiltyService: NavbarVisibilityService,
+    private router: Router
+  ){}
   ngOnDestroy(): void {
     this.socketIOService.disconnectSocket()
   }
@@ -37,7 +43,7 @@ export class HomepageComponent implements OnInit,OnDestroy {
     const token = this.authService.getAuthToken().subscribe((res)=>{
       this.socketIOService.connectWithToken(res.data as string)
     }); 
-    
+
     
   }
 }

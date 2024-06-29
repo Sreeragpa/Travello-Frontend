@@ -26,7 +26,8 @@
     word-wrap: break-word;
 } */
 .right {
-    justify-content: flex-end;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
 }
 
 .left {

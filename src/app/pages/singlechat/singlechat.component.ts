@@ -8,17 +8,22 @@ import { IMessage } from '../../core/models/message.model';
 import { CommonModule } from '@angular/common';
 import { SocketioService } from '../../core/services/socketio.service';
 import { LinkifyPipe } from "../../shared/pipes/linkify.pipe";
+import { ChatMembersComponent } from "../../shared/widgets/chat-members/chat-members.component";
+import { DateFormatPipe } from "../../shared/pipes/date-format.pipe";
+import { TimeFormatPipe } from "../../shared/pipes/time-format.pipe";
+import { NavbarVisibilityService } from '../../core/services/navbar-visibility.service';
 
 @Component({
     selector: 'app-singlechat',
     standalone: true,
     templateUrl: './singlechat.component.html',
     styleUrl: './singlechat.component.css',
-    imports: [RouterLink, FormsModule, CommonModule, LinkifyPipe]
+    imports: [RouterLink, FormsModule, CommonModule, LinkifyPipe, ChatMembersComponent, DateFormatPipe, TimeFormatPipe]
 })
 export class SinglechatComponent {
   text!: string;
-  constructor(private route: ActivatedRoute, private messageService: MessageService, private conversationService: ConversationService, private socketioService: SocketioService) { }
+membersTab: boolean = false;
+  constructor(private route: ActivatedRoute,private navbarVisibiltyService: NavbarVisibilityService, private messageService: MessageService, private conversationService: ConversationService, private socketioService: SocketioService) { }
   private conversationid!: string
   conversation!: IConversation
   messages!: IMessage[]
@@ -26,6 +31,7 @@ export class SinglechatComponent {
   @ViewChild('chatContainer') private chatContainerRef!: ElementRef;
 
   ngOnInit() {
+    this.navbarVisibiltyService.hideNavBar()
     this.route.paramMap.subscribe((params) => {
       this.conversationid = params.get('id')!
     })
