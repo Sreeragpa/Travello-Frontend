@@ -10,11 +10,14 @@
 
 @media (max-width: 640px){
     .skeleton-div{
-        width: 380px;
+        width: 100%;
         height: auto;
     }
     .skeleton-img{
-        width: 340px;
-        height: 600px;
+        width: 100%;
+        height: 500px;
+    }
+    .post-item{
+        width: 95vw;
     }
 }

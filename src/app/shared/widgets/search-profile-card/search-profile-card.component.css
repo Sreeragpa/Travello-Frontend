@@ -8,3 +8,7 @@
     width: 100%; /* Make sure the image fills its container */
     height: auto; /* Maintain aspect ratio */
 }
+
+.profile-card{
+    width: 100%;
+}

@@ -30,8 +30,11 @@
 
 @media (max-width:640px){
     .image-container{
-        width: 380px; /* Allow container to take full width */
+        width: 100%; /* Allow container to take full width */
         /* height: 520px; */
+    }
+    .post-item{
+        width: 95vw;
     }
 }
 

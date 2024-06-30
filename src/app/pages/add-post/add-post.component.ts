@@ -126,7 +126,6 @@ export class AddPostComponent {
   }
 
   saveCropped(){
-    console.log("hehe");
     console.log(this.cropActive);
     this.cropActive = false;
     
@@ -162,15 +161,14 @@ export class AddPostComponent {
   }
 
   onUpload(){
-    console.log('hellooo');
+
     if(!this.selectedPlace){
       this.toastService.showToast("Enter Location",ToastType.Failure)
     }
 
     console.log('capt',this.caption);
     if(!this.selectedPlace || !this.caption || this.croppedImages.length===0){
-      console.log('validation er');
-      
+
       return
     }
     

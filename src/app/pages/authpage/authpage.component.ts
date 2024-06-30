@@ -129,8 +129,7 @@ export class AuthpageComponent {
       this.isLoading = false
       if(res){
         console.log("Verified Successfully");
-        this.router.navigate(['signin'])
-        
+        this.router.navigate(['/signin'])
       }
     })
   }

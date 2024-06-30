@@ -16,6 +16,7 @@ a {
 }
 
 .mobile-navbar {
+    visibility: hidden;
     opacity: 0;
     transform: translateY(50%) translateX(-50%);
     transition:  transform 0.3s ease-out;
@@ -23,6 +24,7 @@ a {
 }
 
 .mobile-navbar.active {
+    visibility: visible;
     opacity: 1;
     transform: translateY(0) translateX(-50%);
     z-index: 100; /* Adjust as needed */
