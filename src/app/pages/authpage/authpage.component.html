@@ -1,4 +1,5 @@
 <div [class.dark]="darkmode" class="authpage-component w-screen h-screen" [class.dark-bg]="darkmode" > 
+  <app-mytoast class="flex justify-center "></app-mytoast>
 </div>
 
 <div class="absolute w-screen" >
@@ -12,17 +13,17 @@
     
   @if(isPresent=="/signin"){
     @if (!isOtpSend) {
-      <app-signin-form (formdata)="signin($event)" [error]="signinerror"></app-signin-form>
+      <app-signin-form (formdata)="signin($event)" [error]="signinerror" [isLoading]="isLoading"></app-signin-form>
     }@else {
-      <app-otp-form formtype="signup" email={{email}} (formData)="verifyOtp($event)" [error]="otpError"></app-otp-form>
+      <app-otp-form formtype="signup" email={{email}} (formData)="verifyOtp($event)" [error]="otpError" [isLoading]="isLoading"></app-otp-form>
     }
   }@else if(isPresent=="/signup"){
     @if (!isOtpSend) {
     
-      <app-signup-form (fromData)="signup($event)" [error]="signupError"></app-signup-form>
+      <app-signup-form (fromData)="signup($event)" [error]="signupError" [isLoading]="isLoading"></app-signup-form>
 
     }@else {
-      <app-otp-form formtype="signup"  email={{email}} (formData)="verifyOtp($event)"></app-otp-form>
+      <app-otp-form formtype="signup" email={{email}} (formData)="verifyOtp($event)" [isLoading]="isLoading"></app-otp-form>
     }
   } 
   </div>

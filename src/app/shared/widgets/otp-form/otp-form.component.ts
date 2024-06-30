@@ -14,6 +14,7 @@ export class OtpFormComponent {
   @Input({required:true}) email!: string
   @Input() error!: string
   @Output() formData: EventEmitter<string> = new EventEmitter()
+  @Input() isLoading: boolean = false
   otpForm!: FormGroup
   otpControls: FormControl[] = [];
   otpInput: any;

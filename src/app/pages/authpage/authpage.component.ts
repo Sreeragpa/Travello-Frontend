@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { animate, animation, state, style, transition, trigger, useAnimation } from '@angular/animations';
 import { ToastService, ToastType } from '../../core/services/toast.service';
+import { MytoastComponent } from "../../shared/widgets/mytoast/mytoast.component";
 
 
 
@@ -18,28 +19,28 @@ import { ToastService, ToastType } from '../../core/services/toast.service';
     standalone: true,
     templateUrl: './authpage.component.html',
     styleUrl: './authpage.component.css',
-    imports: [RouterOutlet, SigninFormComponent, SignupFormComponent, OtpFormComponent],
-    animations:[
-      trigger('openClose', [
-        // ...
-        state('open', style({
-          height: '200px',
-          opacity: 1,
-          backgroundColor: 'yellow'
-        })),
-        state('closed', style({
-          height: '100px',
-          opacity: 0.8,
-          backgroundColor: 'blue'
-        })),
-        transition('open => closed', [
-          animate('1s')
+    animations: [
+        trigger('openClose', [
+            // ...
+            state('open', style({
+                height: '200px',
+                opacity: 1,
+                backgroundColor: 'yellow'
+            })),
+            state('closed', style({
+                height: '100px',
+                opacity: 0.8,
+                backgroundColor: 'blue'
+            })),
+            transition('open => closed', [
+                animate('1s')
+            ]),
+            transition('closed => open', [
+                animate('0.5s')
+            ]),
         ]),
-        transition('closed => open', [
-          animate('0.5s')
-        ]),
-      ]),
-    ]
+    ],
+    imports: [RouterOutlet, SigninFormComponent, SignupFormComponent, OtpFormComponent, MytoastComponent]
 })
 export class AuthpageComponent {
   darkmode: boolean = false;
@@ -48,7 +49,7 @@ export class AuthpageComponent {
   background: string[] = ['/login', '/register'];
   isPresent: string = this.router.url;
   email: string = '';
-  isLoading: Boolean = false;
+  isLoading: boolean = false;
   signinerror: Boolean = false;
   signupError!: string
   otpError!: string
@@ -75,6 +76,7 @@ export class AuthpageComponent {
               this.isOtpSend = true
             }
             console.log(error);
+            this.isLoading = false
             
             return of(null)
           })
@@ -88,6 +90,7 @@ export class AuthpageComponent {
   }
 
   signup(data: ISignup){
+    this.isLoading = true
     console.log(data);
     this.email = data.email
     this.authService.signup(data)
@@ -98,11 +101,13 @@ export class AuthpageComponent {
           this.signupError = "Account already exists"
         }
         console.log('Error during signup:', error);
+        this.isLoading = false
         return of(null)
       })
     )
     .subscribe(res => {
       if (res && res.status === 'success') {
+        this.isLoading = false
         this.isOtpSend = true;
         this.toastService.showToast("OTP Sent Successfully",ToastType.Normal)
       }
@@ -111,15 +116,17 @@ export class AuthpageComponent {
   }
 
   verifyOtp(otp: string){
-
+    this.isLoading = true
     this.authService.verifyOtp({email:this.email,otp:otp}).pipe(
       catchError((error)=>{
         this.otpError = error.error.message
         console.log(error);
+      this.isLoading = false
         
         return of(null)
       })
     ).subscribe((res)=>{
+      this.isLoading = false
       if(res){
         console.log("Verified Successfully");
         this.router.navigate(['signin'])

@@ -21,6 +21,6 @@
 
 @media (max-width: 640px) {
     .trip-item {
-        width: 85vw; /* Allow container to take full width */
+        width: 95vw; /* Allow container to take full width */
     }
 }

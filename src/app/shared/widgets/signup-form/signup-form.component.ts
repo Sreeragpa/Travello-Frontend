@@ -16,6 +16,7 @@ export class SignupFormComponent {
   @Output() fromData: EventEmitter<ISignup> =  new EventEmitter()
   @Output() signupVerified: EventEmitter<boolean> = new EventEmitter()
   @Input() error!: string
+  @Input() isLoading:boolean = false
   constructor(private fb: FormBuilder){
     this.signupForm = this.fb.group({
       username: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),

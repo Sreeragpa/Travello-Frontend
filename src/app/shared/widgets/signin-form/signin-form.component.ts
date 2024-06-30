@@ -13,7 +13,8 @@ import { Ilogin } from '../../../core/models/auth.models';
 })
 export class SigninFormComponent {
   @Output() formdata: EventEmitter<Ilogin> = new EventEmitter();
-  @Input() error: Boolean = false
+  @Input() error: Boolean = false;
+  @Input() isLoading: boolean = false
   signinForm!: FormGroup
   constructor(private fb: FormBuilder, private authService: AuthService){
     this.signinForm = this.fb.group({
