@@ -4,9 +4,9 @@
     }
     <div class="flex gap-2 flex-col">
         @defer(when isLoading == false) {
-            <!-- @if (isLoading) {
+            @if (isLoading) {
                 <app-trip-item-skeleton></app-trip-item-skeleton>
-              }@else {    -->
+              }@else {   
                   @for (trip of trips; track trip._id) {
                       <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)" 
                       (followButton)="followAccount($event)" 
@@ -15,7 +15,7 @@
                       
                       ></app-trip-item>
                   }
-              <!-- } -->
+              }
         }@placeholder(minimum 500ms) {
             <app-trip-item-skeleton></app-trip-item-skeleton>
         }

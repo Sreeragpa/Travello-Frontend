@@ -39,9 +39,12 @@ export class TripComponent {
     private scrollService: ScrollService
   ) {}
   onNavChange(nav: string) {
+    this.currentPageFollow = 1;
+    this.currentPageNearby = 1; 
     this.currentNav = nav
-    this.isLoading = true
-    console.log(nav);
+    this.isLoading = true;
+    this.trips = []
+
     if (nav == 'Following') {
       this.getFollowingTrips()
     } else {
@@ -83,7 +86,11 @@ export class TripComponent {
     })
 
     this.scrollService.scroll$.subscribe((res)=>{
-      this.loadMoreTrips()
+      if(!this.isLoading){
+        this.loadMoreTrips();
+      }
+
+      
     })
 
     if(this.tripid){
