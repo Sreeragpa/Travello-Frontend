@@ -4,7 +4,7 @@ export const API_URLS = {
       ADD_POST: '/add-post',
       GET_USER_POSTS: '/get-userpost',
       GET_PROFILE_POSTS: (profileid: string)=> `/get-userpost/${profileid}`,
-      GET_ALL_POSTS: '/get-post',
+      GET_ALL_POSTS: (page: number)=> `/get-post?page=${page}`,
       GET_SINGLE_POST: (postId: string) => `/get-post/${postId}`,
       LIKE_POST: '/like',
       UNLIKE_POST: '/unlike',

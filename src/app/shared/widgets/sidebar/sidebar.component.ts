@@ -45,7 +45,7 @@ export class SidebarComponent {
           
         }
       })
-    },100)
+    },500)
 
     this.notificationService.getNotificationCount().subscribe({
       next:(res)=>{

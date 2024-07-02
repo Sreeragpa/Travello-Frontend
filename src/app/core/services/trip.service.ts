@@ -22,8 +22,8 @@ export class TripService {
     return this.http.post<IResponse<ITrip>>(`${this.apiUrl}${API_URLS.TRIPS.ADD_TRIP}`, data);
   }
 
-  getTrips(query: string, userLocation: IUserLocation = { latitude: 0, longitude: 0 }): Observable<IResponse<ITrip[]>> {
-    return this.http.get<IResponse<ITrip[]>>(`${this.apiUrl}${API_URLS.TRIPS.GET_TRIPS}?by=${query}&long=${userLocation.longitude}&lat=${userLocation.latitude}`);
+    getTrips(query: string,page: number, userLocation: IUserLocation = { latitude: 0, longitude: 0 }): Observable<IResponse<ITrip[]>> {
+    return this.http.get<IResponse<ITrip[]>>(`${this.apiUrl}${API_URLS.TRIPS.GET_TRIPS}?by=${query}&long=${userLocation.longitude}&lat=${userLocation.latitude}&page=${page}`);
   }
 
   getSingleTrip(tripid: string): Observable<IResponse<ITrip[]>> {

@@ -38,9 +38,9 @@ export class PostService {
     }
   }
 
-  getAllPosts() {
+  getAllPosts(page: number) {
     return this.http.get<IResponse<IPost[]>>(
-      `${this.apiUrl}${API_URLS.POSTS.GET_ALL_POSTS}`
+      `${this.apiUrl}${API_URLS.POSTS.GET_ALL_POSTS(page)}`
     );
   }
 

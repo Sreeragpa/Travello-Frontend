@@ -7,6 +7,8 @@ import { animation, style, animate, trigger, transition, useAnimation } from '@a
 import { AuthService } from '../../core/services/auth.service';
 import { SocketioService } from '../../core/services/socketio.service';
 import { NavbarVisibilityService } from '../../core/services/navbar-visibility.service';
+import { IInfiniteScrollEvent, InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { ScrollService } from '../../core/services/scroll.service';
 
 
 export const componentFadeInAnimation = animation([
@@ -26,7 +28,7 @@ export const componentFadeInAnimation = animation([
     standalone: true,
     templateUrl: './homepage.component.html',
     styleUrl: './homepage.component.css',
-    imports: [SidebarComponent, RouterOutlet, HeaderComponent, MytoastComponent]
+    imports: [SidebarComponent, RouterOutlet, HeaderComponent, MytoastComponent, InfiniteScrollDirective]
 })
 export class HomepageComponent implements OnInit,OnDestroy {
 
@@ -34,11 +36,17 @@ export class HomepageComponent implements OnInit,OnDestroy {
     private authService: AuthService,
     private socketIOService: SocketioService,
     private navbarVisibiltyService: NavbarVisibilityService,
-    private router: Router
+    private router: Router,
+    private scrollService: ScrollService
   ){}
   ngOnDestroy(): void {
     this.socketIOService.disconnectSocket()
   }
+
+  onScroll($event: IInfiniteScrollEvent) {
+    this.scrollService.emitScrollSubject($event)
+  }
+  
   ngOnInit(): void {
     const token = this.authService.getAuthToken().subscribe((res)=>{
       this.socketIOService.connectWithToken(res.data as string)

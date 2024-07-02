@@ -11,6 +11,9 @@ import { ToastService, ToastType } from '../../core/services/toast.service';
 import { CommentModalComponent } from "../../shared/widgets/comment-modal/comment-modal.component";
 import { ScrollLoadDirective } from '../../shared/directives/scroll-load.directive';
 import { ChatModalComponent } from "../../shared/widgets/chat-modal/chat-modal.component";
+import { ScrollService } from '../../core/services/scroll.service';
+
+
 
 @Component({
     selector: 'app-post',
@@ -35,15 +38,30 @@ export class PostComponent {
     private likeSubject = new Subject<string>();
     private unlikeSubject = new Subject<string>();
     postid!: string;
-    iscommentVisible: boolean = false
+    iscommentVisible: boolean = false;
+    currentPage: number = 1;
 
 
 
-    constructor(private postService: PostService, private followService: FollowService, private route: ActivatedRoute, private toastService: ToastService) { }
+    constructor(
+        private postService: PostService, 
+        private followService: FollowService, 
+        private route: ActivatedRoute, 
+        private toastService: ToastService,
+        private scrollService: ScrollService
+    ) { }
     ngOnInit() {
         this.route.paramMap.subscribe((params) => {
             this.postid = params.get('id')!
         })
+
+        this.scrollService.scroll$.subscribe((res)=>{
+            console.log(res);
+            console.log("Scrolllelelldlldld");
+            this.currentPage++;
+            this.loadmorePosts()
+        })
+
         if (this.postid) {
             console.log(this.postid);
             this.postService.getSinglePost(this.postid).subscribe((res) => {
@@ -60,15 +78,7 @@ export class PostComponent {
             })
 
         } else {
-            this.postService.getAllPosts().subscribe((res) => {
-                console.log(res);
-                if (res) {
-                    setTimeout(() => {
-                        this.isLoading = false
-                    }, 1000)
-                    this.posts = res.data
-                }
-            })
+            this.getAllPosts()
         }
 
 
@@ -117,6 +127,28 @@ export class PostComponent {
         // setTimeout(()=>{
         //     this.isLoading = false
         // },2000)
+    }
+
+    getAllPosts(){
+        this.postService.getAllPosts(this.currentPage).subscribe((res) => {
+            if (res) {
+                setTimeout(() => {
+                    this.isLoading = false
+                }, 1000)
+                this.posts = res.data
+            }
+        })
+    }
+
+    loadmorePosts(){
+        this.postService.getAllPosts(this.currentPage).subscribe((res) => {
+            if (res) {
+                setTimeout(() => {
+                    this.isLoading = false
+                }, 1000)
+                this.posts = [...this.posts,...res.data]
+            }
+        })
     }
 
     likePost(postid: string) {

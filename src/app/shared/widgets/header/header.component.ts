@@ -20,9 +20,9 @@ export class HeaderComponent {
       this.socketioService.on<IMessage>('newMessageNotification').subscribe((res) => {
         this.getUnreadCount()
       })
-    }, 100)
+    }, 500)
   }
-
+  
   getUnreadCount(){
     this.conversationService.getUnreadConversationCount().subscribe((res)=>{
       this.conversationCount = res.data

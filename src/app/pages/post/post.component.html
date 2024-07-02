@@ -1,4 +1,4 @@
-<div class="flex gap-6 flex-col" appScrollLoad (loadMore)="test($event)">
+<div class="flex gap-6 flex-col overflow-y-auto ">
     @defer (when isLoading===false) {
         @for (post of posts; track post._id) {
             <app-post-item [postdata]="post" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)"
@@ -6,7 +6,7 @@
                 (saveButton)="savePost($event)" (unsaveButton)="unsavePost($event)"
                 (commentButton)="showComment($event)">
             </app-post-item>
-            }
+        }
     }@placeholder(minimum 500ms) {
         <app-post-item-skeleton></app-post-item-skeleton>
     }@loading {

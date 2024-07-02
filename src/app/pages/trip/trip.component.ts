@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GeolocationService, IGeolocationPosition, IUserLocation } from '../../core/services/geolocation.service';
 import { map, switchMap, catchError, of } from 'rxjs';
 import { ChatModalComponent } from "../../shared/widgets/chat-modal/chat-modal.component";
+import { ScrollService } from '../../core/services/scroll.service';
 
 @Component({
     selector: 'app-trip',
@@ -19,7 +20,7 @@ import { ChatModalComponent } from "../../shared/widgets/chat-modal/chat-modal.c
     imports: [SlideNavComponent, TripItemComponent, TripItemSkeletonComponent, ChatModalComponent]
 })
 export class TripComponent {
-
+  currentNav: string = 'Following' 
   isLoading: boolean = true;
   trips!: ITrip[];
   navItems: string[] = ['Following', 'Nearby'];
@@ -27,28 +28,22 @@ export class TripComponent {
   userLocation!: IUserLocation
   chatModal: boolean= false;
   link!: string;
+  currentPageFollow: number = 1
+  currentPageNearby: number = 1
   constructor(
     private tripService: TripService,
     private toastService: ToastService,
     private followService: FollowService,
     private route: ActivatedRoute,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private scrollService: ScrollService
   ) {}
   onNavChange(nav: string) {
+    this.currentNav = nav
     this.isLoading = true
     console.log(nav);
     if (nav == 'Following') {
-      this.tripService.getTrips('following').subscribe({
-        next: (res) => {
-          this.trips = res.data;
-          setTimeout(() => {
-            this.isLoading = false;
-          }, 1000);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+      this.getFollowingTrips()
     } else {
 
       this.geolocationService.getCurrentPosition().pipe(
@@ -58,7 +53,7 @@ export class TripComponent {
         })),
         switchMap((location) => {
           this.userLocation = location;
-          return this.tripService.getTrips('nearby', this.userLocation);
+          return this.tripService.getTrips('nearby',this.currentPageNearby, this.userLocation);
         }),
         catchError((error) => {
           console.error('Error:', error);
@@ -86,6 +81,11 @@ export class TripComponent {
     this.route.paramMap.subscribe((params) => {
         this.tripid = params.get('id')!
     })
+
+    this.scrollService.scroll$.subscribe((res)=>{
+      this.loadMoreTrips()
+    })
+
     if(this.tripid){
         console.log(this.tripid);
         
@@ -102,19 +102,38 @@ export class TripComponent {
             }
         })
     }else{
-        this.tripService.getTrips('following').subscribe({
-            next: (res) => {
-              this.trips = res.data;
-              setTimeout(() => {
-                this.isLoading = false;
-              }, 1000);
-            },
-            error: (err) => {
-              console.log(err);
-            },
-          });
+      this.getFollowingTrips()
+    
     }
  
+  }
+  loadMoreTrips() {
+    if(this.currentNav == "Following"){
+      this.currentPageFollow++;
+      this.getFollowingTrips()
+    }else{
+      this.currentPageNearby++;
+      this.tripService.getTrips('nearby',this.currentPageNearby, this.userLocation).subscribe({
+        next:(res)=>{
+          this.trips = [...this.trips,...res.data]
+        }
+      })
+
+    }
+  }
+
+  getFollowingTrips(){
+    this.tripService.getTrips('following',this.currentPageFollow).subscribe({
+      next: (res) => {
+        (this.trips)?this.trips = [...this.trips,...res.data]: this.trips = res.data
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   joinTrip(data: IJoinTrip) {

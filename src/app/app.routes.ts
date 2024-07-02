@@ -15,6 +15,9 @@ import { EditTripComponent } from './shared/widgets/edit-trip/edit-trip.componen
 import { ChatpageComponent } from './pages/chatpage/chatpage.component';
 import { SinglechatComponent } from './pages/singlechat/singlechat.component';
 import { PostItemComponent } from './shared/widgets/post-item/post-item.component';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { AdminDashComponent } from './shared/widgets/admin/admin-dash/admin-dash.component';
+import { AdminLoginComponent } from './shared/widgets/admin/admin-login/admin-login.component';
 
 export const routes: Routes = [
     {
@@ -40,5 +43,12 @@ export const routes: Routes = [
     },
     {
         path: 'signup',component:AuthpageComponent,canActivate:[authGuard]
+    },
+    {
+        path: 'admin',component:AdminPageComponent,
+        children:[
+            {path:'dashboard',component:AdminDashComponent},
+            {path:'login',component:AdminLoginComponent}
+        ]
     }
 ];
