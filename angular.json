@@ -32,7 +32,8 @@
               "node_modules/flowbite/dist/datepicker.js"  
             ],
             "allowedCommonJsDependencies": [
-            "cropperjs"
+            "cropperjs",
+            "apexcharts"
           ]
           },
           "configurations": {
