@@ -42,4 +42,9 @@ export class AdminService {
     return this.http.get<IResponse<IUser[]>>(`${this.apiUrl}${API_URLS.ADMIN.GET_ALL_USERS}`)
   }
 
+  searchUser(text: string):Observable<IResponse<IUser[]>>{
+    return this.http.get<IResponse<IUser[]>>(`${this.apiUrl}${API_URLS.ADMIN.SEARCH_USER(text)}`)
+
+  }
+
 }

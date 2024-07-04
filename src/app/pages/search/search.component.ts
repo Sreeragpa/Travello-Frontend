@@ -29,7 +29,7 @@ export class SearchComponent {
   tabs = tabs;
   trips: ITrip[] = []
   profiles: IUser[] = []
-  private searchValue: Subject<string> = new Subject<string>
+  private searchValue: Subject<string> = new Subject<string>()
 
   constructor(private userService: UserService,private tripService: TripService){}
 
