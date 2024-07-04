@@ -19,6 +19,7 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AdminDashComponent } from './shared/widgets/admin/admin-dash/admin-dash.component';
 import { AdminLoginComponent } from './shared/widgets/admin/admin-login/admin-login.component';
 import { UsermanagementComponent } from './shared/widgets/admin/usermanagement/usermanagement.component';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
     {
@@ -46,7 +47,7 @@ export const routes: Routes = [
         path: 'signup',component:AuthpageComponent,canActivate:[authGuard]
     },
     {
-        path: 'admin',component:AdminPageComponent,
+        path: 'admin',component:AdminPageComponent,canActivate:[adminGuard],
         children:[
             {path:'',component:AdminDashComponent},
             {path:'login',component:AdminLoginComponent},

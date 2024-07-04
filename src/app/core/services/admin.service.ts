@@ -58,4 +58,8 @@ export class AdminService {
     return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.ADMIN.LOGOUT}`,'')
   }
 
+  isAdmin():Observable<IResponse<boolean>>{
+    return this.http.get<IResponse<boolean>>(`${this.apiUrl}${API_URLS.ADMIN.IS_ADMIN}`)
+  }
+
 }

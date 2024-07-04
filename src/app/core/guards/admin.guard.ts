@@ -1,5 +1,25 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { AdminService } from '../services/admin.service';
+import { catchError, map, of } from 'rxjs';
 
 export const adminGuard: CanActivateFn = (route, state) => {
-  return true;
+  const adminService = inject(AdminService);
+  const router = inject(Router);
+  
+  return adminService.isAdmin().pipe(
+     map((res)=>{
+      if(res.data){
+        return true
+      }else{
+        router.navigate(['/login']);
+        return false
+      }
+    }),
+    catchError(() => {
+      router.navigate(['/login']);
+      return of(false)
+    })
+  )
+
 };
