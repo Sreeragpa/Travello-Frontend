@@ -1,94 +1,81 @@
 import { Component } from '@angular/core';
-import ApexCharts from 'apexcharts';
+import { AdminService } from '../../../../core/services/admin.service';
+import { GraphComponent, graphTypes } from "../graph/graph.component";
+import { IStatisticsData } from '../../../../core/models/trip.model';
+import { GraphService } from '../../../../core/services/graph.service';
+
 
 @Component({
-  selector: 'app-admin-dash',
-  standalone: true,
-  imports: [],
-  templateUrl: './admin-dash.component.html',
-  styleUrl: './admin-dash.component.css'
+    selector: 'app-admin-dash',
+    standalone: true,
+    templateUrl: './admin-dash.component.html',
+    styleUrl: './admin-dash.component.css',
+    imports: [GraphComponent]
 })
+
 export class AdminDashComponent {
+  userStatistics!: IStatisticsData[]
+  postStatistics!: IStatisticsData[]
+  tripStatistics!: IStatisticsData[]
+  graphLoading:number = 0
+  graphTypes = graphTypes
+  constructor(private adminService: AdminService,private dataService: GraphService){}
   ngOnInit() {
-    this.initChart()
+    this.getPostGraph()
+    this.getTripGraph()
+    this.getUserGraph()
+  }
+  getPostGraph(period: number = 7) {
+    // console.log(period);
+    
+    this.adminService.getPostStatistics(period).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.dataService.updatePostStatistics(res.data)
+        // this.postStatistics = res.data;
+        // this.graphLoading++;
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
+  }
+  getTripGraph(period: number = 7) {
+    this.adminService.getTripStatistics(period).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.dataService.updateTripStatistics(res.data)
+
+        // this.tripStatistics = res.data
+        // this.graphLoading++;
+
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
+  }
+  getUserGraph(period: number = 7){
+    this.adminService.getUserStatistics(period).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.dataService.updateUserStatistics(res.data)
+
+        // this.userStatistics = res.data
+        // this.graphLoading++;
+
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
+
   }
 
-  initChart(){
-    const options = {
-      chart: {
-        height: "100%",
-        maxWidth: "100%",
-        type: "area",
-        fontFamily: "Inter, sans-serif",
-        dropShadow: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      tooltip: {
-        enabled: true,
-        x: {
-          show: false,
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          opacityFrom: 0.55,
-          opacityTo: 0,
-          shade: "#1C64F2",
-          gradientToColors: ["#1C64F2"],
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        width: 6,
-      },
-      grid: {
-        show: false,
-        strokeDashArray: 4,
-        padding: {
-          left: 2,
-          right: 2,
-          top: 0
-        },
-      },
-      series: [
-        {
-          name: "New users",
-          data: [6500, 6418, 6456, 6526, 6356, 6456],
-          color: "#1A56DB",
-        },
-      ],
-      xaxis: {
-        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        show: false,
-      },
-    }
-    
-    if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("area-chart"), options);
-      chart.render();
-    }
-    
-    
-  }
-  
+
 }
 
 

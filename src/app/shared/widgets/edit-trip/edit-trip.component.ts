@@ -104,15 +104,7 @@ export class EditTripComponent {
   }
 
   onSubmit() {
-    console.log("hiohiohiohiohiohio");
-    
-    
-    
-    //{ title: '', members: '', description: '', start: '', end: '' }
-    console.log(this.tripEditForm.value);  //{ title: '', members: '', description: '', start: '', end: '' }
-    console.log(this.croppedImages);
 
-   
     // Error Handling
     
 

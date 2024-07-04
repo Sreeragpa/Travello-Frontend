@@ -46,3 +46,8 @@ export interface ITrip {
     tripid: string
   }
   
+  export interface IStatisticsData{
+    _id: string,
+    count: number
+  }
+  

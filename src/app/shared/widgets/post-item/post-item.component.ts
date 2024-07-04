@@ -5,15 +5,16 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { CommentService } from '../../../core/services/comment.service';
 import { LikesWithMutualPipe } from '../../pipes/likes-with-mutual.pipe';
 import { RouterLink } from '@angular/router';
+import { TextslicePipe } from "../../pipes/textslice.pipe";
 // import { IconDefinition, fa } from '@fortawesome/fontawesome-free';
 
 @Component({
-  selector: 'app-post-item',
-  standalone: true,
-  imports: [DateFormatPipe,LikesWithMutualPipe,RouterLink],
-  templateUrl: './post-item.component.html',
-  styleUrl: './post-item.component.css',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    selector: 'app-post-item',
+    standalone: true,
+    templateUrl: './post-item.component.html',
+    styleUrl: './post-item.component.css',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [DateFormatPipe, LikesWithMutualPipe, RouterLink, TextslicePipe]
 })
 export class PostItemComponent {
 test($event: Event) {

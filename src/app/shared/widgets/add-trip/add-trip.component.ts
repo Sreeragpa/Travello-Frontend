@@ -10,7 +10,6 @@ import { ToastService, ToastType } from '../../../core/services/toast.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImgUploadComponent } from "../img-upload/img-upload.component";
 import Cropper from 'cropperjs';
-// import datepicker from '../../../../../node_modules/flowbite/dist/datepicker'
 import Datepicker from 'flowbite';
 import { ITrip, ITripForm } from '../../../core/models/trip.model';
 import { TripService } from '../../../core/services/trip.service';
@@ -221,7 +220,7 @@ export class AddTripComponent {
   }
 
   saveCropped(){
-    console.log("hehe");
+
     console.log(this.cropActive);
     this.cropActive = false;
     

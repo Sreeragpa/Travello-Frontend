@@ -18,6 +18,7 @@ import { PostItemComponent } from './shared/widgets/post-item/post-item.componen
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AdminDashComponent } from './shared/widgets/admin/admin-dash/admin-dash.component';
 import { AdminLoginComponent } from './shared/widgets/admin/admin-login/admin-login.component';
+import { UsermanagementComponent } from './shared/widgets/admin/usermanagement/usermanagement.component';
 
 export const routes: Routes = [
     {
@@ -48,7 +49,8 @@ export const routes: Routes = [
         path: 'admin',component:AdminPageComponent,
         children:[
             {path:'dashboard',component:AdminDashComponent},
-            {path:'login',component:AdminLoginComponent}
+            {path:'login',component:AdminLoginComponent},
+            {path:'usermanagement',component:UsermanagementComponent}
         ]
     }
 ];

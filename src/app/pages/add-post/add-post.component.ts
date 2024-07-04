@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import Cropper from 'cropperjs';
-import 'cropperjs/dist/cropper.min.css';
 import { MapService } from '../../core/services/map.service';
 import { Subject, debounceTime, distinctUntilChanged, of, switchMap, tap } from 'rxjs';
 import { Feature, IPlaceSuggestion } from '../../core/models/mapService.models';

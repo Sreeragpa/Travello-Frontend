@@ -5,7 +5,7 @@
         </div>
         <div class=" flex flex-col">
             <span class="font-semibold dark:text-white"> {{postdata.user?.username}}</span>
-            <span class="dark:text-white text-xs">{{postdata.place}}</span>
+            <span class="dark:text-white text-xs">{{postdata.place | textslice:20 }}</span>
         </div>
         @if(!postdata.same_user) {
         <div class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">

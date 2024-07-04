@@ -2,7 +2,6 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { EditprofileFormComponent } from "../../shared/widgets/editprofile-form/editprofile-form.component";
 import { RouterLink } from '@angular/router';
 import Cropper from 'cropperjs';
-import 'cropperjs/dist/cropper.min.css';
 import { UserService } from '../../core/services/user.service';
 import IUser from '../../core/models/user.models';
 import { ToastService, ToastType } from '../../core/services/toast.service';
