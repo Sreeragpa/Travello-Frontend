@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -10,11 +10,17 @@ import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } 
   styleUrl: './otp-form.component.css'
 })
 export class OtpFormComponent {
+clearInput(idx: number) {
+  this.otpInputs.toArray()[idx].nativeElement.value=''
+}
   @Input({required:true}) formtype!: string
   @Input({required:true}) email!: string
   @Input() error!: string
   @Output() formData: EventEmitter<string> = new EventEmitter()
   @Input() isLoading: boolean = false
+
+  @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef<HTMLInputElement>>;
+
   otpForm!: FormGroup
   otpControls: FormControl[] = [];
   otpInput: any;
@@ -29,6 +35,11 @@ export class OtpFormComponent {
       otp: this.fb.array(this.otpControls)
     })  
   }
+
+  ngAfterViewInit(): void {
+    this.otpInputs.toArray()[0].nativeElement.focus();
+  }
+
   ngOnInit() {
     this.startOtpTimer();
   }
@@ -59,14 +70,28 @@ export class OtpFormComponent {
       this.formData.emit(otp)
       
     }else{
-      console.log('EROR');
-      
       this.otpForm.markAllAsTouched()
     }
     
   }
 
-  checkOTPFormValid(){
+  checkOTPFormValid(event: KeyboardEvent, idx: number){
+    const keyChar: string = event.key;
+
+    if (/[0-9A-Za-z]/.test(keyChar) && !event.shiftKey ) {
+        if (idx < 5) {
+          // if(this.otpInputs.toArray()[idx].nativeElement.value && keyChar!="Shift"){
+          //   this.otpInputs.toArray()[idx].nativeElement.value = keyChar;
+          // }
+          this.otpInputs.toArray()[idx + 1].nativeElement.focus();
+        }
+    } else if (keyChar === 'Backspace') {
+      if (idx > 0) {
+        this.otpInputs.toArray()[idx - 1].nativeElement.focus();
+      }
+    }
+    
+    
     if(this.otpForm.valid){
       this.otpFormValid = true
     }else{
@@ -75,7 +100,7 @@ export class OtpFormComponent {
   }
   createOtpControls() {
     // Create exactly 6 FormControl instances
-    for (let i = 0; i < 6; i++) { // Ensure loop runs exactly 6 times
+    for (let i = 0; i < 6; i++) { 
       this.otpControls.push(new FormControl('', [Validators.required])); 
     }
   }
