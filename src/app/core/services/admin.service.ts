@@ -44,7 +44,18 @@ export class AdminService {
 
   searchUser(text: string):Observable<IResponse<IUser[]>>{
     return this.http.get<IResponse<IUser[]>>(`${this.apiUrl}${API_URLS.ADMIN.SEARCH_USER(text)}`)
+  }
 
+  blockUser(userid: string):Observable<IResponse<IUser>>{
+    return this.http.post<IResponse<IUser>>(`${this.apiUrl}${API_URLS.ADMIN.BLOCK_USER(userid)}`,'')
+  }
+
+  unBlockUser(userid: string):Observable<IResponse<IUser>>{
+    return this.http.post<IResponse<IUser>>(`${this.apiUrl}${API_URLS.ADMIN.UNBLOCK_USER(userid)}`,'')
+  }
+
+  logOut():Observable<IResponse<string>>{
+    return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.ADMIN.LOGOUT}`,'')
   }
 
 }

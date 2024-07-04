@@ -77,7 +77,7 @@ export class CommentModalComponent {
       ).subscribe({
         next: (res) => {
           this.comments = res.data;
-          console.log(this.comments);
+          this.commentContent = ""
         },
         error: (err) => {
           console.log(err);

@@ -4,7 +4,7 @@
             <img class="w-10 h-10 rounded-full" [src]="postdata.user?.profileimg" alt="Rounded avatar">
         </div>
         <div class=" flex flex-col">
-            <span class="font-semibold dark:text-white"> {{postdata.user?.username}}</span>
+            <span class="font-semibold dark:text-white cursor-pointer" [routerLink]="['/profile',postdata.user?._id]"> {{postdata.user?.username}}</span>
             <span class="dark:text-white text-xs">{{postdata.place | textslice:20 }}</span>
         </div>
         @if(!postdata.same_user) {

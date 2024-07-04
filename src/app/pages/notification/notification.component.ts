@@ -3,11 +3,12 @@ import { NotificationService } from '../../core/services/notification.service';
 import { INotification } from '../../core/models/notification.model';
 import { TripService } from '../../core/services/trip.service';
 import { NOTIFICATION_TYPE } from '../../core/enums/notification.enums';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-notification',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.css'
 })

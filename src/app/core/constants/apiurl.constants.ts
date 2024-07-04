@@ -104,6 +104,7 @@ export const API_URLS = {
     SEARCH_USER: (query: string)=>`/search-users?search=${query}`,
     BLOCK_USER: (userid: string)=>`/block/user/${userid}`,
     UNBLOCK_USER: (userid: string)=>`/unblock/user/${userid}`,
+    LOGOUT: `/logout`
   }
 
 

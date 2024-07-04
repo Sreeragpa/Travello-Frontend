@@ -4,7 +4,8 @@
     </div>
     <div class="mt-5 flex flex-col gap-2">
         @for (notification of notifications; track notification._id) {
-            <div class="notification-item flex bg-primary rounded-2xl p-5 gap-3 items-center justify-between">
+  
+            <div class="notification-item flex bg-primary rounded-2xl p-5 gap-3 items-center justify-between cursor-pointer" [routerLink]="['/profile',notification.senderDetails?._id]">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 sm:w-14 sm:h-14 bg-slate-500 p-0 rounded-full">
                         <img class="rounded-full" [src]="notification.senderDetails?.profileimg" alt="">
@@ -28,10 +29,10 @@
                             class="text-white transition-all bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-10 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Accept
                         </button>
-                        <i class="fa-solid fa-xmark text-lg cursor-pointer" style="color: #000000;" (click)="onMarkAsread(notification._id)"></i>
+                        <i class="fa-solid fa-xmark text-lg cursor-pointer" style="color: #000000;" (click)="onMarkAsread(notification._id); $event.stopPropagation()"></i>
                     </div>
                 }@else {
-                    <i class="fa-solid fa-xmark text-lg cursor-pointer" style="color: #000000;" (click)="onMarkAsread(notification._id)"></i>
+                    <i class="fa-solid fa-xmark text-lg cursor-pointer" style="color: #000000;" (click)="onMarkAsread(notification._id); $event.stopPropagation();"></i>
                     
                 }
             </div>

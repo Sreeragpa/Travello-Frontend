@@ -19,7 +19,7 @@ export class SignupFormComponent {
   @Input() isLoading:boolean = false
   constructor(private fb: FormBuilder){
     this.signupForm = this.fb.group({
-      username: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(10)]),
+      username: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(18)]),
       email: new FormControl('',[Validators.required,Validators.email]),
       password: new FormControl('',[Validators.required,Validators.minLength(8)]),
       confirmpassword: new FormControl('',[Validators.required,Validators.minLength(8),confirmPasswordValidator])  //Validators.pattern("[a-zA-Z ]*")

@@ -3,6 +3,7 @@ import { AdminService } from '../../../../core/services/admin.service';
 import { GraphComponent, graphTypes } from "../graph/graph.component";
 import { IStatisticsData } from '../../../../core/models/trip.model';
 import { GraphService } from '../../../../core/services/graph.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class AdminDashComponent {
   tripStatistics!: IStatisticsData[]
   graphLoading:number = 0
   graphTypes = graphTypes
-  constructor(private adminService: AdminService,private dataService: GraphService){}
+  constructor(private adminService: AdminService,private dataService: GraphService, private router: Router){}
   ngOnInit() {
     this.getPostGraph()
     this.getTripGraph()
@@ -74,6 +75,8 @@ export class AdminDashComponent {
     })
 
   }
+
+
 
 
 }

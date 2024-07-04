@@ -12,6 +12,7 @@ import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 })
 export class UsermanagementComponent {
 
+
   users: IUser[] = [];
   usersTemp: IUser[] = []
   private searchValue: Subject<string> = new Subject<string>()
@@ -48,6 +49,38 @@ export class UsermanagementComponent {
     }else{
       this.users = this.usersTemp
     }
+  }
+
+  blockUser(userid: string) {
+    this.adminService.blockUser(userid).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.users.forEach((user)=>{
+          if(String(user._id) === String(res.data._id)){
+            console.log("hehe");
+            
+            user.isBlocked = true
+          }
+        })
+        this.usersTemp = this.users
+
+      }
+    })
+  }
+
+  unBlockUser(userid: string) {
+    this.adminService.unBlockUser(userid).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.users.forEach((user)=>{
+          if(String(user._id) === String(res.data._id)){
+            user.isBlocked = false
+          }
+        })
+        this.usersTemp = this.users
+
+      }
+    })
   }
     
 

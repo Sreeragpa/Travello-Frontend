@@ -48,7 +48,7 @@ export const routes: Routes = [
     {
         path: 'admin',component:AdminPageComponent,
         children:[
-            {path:'dashboard',component:AdminDashComponent},
+            {path:'',component:AdminDashComponent},
             {path:'login',component:AdminLoginComponent},
             {path:'usermanagement',component:UsermanagementComponent}
         ]

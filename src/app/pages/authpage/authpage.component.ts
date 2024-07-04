@@ -73,18 +73,27 @@ export class AuthpageComponent {
               console.log("INVALID_CREDENTIALS");
             }
             if(error.error.message == "USER_NOT_VERIFIED"){
+              this.toastService.showToast("OTP Sent Successfully",ToastType.Normal)
               this.isOtpSend = true
+              this.otpError = ''
             }
             console.log(error);
             this.isLoading = false
             
             return of(null)
           })
-        ).subscribe((res)=>{
-          if(res){
-            this.router.navigate(['']);
+        ).subscribe({
+          next: (res) => {
+            this.isLoading = false;
+            if (res) {
+              console.log("Verified Successfully");
+              this.router.navigate(['']);
+            }
+          },
+          error: (error) => {
+            console.error('Error navigating to signin:', error);
+            // Handle error condition if necessary
           }
-          console.log(res);
         })
     
   }
@@ -128,8 +137,14 @@ export class AuthpageComponent {
     ).subscribe((res)=>{
       this.isLoading = false
       if(res){
-        console.log("Verified Successfully");
-        this.router.navigate(['/signin'])
+        this.toastService.showToast("OTP Verified Successfully",ToastType.Normal)
+
+        setTimeout(()=>{
+          this.signinerror = false
+          this.isOtpSend = false
+        },2000)
+        console.log("Otp Verified Successfully");
+        this.router.navigate(['/signin'])  
       }
     })
   }
