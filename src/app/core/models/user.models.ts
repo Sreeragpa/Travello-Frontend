@@ -3,7 +3,8 @@ import { ITrip } from "./trip.model";
 export interface IUserBasic{
     username: string,
     _id: string,
-    profileimg: string
+    profileimg: string,
+    isPremium: boolean
 }
 
 
@@ -21,6 +22,7 @@ export default interface IUser {
     bio: string;
     isFollowing: boolean
     isBlocked: boolean
+    isPremium: boolean
     
   }
   export interface ILikedUser{

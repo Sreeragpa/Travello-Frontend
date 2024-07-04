@@ -9,15 +9,15 @@ export const adminGuard: CanActivateFn = (route, state) => {
   
   return adminService.isAdmin().pipe(
      map((res)=>{
-      if(res.data){
+      if(res?.data){
         return true
       }else{
-        router.navigate(['/login']);
+        router.navigate(['/admin/login']);
         return false
       }
     }),
     catchError(() => {
-      router.navigate(['/login']);
+      router.navigate(['/admin/login']);
       return of(false)
     })
   )

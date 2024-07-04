@@ -28,7 +28,7 @@ onSubmit() {
   if(this.loginForm.valid){
     this.adminService.login(loginData).subscribe({
       next:(res)=>{
-        this.router.navigate(['/admin/dashboard'])
+        this.router.navigate(['/admin'])
       },
       error:(err)=>{
         this.error = true;
