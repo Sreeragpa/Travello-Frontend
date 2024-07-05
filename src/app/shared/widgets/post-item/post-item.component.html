@@ -23,7 +23,7 @@
         }
 
     </div>
-    <div class="image-container" (dblclick)="like(postdata._id)">
+    <div class="image-container" (dblclick)="like(postdata._id)" (touchstart)="onTouchStart($event, postdata._id)">
         <!-- <img [src]="postdata.images[0]" alt="" > -->
         <swiper-container navigation="true" pagination="true">
             @for (image of postdata.images; track image) {

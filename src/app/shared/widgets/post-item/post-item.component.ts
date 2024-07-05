@@ -17,6 +17,26 @@ import { TextslicePipe } from "../../pipes/textslice.pipe";
     imports: [DateFormatPipe, LikesWithMutualPipe, RouterLink, TextslicePipe]
 })
 export class PostItemComponent {
+  lastTap: number = 0;
+  doubleTapTimeout: any;
+onTouchStart($event: TouchEvent,postid: any) {
+  const currentTime = new Date().getTime();
+  const tapLength = currentTime - this.lastTap;
+
+  clearTimeout(this.doubleTapTimeout);
+
+  if (tapLength < 500 && tapLength > 0) {
+    // Double-tap detected
+    this.likeButton.emit(postid as string)
+  } else {
+    // Single-tap detected, start a timeout to reset the lastTap
+    this.doubleTapTimeout = setTimeout(() => {
+      clearTimeout(this.doubleTapTimeout);
+    }, 500);
+  }
+
+  this.lastTap = currentTime;
+}
 test($event: Event) {
 throw new Error('Method not implemented.');
 }

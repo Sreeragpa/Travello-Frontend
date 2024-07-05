@@ -153,7 +153,10 @@ export class PostComponent {
 
     likePost(postid: string) {
         console.log('Like pressed');
-        this.likeSubject.next(postid)
+        const likedpost = this.posts.find((post)=>{return post._id == postid})
+        if(!likedpost?.isLiked){
+            this.likeSubject.next(postid)
+        }
     }
 
     unlikePost(postid: string) {
