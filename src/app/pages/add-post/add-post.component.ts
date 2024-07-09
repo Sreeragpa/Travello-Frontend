@@ -112,7 +112,7 @@ export class AddPostComponent {
     this.cropperInstance = new Cropper(image, {
       aspectRatio: 4 / 5, // Define aspect ratio here (e.g., 4:3)
       movable: true, // Allow user to move image within crop area
-      zoomable: true, // Allow user to zoom in/out
+      zoomable: true, // Allow user to zoom in/outch
       viewMode: 1, // Enable drag mode for repositioning image
       cropBoxResizable:true,
       cropBoxMovable:true,

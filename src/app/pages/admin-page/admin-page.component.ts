@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AdminHeaderComponent } from "../../shared/widgets/admin/admin-header/admin-header.component";
 import { AdminSidebarComponent } from "../../shared/widgets/admin/admin-sidebar/admin-sidebar.component";
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-admin-page',
@@ -11,7 +12,15 @@ import { RouterOutlet } from '@angular/router';
     imports: [AdminHeaderComponent, AdminSidebarComponent,RouterOutlet]
 })
 export class AdminPageComponent {
-
+    showSidebar: boolean = true;
+    constructor(private router: Router){}
     
+    ngOnInit() {
+        this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd)
+        ).subscribe(()=>{
+            this.showSidebar = !this.router.url.includes('/admin/login')
+        })
+    }
 
 }

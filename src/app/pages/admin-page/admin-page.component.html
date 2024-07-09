@@ -1,7 +1,9 @@
 <div class="admin-layout">
       <app-admin-header class="header"></app-admin-header>
       <div class="main-content">
-        <app-admin-sidebar class="sidebar"></app-admin-sidebar>
+        @if (showSidebar) {
+          <app-admin-sidebar class="sidebar"></app-admin-sidebar>
+        }
         <div class="content">
           <router-outlet></router-outlet>
         </div>

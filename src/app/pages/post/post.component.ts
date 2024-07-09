@@ -243,7 +243,6 @@ export class PostComponent {
 
     showComment(postid: string) {
         this.iscommentVisible = true
-        console.log(postid);
 
     }
 }
