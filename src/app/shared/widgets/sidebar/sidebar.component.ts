@@ -63,12 +63,13 @@ export class SidebarComponent {
       if(res){
         this.notificationCount++;
       }else{
-        this.notificationCount--;
+        if(this.notificationCount>=1){
+          this.notificationCount--;
+        }
       }
     })
 
     this.navbarVisibiltyService.navBarVisible$.subscribe((visible)=>{
-      console.log(visible,"vidibelel");
       this.navBarVisible = visible;
     })
 

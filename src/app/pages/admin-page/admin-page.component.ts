@@ -26,6 +26,9 @@ export class AdminPageComponent {
             
         });
 
+        if(this.router.url=='/admin/login'){
+            this.showSidebar = false
+        }
         
     }
 
