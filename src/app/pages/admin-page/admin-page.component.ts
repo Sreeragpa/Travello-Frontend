@@ -16,11 +16,17 @@ export class AdminPageComponent {
     constructor(private router: Router){}
     
     ngOnInit() {
+
+
         this.router.events.pipe(
             filter(event => event instanceof NavigationEnd)
-        ).subscribe(()=>{
-            this.showSidebar = !this.router.url.includes('/admin/login')
-        })
+        ).subscribe((va)=>{
+            console.log(this.router.url);
+            this.showSidebar = !this.router.url.includes('/admin/login');
+            
+        });
+
+        
     }
 
 }
