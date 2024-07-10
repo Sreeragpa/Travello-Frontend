@@ -9,6 +9,7 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
 })
 export class ImgUploadComponent {
   @Output() imgFile: EventEmitter<string> = new EventEmitter()
+  @Output() imgError: EventEmitter<string> = new EventEmitter();
 
   
   onFile(event: any){
@@ -17,6 +18,16 @@ export class ImgUploadComponent {
     if (!file) {
       return;
     }
+
+        // Check if the file type is an image
+        if (!file.type.startsWith('image/')) {
+          console.error('The selected file is not an image.');
+          this.imgError.emit("The selected file is not an image.")
+          return; 
+        }else{
+          this.imgError.emit('')
+        }
+    
 
     const reader = new FileReader();
     reader.readAsDataURL(file);

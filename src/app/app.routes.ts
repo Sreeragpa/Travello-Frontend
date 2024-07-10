@@ -21,6 +21,7 @@ import { AdminLoginComponent } from './shared/widgets/admin/admin-login/admin-lo
 import { UsermanagementComponent } from './shared/widgets/admin/usermanagement/usermanagement.component';
 import { adminGuard } from './core/guards/admin.guard';
 import { adminloginGuard } from './core/guards/adminlogin.guard';
+import { ErrorpageComponent } from './pages/errorpage/errorpage.component';
 
 export const routes: Routes = [
     {
@@ -54,5 +55,8 @@ export const routes: Routes = [
             {path:'login',component:AdminLoginComponent,canActivate:[adminloginGuard]},
             {path:'usermanagement',component:UsermanagementComponent,canActivate:[adminGuard]}
         ]
+    },
+    {
+        path: '**',component:ErrorpageComponent
     }
 ];

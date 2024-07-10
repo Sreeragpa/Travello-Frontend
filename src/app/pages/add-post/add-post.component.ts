@@ -29,6 +29,7 @@ export class AddPostComponent {
   caption: string = ""
   private searchvalue = new Subject<string>();
   isLoading: Boolean = false
+  imgError: string = ''
 
   constructor(private mapService: MapService, private postService: PostService,private authSerive: AuthService, private toastService:ToastService, private router: Router){
 
@@ -97,6 +98,10 @@ export class AddPostComponent {
         console.error("Image element not found"); // Handle case where element is not ready
       }
     
+  }
+
+  onImgError(error: string){
+    this.imgError = error
   }
 
 

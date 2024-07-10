@@ -52,7 +52,11 @@
 
                 <form action="" class="space-y-2">
                     <!-- Image Upload -->
-                    <app-img-upload (imgFile)="onFile($event)" [class.hidden]="croppedImages.length>=3"></app-img-upload>
+                    <app-img-upload (imgFile)="onFile($event)" [class.hidden]="croppedImages.length>=3" (imgError)="onImgError($event)"></app-img-upload>
+
+                    <div>
+                        <p class="text-red-600">{{imgError}}</p>
+                    </div>
 
                     <!-- Form Inputs -->
                     <div class="mb-5 w-1/2">
@@ -60,7 +64,7 @@
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
                         <div class="flex gap-2">
                             <input type="text" id="location" (keyup)="onkeyLocationKeyUp($event)"
-                                [value]="selectedPlace?.properties?.city"
+                                [value]="selectedPlace?.properties?.formatted"
                                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                                 placeholder="" required />
 
