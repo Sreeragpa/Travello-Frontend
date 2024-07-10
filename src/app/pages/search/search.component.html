@@ -1,4 +1,4 @@
-<div class="search-main">
+<div class="search-main mt-1">
             <div class=" w-full flex justify-center">
                 <div class="relative inset-y-0 start-8 flex items-center ps-3 pointer-events-none">
                     <i class="fa-solid fa-search text-gray-500 dark:text-gray-400"></i>
@@ -22,7 +22,7 @@
             </div>
             <div class="w-full flex justify-center mt-5 ">
                 @if (activeTab===tabs.profiles) {
-                    <app-search-profile-card [profiles]="profiles"></app-search-profile-card>
+                    <app-search-profile-card [profiles]="profiles" class="w-[50%]"></app-search-profile-card>
                 }@else {
                   <app-search-trip-card [trips]="trips"></app-search-trip-card>
                 }

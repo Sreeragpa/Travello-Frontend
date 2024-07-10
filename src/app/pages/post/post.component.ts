@@ -55,12 +55,7 @@ export class PostComponent {
             this.postid = params.get('id')!
         })
 
-        this.scrollService.scroll$.subscribe((res)=>{
-            console.log(res);
-            console.log("Scrolllelelldlldld");
-            this.currentPage++;
-            this.loadmorePosts()
-        })
+      
 
         if (this.postid) {
             console.log(this.postid);
@@ -79,6 +74,10 @@ export class PostComponent {
 
         } else {
             this.getAllPosts()
+            this.scrollService.scroll$.subscribe((res)=>{
+                this.currentPage++;
+                this.loadmorePosts()
+            })
         }
 
 

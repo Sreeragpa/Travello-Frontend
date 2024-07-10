@@ -85,13 +85,7 @@ export class TripComponent {
         this.tripid = params.get('id')!
     })
 
-    this.scrollService.scroll$.subscribe((res)=>{
-      if(!this.isLoading){
-        this.loadMoreTrips();
-      }
 
-      
-    })
 
     if(this.tripid){
         console.log(this.tripid);
@@ -110,7 +104,11 @@ export class TripComponent {
         })
     }else{
       this.getFollowingTrips()
-    
+      this.scrollService.scroll$.subscribe((res)=>{
+        if(!this.isLoading){
+          this.loadMoreTrips();
+        }
+      })
     }
  
   }
