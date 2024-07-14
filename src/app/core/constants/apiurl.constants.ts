@@ -24,7 +24,8 @@ export const API_URLS = {
     VERIFY_OTP: '/verify-otp',
     CHECK_AUTH: '/check-auth',
     LOGOUT: '/logout',
-    GET_TOKEN: '/token'
+    GET_TOKEN: '/token',
+    FORGOT_PASSWORD: '/forgot-password'
   },
 
   COMMENT: {

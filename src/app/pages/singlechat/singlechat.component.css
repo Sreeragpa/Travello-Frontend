@@ -16,6 +16,22 @@
 .message{
     transition: all 0.3s ease-out;
 }
+.chat-container {
+    position: relative;
+    display: flex;
+  }
+
+emoji-mart {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    z-index: 1000;
+    height: 200px;
+    overflow-y: scroll;
+    background: rgba(255, 255, 255, 0.3); /* Optional: adds a semi-transparent white overlay */
+    backdrop-filter: blur(10px); /* Adjust the blur radius as needed */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+  }
 
 /* .chatbubble {
     max-width: 75%;

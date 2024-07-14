@@ -148,4 +148,17 @@ export class AuthpageComponent {
       }
     })
   }
+
+  forgotPassword(){
+    this.authService.forgotPassword().subscribe({
+      next:(res)=>{
+        console.log(res);
+        
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
+  }
 }

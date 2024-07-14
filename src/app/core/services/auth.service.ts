@@ -58,5 +58,9 @@ export class AuthService {
     // return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.AUTH.LOGOUT}`,'')
   }
 
+  forgotPassword(): Observable<IResponse<string>>{
+    return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.AUTH.FORGOT_PASSWORD}`,'')
+  }
+
 
 }

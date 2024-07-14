@@ -15,6 +15,7 @@ export class SigninFormComponent {
   @Output() formdata: EventEmitter<Ilogin> = new EventEmitter();
   @Input() error: Boolean = false;
   @Input() isLoading: boolean = false
+  @Output() onForgotPassword: EventEmitter<boolean> = new EventEmitter();
   signinForm!: FormGroup
   constructor(private fb: FormBuilder, private authService: AuthService){
     this.signinForm = this.fb.group({
@@ -31,5 +32,9 @@ export class SigninFormComponent {
       this.signinForm.markAllAsTouched()
     }
     
+  }
+
+  forgotPassword(){
+    this.onForgotPassword.emit(true)
   }
 }

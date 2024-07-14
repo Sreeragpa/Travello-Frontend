@@ -12,16 +12,20 @@ import { ChatMembersComponent } from "../../shared/widgets/chat-members/chat-mem
 import { DateFormatPipe } from "../../shared/pipes/date-format.pipe";
 import { TimeFormatPipe } from "../../shared/pipes/time-format.pipe";
 import { NavbarVisibilityService } from '../../core/services/navbar-visibility.service';
+import { EmojiComponent, EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+
 
 @Component({
     selector: 'app-singlechat',
     standalone: true,
     templateUrl: './singlechat.component.html',
     styleUrl: './singlechat.component.css',
-    imports: [RouterLink, FormsModule, CommonModule, LinkifyPipe, ChatMembersComponent, DateFormatPipe, TimeFormatPipe]
+    imports: [RouterLink, FormsModule, CommonModule, LinkifyPipe, ChatMembersComponent, DateFormatPipe, TimeFormatPipe,PickerComponent]
 })
 export class SinglechatComponent {
-  text!: string;
+
+  text: string = '';
 membersTab: boolean = false;
   constructor(private route: ActivatedRoute,private navbarVisibiltyService: NavbarVisibilityService, private messageService: MessageService, private conversationService: ConversationService, private socketioService: SocketioService) { }
   private conversationid!: string
@@ -29,6 +33,17 @@ membersTab: boolean = false;
   messages!: IMessage[]
   currentUserId!: string
   @ViewChild('chatContainer') private chatContainerRef!: ElementRef;
+  showEmojiPicker: boolean = false;
+
+  toggleEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  addEmoji(event: any) {
+    const emoji = event.emoji.native;
+    this.text += emoji;
+    this.showEmojiPicker = false;
+  }
 
   ngOnInit() {
     this.navbarVisibiltyService.hideNavBar()
