@@ -17,7 +17,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     // headers for third-party API requests
     authReq = req.clone({
       headers: req.headers.set('Content-Type', 'application/json')
-      // Do not set withCredentials for third-party APIs
+      // Do not set withCredentials for third-party APIs (LocationAPI)
     });
   }
   return next(authReq);

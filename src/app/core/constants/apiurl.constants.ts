@@ -20,6 +20,7 @@ export const API_URLS = {
   AUTH: {
     BASE: '/api/auth',
     SIGNIN: '/signin',
+    SIGNIN_WITH_GOOGLE: '/google',
     SIGNUP: '/signup',
     VERIFY_OTP: '/verify-otp',
     CHECK_AUTH: '/check-auth',

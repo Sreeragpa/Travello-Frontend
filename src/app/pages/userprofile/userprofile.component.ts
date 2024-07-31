@@ -12,6 +12,7 @@ import { ToastService, ToastType } from '../../core/services/toast.service';
 import { TripService } from '../../core/services/trip.service';
 import { ITrip } from '../../core/models/trip.model';
 import { TripGridComponent } from "../../shared/widgets/trip-grid/trip-grid.component";
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-userprofile',
@@ -45,6 +46,7 @@ export class UserprofileComponent {
     private toastService: ToastService,
     private tripService: TripService,
     private route: ActivatedRoute,
+    private googleAuthService:SocialAuthService
    
   ) { }
   ngOnInit() {
@@ -168,10 +170,15 @@ export class UserprofileComponent {
 
   onLogout() {
     this.authService.logout().subscribe((res) => {
-      console.log(res);
+      this.googleSignOut()
       this.router.navigate(['/signin']);
     });
   }
+
+  googleSignOut(): void {
+    this.googleAuthService.signOut();
+  }
+
 
   follow(userid: string){
     this.followService.followAccount(userid).subscribe({

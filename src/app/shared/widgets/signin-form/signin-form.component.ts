@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import {  Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { Ilogin } from '../../../core/models/auth.models';
+import { GoogleSigninButtonModule, SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-signin-form',
   standalone: true,
-  imports: [RouterLink,ReactiveFormsModule],
+  imports: [RouterLink,ReactiveFormsModule,GoogleSigninButtonModule],
   templateUrl: './signin-form.component.html',
   styleUrl: './signin-form.component.css'
 })
@@ -17,11 +18,33 @@ export class SigninFormComponent {
   @Input() isLoading: boolean = false
   @Output() onForgotPassword: EventEmitter<boolean> = new EventEmitter();
   signinForm!: FormGroup
-  constructor(private fb: FormBuilder, private authService: AuthService){
+  constructor(private fb: FormBuilder, private authService: AuthService,private googleAuthService:SocialAuthService,private router: Router){
     this.signinForm = this.fb.group({
       email: new FormControl('',[Validators.required,Validators.email]),
       password: new FormControl('',[Validators.required])
     })  
+  }
+
+  ngOnInit() {
+    this.googleAuthService.authState.subscribe((user) => {
+      // this.user = user;
+      // this.loggedIn = (user != null);
+      console.log(user);
+      this.authService.loginWithGoogle(user.idToken).subscribe({
+        next:(res)=>{
+          this.router.navigate([''])
+          
+        },
+        error:(err)=>{
+          console.log(err,'errr');
+        }
+      })
+      
+    });
+  }
+
+  googleLogin(){
+    console.log("Googlelgel");
   }
   
   onSubmit(){

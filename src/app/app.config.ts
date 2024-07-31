@@ -8,6 +8,10 @@ import { authInterceptor } from './core/interceptor/auth.interceptor';
 import { errorInterceptor } from './core/interceptor/error.interceptor';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { socketio_config } from './socketio.config';
+import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider,
+} from '@abacritt/angularx-social-login';
 
 
 export const appConfig: ApplicationConfig = {
@@ -15,5 +19,24 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor,errorInterceptor])),
     provideAnimations(),
     // importProvidersFrom(SocketIoModule.forRoot(socketio_config as SocketIoConfig))
+    // Google Auth
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        lang: 'en',
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '696084527477-09ptrr8mh7mmufpivk2k2aeih2m91cvk.apps.googleusercontent.com'
+            )
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
   ]
 };

@@ -84,11 +84,6 @@ export class AddTripComponent {
   }
 
   onSubmit() {
-    console.log("hiohiohiohiohiohio");
-    console.log(this.tripForm.value);  //{ title: '', members: '', description: '', start: '', end: '' }
-    console.log(this.startingPoint,this.destination);
-    console.log(this.croppedImages);
-    console.log(this.tripForm.value.start>=this.tripForm.value.end); // Date with time
 
    
     // Error Handling
@@ -159,11 +154,11 @@ export class AddTripComponent {
 
     this.tripService.addTrip(tripData).subscribe({
       next:(res)=>{
-        console.log(res);
-        
         this.isLoading = false
         this.toastService.showToast("Trip Added",ToastType.Success);
-        //    this.router.navigate(['posts'])
+        this.router.navigate([''])
+        console.log("heheh");
+        
       },
       error:(err)=>{
         console.log(err);

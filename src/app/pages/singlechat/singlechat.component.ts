@@ -14,7 +14,7 @@ import { TimeFormatPipe } from "../../shared/pipes/time-format.pipe";
 import { NavbarVisibilityService } from '../../core/services/navbar-visibility.service';
 import { EmojiComponent, EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-
+  
 
 @Component({
     selector: 'app-singlechat',

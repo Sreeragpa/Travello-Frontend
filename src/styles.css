@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 
 /* :root {
@@ -12,7 +14,6 @@
 .light{
     --primary: 246, 244, 248;
     --secondary: 255, 255, 255;
-
     --travello-notify: 4, 187, 223
 }
 
@@ -20,7 +21,6 @@
 .dark{
     --primary: 23, 23, 23;
     --secondary: 33, 33, 33;
-
     --travello_notify: 4, 187, 223
 }
 

@@ -29,6 +29,19 @@ export class AuthService {
         })
       )
   }
+  loginWithGoogle(idToken: string): Observable<IResponse<string>> {
+    return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.AUTH.SIGNIN_WITH_GOOGLE}`, {idToken})
+      .pipe(
+        tap(response =>{
+          console.log(response.data);
+          
+          const token = response.data;
+          if(token){
+            this.authToken = token;
+          }
+        })
+      )
+  }
 
   signup(data:ISignup): Observable<IResponse<IUser>>{
     return this.http.post<IResponse<IUser>>(`${this.apiUrl}${API_URLS.AUTH.SIGNUP}`,data)
