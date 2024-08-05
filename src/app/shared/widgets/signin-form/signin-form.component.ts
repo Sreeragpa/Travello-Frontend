@@ -33,7 +33,7 @@ export class SigninFormComponent {
       this.authService.loginWithGoogle(user.idToken).subscribe({
         next:(res)=>{
           this.router.navigate([''])
-          
+
         },
         error:(err)=>{
           console.log(err,'errr');

@@ -20,8 +20,5 @@ export class AppComponent implements OnInit{
   constructor(private authService: AuthService,private socketIOService: SocketioService){}
   ngOnInit(): void {
     initFlowbite();
-
-    
-    
   }
 }

@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter, withViewTransitions } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -14,12 +14,12 @@ import {
 } from '@abacritt/angularx-social-login';
 import { environment } from '../environments/environment';
 
+// withInMemoryScrolling({scrollPositionRestoration:"top"})
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes,withViewTransitions()),
     provideHttpClient(withInterceptors([authInterceptor,errorInterceptor])),
     provideAnimations(),
-    // importProvidersFrom(SocketIoModule.forRoot(socketio_config as SocketIoConfig))
     // Google Auth
     {
       provide: 'SocialAuthServiceConfig',
