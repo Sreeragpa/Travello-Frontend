@@ -58,7 +58,6 @@ export class EditTripComponent {
     if(this.tripid){
       this.tripService.getSingleTrip(this.tripid).subscribe({
         next:(res)=>{
-          console.log(res);
           this.prevData = res.data[0];
           this.croppedImages.push(this.prevData.imageUrl as string)
           this.createForm();
@@ -73,7 +72,7 @@ export class EditTripComponent {
     }
   }
   createForm(){
-    console.log(this.prevData);
+
     
     
   
@@ -123,7 +122,7 @@ export class EditTripComponent {
     }
 
     const formdata = this.getChangedData(this.tripEditForm.value,this.prevData);
-    console.log(formdata);
+
     if(Object.keys(formdata).length===0 && !this.croppedImages[0]){
       return
     }
@@ -137,18 +136,15 @@ export class EditTripComponent {
     
 
     this.isLoading = true
-    console.log(tripData);
+ 
 
     this.tripService.updateTrip(this.tripid as string,tripData).subscribe({
       next:(res)=>{
-        console.log(res);
-        
         this.isLoading = false
         this.toastService.showToast("Trip Added",ToastType.Success);
         //    this.router.navigate(['posts'])
       },
       error:(err)=>{
-        console.log(err);
         this.isLoading = false
         this.toastService.showToast("Something Wrong Happened",ToastType.Failure)
       }
@@ -160,7 +156,6 @@ export class EditTripComponent {
 
 
   onFile(imgFile: string){
-    console.log("file added");
     this.cropActive = true;
  
     if (!imgFile) {
@@ -202,8 +197,6 @@ export class EditTripComponent {
   }
 
   saveCropped(){
-    console.log("hehe");
-    console.log(this.cropActive);
     this.cropActive = false;
     
     if (this.cropperInstance) {
@@ -214,14 +207,12 @@ export class EditTripComponent {
       if (canvas instanceof HTMLCanvasElement) {
         const dataUrl = canvas.toDataURL('image/jpeg');
         this.croppedImages.push(dataUrl)
-        console.log('Cropped image data URL:', dataUrl);
       } else {
         console.error('getCroppedCanvas did not return a valid HTMLCanvasElement.');
       }
     } else {
       console.error('Cropper instance is null or undefined.');
     }
-    console.log(this.croppedImages);
     this.cropperInstance.destroy();
   }
 

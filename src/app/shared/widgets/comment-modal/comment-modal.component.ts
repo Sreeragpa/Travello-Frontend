@@ -36,8 +36,6 @@ export class CommentModalComponent {
         this.commentService.getPostComments(this.postid).subscribe({
           next:(res)=>{
             this.comments = res.data
-            console.log(this.comments);
-            
           },
           error:(err)=>{
             console.log(err);
@@ -46,8 +44,6 @@ export class CommentModalComponent {
         })
       }else{
         this.commentAnimation = false
-        console.log("hii");
-        
         setTimeout(()=>{
           this.postid = false
           },200)
@@ -64,13 +60,10 @@ export class CommentModalComponent {
   }
 
   addComment(){
-    console.log(this.commentContent);
     this.commentContent = this.commentContent.trim()
-    console.log(this.commentContent);
 
     if(this.commentContent.length===0 ){
-      console.log("nothing");
-      
+    
     }else{
       this.commentService.addComment(this.postid as string, this.commentContent).pipe(
         switchMap(() => this.commentService.getPostComments(this.postid as string))

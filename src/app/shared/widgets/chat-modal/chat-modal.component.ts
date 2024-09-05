@@ -24,7 +24,6 @@ export class ChatModalComponent {
   ngOnInit() {
     this.conversationService.getAllConversation().subscribe({
       next:(res)=>{
-        console.log(res);
         this.conversations = res.data
       },
       error:(err)=>{
@@ -38,10 +37,8 @@ export class ChatModalComponent {
   }
 
   onSend(){
-    console.log(this.message,this.conversationID);
     this.messageService.sendMessage(this.conversationID,this.message).subscribe({
       next:(res)=>{
-        console.log(res);
         this.toastService.showToast("Post Shared",ToastType.Normal);
         this.sharetoChatModal()
         

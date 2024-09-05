@@ -61,9 +61,8 @@ export class AuthpageComponent {
 
   signin(data: Ilogin){
     this.isLoading = true
-    console.log("hehehehhh");
-    this.email = data.email
-    console.log(data);
+
+
         this.authService.login(data)
         .pipe(
           catchError(error=>{
@@ -86,13 +85,11 @@ export class AuthpageComponent {
           next: (res) => {
             this.isLoading = false;
             if (res) {
-              console.log("Verified Successfully");
               this.router.navigate(['']);
             }
           },
           error: (error) => {
             console.error('Error navigating to signin:', error);
-            // Handle error condition if necessary
           }
         })
     
@@ -100,16 +97,14 @@ export class AuthpageComponent {
 
   signup(data: ISignup){
     this.isLoading = true
-    console.log(data);
+
     this.email = data.email
     this.authService.signup(data)
     .pipe(
       catchError(error => {
         if(error.error.message == "EMAIL_ALREADY_EXISTS"){
-          console.log("Email Already Exists");
           this.signupError = "Account already exists"
         }
-        console.log('Error during signup:', error);
         this.isLoading = false
         return of(null)
       })
@@ -143,7 +138,7 @@ export class AuthpageComponent {
           this.signinerror = false
           this.isOtpSend = false
         },2000)
-        console.log("Otp Verified Successfully");
+  
         this.router.navigate(['/signin'])  
       }
     })

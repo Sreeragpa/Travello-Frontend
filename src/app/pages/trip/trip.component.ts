@@ -65,9 +65,7 @@ export class TripComponent {
       ).subscribe({
         next: (res) => {
           if (res) {
-            this.trips = res.data;
-            console.log(this.trips);
-            
+            this.trips = res.data;    
               setTimeout(() => {
                 this.isLoading = false;
               }, 1000);
@@ -88,11 +86,10 @@ export class TripComponent {
 
 
     if(this.tripid){
-        console.log(this.tripid);
         
         this.tripService.getSingleTrip(this.tripid).subscribe({
             next:(res)=>{
-              console.log(res);
+
               this.trips = res.data
                 setTimeout(() => {
                     this.isLoading = false;
@@ -142,7 +139,6 @@ export class TripComponent {
   }
 
   joinTrip(data: IJoinTrip) {
-    console.log(data);
     this.tripService.joinTrip(data).subscribe({
       next: (res) => {
         this.toastService.showToast('Request Sent', ToastType.Normal);

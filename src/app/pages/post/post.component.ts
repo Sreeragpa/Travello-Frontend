@@ -29,9 +29,7 @@ export class PostComponent {
         this.link= `${window.location.origin}/posts/${postId}`;
         this.chatModal = !this.chatModal
     }
-    test($event: any) {
-        console.log($event, "$$$$");
-    }
+
 
     posts!: IPost[]
     isLoading: boolean = true
@@ -58,16 +56,14 @@ export class PostComponent {
       
 
         if (this.postid) {
-            console.log(this.postid);
+   
             this.postService.getSinglePost(this.postid).subscribe((res) => {
-                console.log(res);
+   
                 if (res) {
                     setTimeout(() => {
                         this.isLoading = false
                     }, 1000)
                     this.posts = res.data;
-
-                    console.log(this.posts);
 
                 }
             })
@@ -86,7 +82,7 @@ export class PostComponent {
             switchMap(postid => this.postService.likePost(postid))
         ).subscribe({
             next: (res) => {
-                console.log(res);
+
                 if (res) {
                     this.posts.map((post) => {
                         if (post._id == res.data.post_id) {
@@ -107,7 +103,7 @@ export class PostComponent {
             switchMap(postid => this.postService.unlikePost(postid))
         ).subscribe({
             next: (res) => {
-                console.log(res);
+  
                 if (res) {
                     this.posts.map((post) => {
                         if (post._id == res.data.post_id) {
@@ -151,7 +147,7 @@ export class PostComponent {
     }
 
     likePost(postid: string) {
-        console.log('Like pressed');
+
         const likedpost = this.posts.find((post)=>{return post._id == postid})
         if(!likedpost?.isLiked){
             this.likeSubject.next(postid)
@@ -165,7 +161,7 @@ export class PostComponent {
     followAccount(followingid: string) {
         this.followService.followAccount(followingid).subscribe({
             next: (res) => {
-                console.log(res);
+    
                 if (res) {
                     this.posts.map((post) => {
                         if (post.creator_id == followingid) {
@@ -210,7 +206,7 @@ export class PostComponent {
     savePost(postid: string) {
         this.postService.savePost(postid).subscribe({
             next: (res) => {
-                console.log(res);
+
                 this.posts.map(post => {
                     if (res.data.post_id == post._id) {
                         post.isSaved = true
@@ -226,7 +222,6 @@ export class PostComponent {
     unsavePost(postid: string) {
         this.postService.unsavePost(postid).subscribe({
             next: (res) => {
-                console.log(res);
                 this.posts.map(post => {
                     if (res.data.post_id == post._id) {
                         post.isSaved = false

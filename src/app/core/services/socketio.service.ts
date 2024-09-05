@@ -19,9 +19,6 @@ export class SocketioService {
     this.socket.connect();
 
     this.socket.on('followNotification', (data: any) => {
-      console.log("hehhehh");
-      
-      console.log(data); 
     });
   }
 

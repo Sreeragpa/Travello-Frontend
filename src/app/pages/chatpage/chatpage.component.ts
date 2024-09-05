@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Subject, debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, of, switchMap, tap } from 'rxjs';
 import { FollowService } from '../../core/services/follow.service';
 import IUser from '../../core/models/user.models';
 import { IResponse } from '../../core/models/httpResponse.models';
@@ -23,17 +23,18 @@ export class ChatpageComponent {
   private searchValue: Subject<string> = new Subject<string>();
   searchResults: IUser[] = [];
   conversations: IConversation[] = [];
+  isSearch: boolean = false
   constructor(private followService: FollowService,private navbarVisibiltyService:NavbarVisibilityService,private conversationService: ConversationService,private router: Router,private socketioService: SocketioService){}
   ngOnInit() {
     this.navbarVisibiltyService.showNavBar()
     this.searchValue.pipe(
       debounceTime(300),
       distinctUntilChanged(),
+      tap((searchkey: string)=>searchkey.trim()?this.isSearch=true:this.isSearch=false),
       switchMap((searchkey: string)=>searchkey.trim()?this.followService.searchFollowingUsers(searchkey):of([]))
     ).subscribe({
       next:(res)=>{
         const myres = res as IResponse<IUser[]>
-        console.log(res,"RESSS");
         this.searchResults = myres.data
       },
       error:(err)=>{
@@ -49,7 +50,6 @@ export class ChatpageComponent {
 
     setTimeout(() => {
       this.socketioService.on<IMessage>('newMessageNotification').subscribe((res) => {
-        console.log(res, "socketeft");
         this.getCoversation()
 
       })

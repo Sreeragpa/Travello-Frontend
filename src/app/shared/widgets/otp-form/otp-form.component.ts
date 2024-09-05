@@ -61,12 +61,10 @@ clearInput(idx: number) {
   }
 
   onSubmit(){ 
-    console.log('hehe');
     
     if(this.otpForm.valid){
       
       const otp = this.otpForm.value.otp.join('');
-      console.log(otp);
       this.formData.emit(otp)
       
     }else{

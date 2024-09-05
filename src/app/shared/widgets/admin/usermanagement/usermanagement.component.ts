@@ -42,7 +42,7 @@ export class UsermanagementComponent {
 
   onSearchKeyUp(event: KeyboardEvent) {
     const text = (event.target as HTMLInputElement).value;
-    console.log(text.trim());
+
     
     if(text.trim()){
       this.searchValue.next(text)
@@ -54,11 +54,10 @@ export class UsermanagementComponent {
   blockUser(userid: string) {
     this.adminService.blockUser(userid).subscribe({
       next:(res)=>{
-        console.log(res);
+ 
         this.users.forEach((user)=>{
           if(String(user._id) === String(res.data._id)){
-            console.log("hehe");
-            
+     
             user.isBlocked = true
           }
         })
@@ -71,7 +70,7 @@ export class UsermanagementComponent {
   unBlockUser(userid: string) {
     this.adminService.unBlockUser(userid).subscribe({
       next:(res)=>{
-        console.log(res);
+
         this.users.forEach((user)=>{
           if(String(user._id) === String(res.data._id)){
             user.isBlocked = false

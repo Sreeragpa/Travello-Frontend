@@ -17,7 +17,6 @@ export class ImageGridComponent {
   transition:boolean = false
 
   ngOnInit() {
-    console.log(this.imgData);
     
   }
 

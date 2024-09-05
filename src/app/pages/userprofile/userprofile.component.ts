@@ -57,7 +57,7 @@ export class UserprofileComponent {
   }
   loadCurrentUserData() {
     this.postService.getUserPosts(this.profileid).subscribe((res) => {
-      console.log(res);
+
       if (res) {
         this.posts = res.data;
         setTimeout(() => {
@@ -69,7 +69,6 @@ export class UserprofileComponent {
     this.followService.getFollowCount(this.profileid).subscribe({
       next: (res) => {
         if (res) {
-          console.log(res);
 
           this.followCount = res.data || {
             followingCount: 0,
@@ -85,8 +84,6 @@ export class UserprofileComponent {
     this.userService.getUser(this.profileid).subscribe({
       next: (res) => {
         if (res) {
-          console.log(res);
-
           this.user = res.data;
         }
       },
@@ -97,8 +94,6 @@ export class UserprofileComponent {
 
     this.postService.getPostCount(this.profileid).subscribe({
       next: (res) => {
-        console.log(res.data);
-
         this.postCount = res.data.count;
       },
       error: (err) => {
@@ -135,10 +130,8 @@ export class UserprofileComponent {
         },
       });
     } else if (nav == 'trips') {
-      console.log("trips");
       this.tripService.getUserTrips(this.profileid).subscribe({
         next: (res) => {
-          console.log(res);
           this.trips = res.data
         },
         error: (err) => {
@@ -153,7 +146,6 @@ export class UserprofileComponent {
   }
 
   updateUnderlinePosition() {
-    console.log(this.underline.nativeElement);
 
     if (this.nav === 'posts') {
       this.underline.nativeElement.style.transform = 'translateX(0%)';
@@ -183,9 +175,7 @@ export class UserprofileComponent {
   follow(userid: string){
     this.followService.followAccount(userid).subscribe({
       next:(res)=>{
-        console.log(res);
         this.user.isFollowing = true
-        
       },
       error:(err)=>{
         console.log(err);
@@ -197,10 +187,7 @@ export class UserprofileComponent {
   unfollow(userid: string){
     this.followService.unfollowAccount  (userid).subscribe({
       next:(res)=>{
-        console.log(res);
         this.user.isFollowing = false
-
-        
       },
       error:(err)=>{
         console.log(err);

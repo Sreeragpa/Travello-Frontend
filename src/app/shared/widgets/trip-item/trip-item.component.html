@@ -23,17 +23,19 @@
             }
         </div>
     
-        <div class="relative  cursor-pointer p-2 " (click)="toggleSettings()" >
-            <i class="fa-solid fa-ellipsis-vertical text-lg text-black dark:text-white" ></i>
-            
-        <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2" 
-        [class.active]="toggleStatus" #settings_menu (click)="preventClose($event)">
-        <a [routerLink]="['/edit-trip',tripData._id]">
-            <span class="cursor-pointer p-1 hover:text-gray-600">Edit</span>
-        </a>
-    
-    </div>
+        @if (tripData.issameuser) {          
+            <div class="relative  cursor-pointer p-2 " (click)="toggleSettings()" >
+                <i class="fa-solid fa-ellipsis-vertical text-lg text-black dark:text-white" ></i>
+                
+            <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2" 
+            [class.active]="toggleStatus" #settings_menu (click)="preventClose($event)">
+            <a [routerLink]="['/edit-trip',tripData._id]">
+                <span class="cursor-pointer p-1 hover:text-gray-600">Edit</span>
+            </a>
+        
         </div>
+            </div>
+        }
 
     </div>
     <div class="img-container">

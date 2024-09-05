@@ -31,8 +31,6 @@ export class EditprofileComponent {
     this.userService.getUser().subscribe({
       next: (res) => {
         if (res) {
-          console.log(res);
-
           this.user = res.data
         }
       },
@@ -47,8 +45,6 @@ export class EditprofileComponent {
   }
 
   onFile(event: any) {
-    console.log('change dete');
-
     const file = event.target.files[0];
 
     if (!file) {
@@ -58,10 +54,8 @@ export class EditprofileComponent {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      console.log(reader.result);
       const image = this.imageRef.nativeElement;
       image.src = reader.result as string;
-      console.log('HII');
 
       // this.toggleButton.nativeElement.click()
       this.popupModal.nativeElement.classList.remove('hidden');
@@ -101,7 +95,6 @@ export class EditprofileComponent {
       height: 1024
   });
     const dataUrl = canvas.toDataURL('image/jpeg');
-    console.log(dataUrl);
     this.toastService.showToast("Uploading",ToastType.Normal)
     this.userService.updateProfileimg(dataUrl).subscribe({
       next: (res) => {
@@ -119,18 +112,14 @@ export class EditprofileComponent {
   }
 
   onChangeProfile(data: any) {
-    console.log(data);
     const formdata = this.getChangedData(data, this.user);
     if (!Object.keys(formdata).length) return
-    console.log(Object.keys(formdata));
     this.userService.updateProfile(formdata).subscribe({
       next: (res) => {
-        console.log(res );
         this.user = res.data
         this.toastService.showToast("Updated Successfully", ToastType.Success)
       },
       error: (err) => {
-        console.log(err);
         this.toastService.showToast("Something Wrong Happened", ToastType.Failure)
       }
     })
@@ -149,7 +138,6 @@ export class EditprofileComponent {
     return changedData;
   }
   onChangePassword(data: { currentPassword: string, newPassword: string }) {
-    console.log(data);
     this.userService.updatePassword(data.currentPassword, data.newPassword).subscribe({
       next: (res) => {
         this.toastService.showToast(res.data, ToastType.Success)

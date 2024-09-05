@@ -20,8 +20,6 @@ export class AuthService {
     return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.AUTH.SIGNIN}`, data)
       .pipe(
         tap(response =>{
-          console.log(response.data);
-          
           const token = response.data;
           if(token){
             this.authToken = token;
@@ -33,8 +31,6 @@ export class AuthService {
     return this.http.post<IResponse<string>>(`${this.apiUrl}${API_URLS.AUTH.SIGNIN_WITH_GOOGLE}`, {idToken})
       .pipe(
         tap(response =>{
-          console.log(response.data);
-          
           const token = response.data;
           if(token){
             this.authToken = token;
@@ -55,7 +51,6 @@ export class AuthService {
 
     return this.http.get<IResponse<string>>(`${this.apiUrl}${API_URLS.AUTH.CHECK_AUTH}`)
       .pipe(
-        tap(response => console.log('Response from server:', response)),
         map(response => response.status === 'authenticated'),
         catchError(() => of(false)) 
       );

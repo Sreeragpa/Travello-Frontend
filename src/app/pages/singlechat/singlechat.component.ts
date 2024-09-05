@@ -52,7 +52,6 @@ membersTab: boolean = false;
     })
     setTimeout(() => {
       this.socketioService.on<IMessage>('message').subscribe((res) => {
-        console.log(res, "socketeft");
         this.messages.push(res.data);
         setTimeout(() => {
           this.scrollChatToBottom();
@@ -63,7 +62,6 @@ membersTab: boolean = false;
     if (this.conversationid) {
       this.messageService.getMessages(this.conversationid).subscribe({
         next: (res) => {
-          console.log(res, "messages");
           this.messages = res.data;
           setTimeout(()=>{
             this.scrollChatToBottom();
@@ -76,7 +74,6 @@ membersTab: boolean = false;
 
       this.conversationService.getSingleConversation(this.conversationid).subscribe({
         next: (res) => {
-          console.log(res, "convoo");
           this.conversation = res.data
           this.currentUserId = this.conversation.currentUserId as string
         },
@@ -95,12 +92,10 @@ membersTab: boolean = false;
   
 
   sendMessage() {
-    console.log(this.text);
     if (this.text.trim() && this.conversationid) {
       this.messageService.sendMessage(this.conversationid, this.text).subscribe({
         next: (res) => {
           this.text = ''
-          console.log(res);
           // this.messages.push(res.data)
         },
         error: (err) => {
@@ -115,11 +110,9 @@ membersTab: boolean = false;
     setTimeout(() => {
       this.socketioService.emit('joinConversation', this.conversationid).subscribe({
         next: (res) => {
-          console.log(res, "HEHEHE");
-
         },
         error: (err) => {
-          console.log(err, "ERERRREE");
+          console.log(err);
         }
       });
     }, 1000)
@@ -128,8 +121,6 @@ membersTab: boolean = false;
   scrollChatToBottom(): void {
     try {
       this.chatContainerRef.nativeElement.scrollTop = this.chatContainerRef.nativeElement.scrollHeight;
-      console.log(this.chatContainerRef.nativeElement.scrollHeight);
-      
     } catch(err) {
       console.error('Error scrolling chat container:', err);
     }

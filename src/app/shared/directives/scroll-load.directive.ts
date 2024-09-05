@@ -11,7 +11,6 @@ export class ScrollLoadDirective {
 
   @HostListener('scroll', ['$event'])
   onScroll() {
-    console.log("scrollee");
     // if (this.shouldLoad()) {
     //   console.log("Should load");
     //   this.loadMore.emit();
@@ -25,12 +24,9 @@ export class ScrollLoadDirective {
   private checkScroll() {
     const containerBottomPosition = this.el.nativeElement.getBoundingClientRect().bottom;
     const windowHeight = window.innerHeight;
-    console.log(containerBottomPosition,windowHeight);
     
 
     if (containerBottomPosition <= windowHeight) {
-      console.log("success");
-      
       this.loadMore.emit();
     }
   }

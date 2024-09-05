@@ -39,14 +39,10 @@ export class AddPostComponent {
     this.searchvalue.pipe(
       debounceTime(500), 
       distinctUntilChanged(), // Ignore same search terms
-      tap(value=>console.log(value)),
       // switchMap((term: string) => this.mapService.autoComplete(term))
       switchMap((term: string) => term.trim() ? this.mapService.autoComplete(term) : of([]))
     ).subscribe((data:any) => {
-      console.log(data);
       this.suggestions = data.features;
-      console.log(this.suggestions);
-      
     })
   }
 
@@ -61,7 +57,7 @@ export class AddPostComponent {
 
 
   // onFile(event: any){
-  //   console.log("file added");
+  //   ("file added");
   //   this.cropActive = true;
   //   const file = event.target.files[0];
 
@@ -84,7 +80,6 @@ export class AddPostComponent {
   // }
 
   onFile(imgFile: string){
-    console.log("file added");
     this.cropActive = true;
  
     if (!imgFile) {
@@ -130,7 +125,6 @@ export class AddPostComponent {
   }
 
   saveCropped(){
-    console.log(this.cropActive);
     this.cropActive = false;
     
     if (this.cropperInstance) {
@@ -142,14 +136,12 @@ export class AddPostComponent {
       if (canvas instanceof HTMLCanvasElement) {
         const dataUrl = canvas.toDataURL('image/jpeg');
         this.croppedImages.push(dataUrl)
-        console.log('Cropped image data URL:', dataUrl);
       } else {
         console.error('getCroppedCanvas did not return a valid HTMLCanvasElement.');
       }
     } else {
       console.error('Cropper instance is null or undefined.');
     }
-    console.log(this.croppedImages);
     this.cropperInstance.destroy();
   }
 
@@ -170,7 +162,7 @@ export class AddPostComponent {
       this.toastService.showToast("Enter Location",ToastType.Failure)
     }
 
-    console.log('capt',this.caption);
+
     if(!this.selectedPlace || !this.caption || this.croppedImages.length===0){
 
       return
@@ -184,7 +176,7 @@ export class AddPostComponent {
       likes: 0,
       createdAt:new Date()
     }
-    console.log(data);
+
     this.isLoading = true
     this.postService.createPost(data).subscribe({
       next:(res)=>{

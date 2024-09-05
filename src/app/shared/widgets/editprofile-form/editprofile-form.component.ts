@@ -60,11 +60,6 @@ export class EditprofileFormComponent {
   onSubmit(){
     if(this.toggleStatus){
 
-      console.log(this.editForm.get('profiledetails')?.valid);
-      console.log(this.editForm.get('profiledetails')?.value);
-
-      
-
       if(this.editForm.get('profiledetails')?.valid){
         let data = this.editForm.get('profiledetails')?.value
         this.changeProfile.emit(data)
@@ -72,8 +67,7 @@ export class EditprofileFormComponent {
 
       
     }else{
-      console.log(this.editForm.get('changepassword')?.valid);
-      console.log(this.editForm.get('changepassword')?.value);
+
 
       if(this.editForm.get('changepassword')?.valid){
         let data = this.editForm.get('changepassword')?.value

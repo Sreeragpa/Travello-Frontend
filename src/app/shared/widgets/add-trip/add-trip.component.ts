@@ -67,9 +67,9 @@ export class AddTripComponent {
       // switchMap((term: string) => this.mapService.autoComplete(term))
       switchMap((term: string) => term.trim() ? this.mapService.autoComplete(term) : of([]))
     ).subscribe((data:any) => {
-      console.log(data);
+
       this.suggestions = data.features;
-      console.log(this.suggestions);
+
       
     })
   }
@@ -150,18 +150,18 @@ export class AddTripComponent {
       memberlimit: formValues.members
     };
     this.isLoading = true
-    console.log(tripData);
+
 
     this.tripService.addTrip(tripData).subscribe({
       next:(res)=>{
         this.isLoading = false
         this.toastService.showToast("Trip Added",ToastType.Success);
         this.router.navigate([''])
-        console.log("heheh");
+ 
         
       },
       error:(err)=>{
-        console.log(err);
+
         this.isLoading = false
         this.toastService.showToast("Something Wrong Happened",ToastType.Failure)
       }
@@ -173,7 +173,6 @@ export class AddTripComponent {
 
 
   onFile(imgFile: string){
-    console.log("file added");
     this.cropActive = true;
  
     if (!imgFile) {
@@ -216,7 +215,6 @@ export class AddTripComponent {
 
   saveCropped(){
 
-    console.log(this.cropActive);
     this.cropActive = false;
     
     if (this.cropperInstance) {
@@ -228,14 +226,13 @@ export class AddTripComponent {
       if (canvas instanceof HTMLCanvasElement) {
         const dataUrl = canvas.toDataURL('image/jpeg');
         this.croppedImages.push(dataUrl)
-        console.log('Cropped image data URL:', dataUrl);
       } else {
         console.error('getCroppedCanvas did not return a valid HTMLCanvasElement.');
       }
     } else {
       console.error('Cropper instance is null or undefined.');
     }
-    console.log(this.croppedImages);
+
     this.cropperInstance.destroy();
   }
 
@@ -248,16 +245,14 @@ export class AddTripComponent {
   }
 
   selectStartingPoint(placeId: string){
-    console.log(placeId);
     this.startingPoint = this.suggestions.find(value=>value.properties.place_id == placeId);
-    console.log(this.startingPoint);
     this.suggestions=[]
      
   }
   selectDestination(placeId: string){
-    console.log(placeId);
+
     this.destination = this.suggestions.find(value=>value.properties.place_id == placeId);
-    console.log(this.destination);
+
     this.suggestions=[]
      
   }

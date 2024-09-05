@@ -27,13 +27,9 @@ export class SigninFormComponent {
 
   ngOnInit() {
     this.googleAuthService.authState.subscribe((user) => {
-      // this.user = user;
-      // this.loggedIn = (user != null);
-      console.log(user);
       this.authService.loginWithGoogle(user.idToken).subscribe({
         next:(res)=>{
           this.router.navigate([''])
-
         },
         error:(err)=>{
           console.log(err,'errr');
@@ -43,10 +39,7 @@ export class SigninFormComponent {
     });
   }
 
-  googleLogin(){
-    console.log("Googlelgel");
-  }
-  
+
   onSubmit(){
     if(this.signinForm.valid){
       const logindata:Ilogin = this.signinForm.value

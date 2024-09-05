@@ -7,7 +7,7 @@ export const homeGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  console.log('hehe');
+
 
   return authService.isAuthenticated().pipe(
     tap((isAuthenticated) => {

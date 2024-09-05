@@ -27,11 +27,10 @@ export class AdminDashComponent {
     this.getUserGraph()
   }
   getPostGraph(period: number = 7) {
-    // console.log(period);
     
     this.adminService.getPostStatistics(period).subscribe({
       next:(res)=>{
-        console.log(res);
+  
         this.dataService.updatePostStatistics(res.data)
         // this.postStatistics = res.data;
         // this.graphLoading++;
@@ -45,7 +44,7 @@ export class AdminDashComponent {
   getTripGraph(period: number = 7) {
     this.adminService.getTripStatistics(period).subscribe({
       next:(res)=>{
-        console.log(res);
+  
         this.dataService.updateTripStatistics(res.data)
 
         // this.tripStatistics = res.data
@@ -61,7 +60,6 @@ export class AdminDashComponent {
   getUserGraph(period: number = 7){
     this.adminService.getUserStatistics(period).subscribe({
       next:(res)=>{
-        console.log(res);
         this.dataService.updateUserStatistics(res.data)
 
         // this.userStatistics = res.data

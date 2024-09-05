@@ -21,7 +21,6 @@ export class AdminPageComponent {
         this.router.events.pipe(
             filter(event => event instanceof NavigationEnd)
         ).subscribe((va)=>{
-            console.log(this.router.url);
             this.showSidebar = !this.router.url.includes('/admin/login');
             
         });

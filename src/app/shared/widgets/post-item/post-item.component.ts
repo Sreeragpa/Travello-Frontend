@@ -44,7 +44,6 @@ throw new Error('Method not implemented.');
 hidePopover() {
   this.popovers.nativeElement.style.visibility = 'invisible';
   this.popovers.nativeElement.style.opacity = '0';
-  console.log(this.popovers.nativeElement,"nativeveee");
   
 }
 showPopover() {

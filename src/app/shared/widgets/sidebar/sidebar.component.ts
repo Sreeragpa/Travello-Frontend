@@ -49,13 +49,10 @@ export class SidebarComponent {
 
     this.notificationService.getNotificationCount().subscribe({
       next:(res)=>{
-        console.log(res);
         this.notificationCount = res.data
-        
       },
       error:(err)=>{
         console.log(err);
-        
       }
     })
 
@@ -78,7 +75,6 @@ export class SidebarComponent {
   currentUrl: string = ''
 
   changeURL(route: string) {
-    console.log(this.router.url);
     
   }
 
