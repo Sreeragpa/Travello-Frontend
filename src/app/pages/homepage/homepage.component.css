@@ -2,3 +2,13 @@
     height: 100vh; /* Full viewport height */
     overflow-y: auto; /* Enable vertical scrolling */
   }
+
+  .test{
+    background: linear-gradient(60deg, #d016ff, #5c14a0, #3835f1, #7b72ff);
+  }
+
+  .test:hover {
+    /* transform: scale(1.05); */
+    transition: 0.2s all;
+    border:  3px solid #9796ec;
+}
