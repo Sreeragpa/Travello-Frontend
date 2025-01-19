@@ -49,7 +49,9 @@ export class HomepageComponent implements OnInit,OnDestroy {
   
   ngOnInit(): void {
     const token = this.authService.getAuthToken().subscribe((res)=>{
-      this.socketIOService.connectWithToken(res.data as string)
+      if(res.data){
+        this.socketIOService.connectWithToken(res.data as string)
+      }
     }); 
 
     

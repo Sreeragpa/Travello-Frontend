@@ -19,12 +19,14 @@ export class ChatModalComponent {
   @Input() title!: string
   conversations!: IConversation[];
   conversationID!: string
+  isLoading: boolean = true
   constructor(private conversationService: ConversationService,private messageService: MessageService,private toastService: ToastService){}
 
   ngOnInit() {
     this.conversationService.getAllConversation().subscribe({
       next:(res)=>{
         this.conversations = res.data
+        this.isLoading = false
       },
       error:(err)=>{
         console.log(err);

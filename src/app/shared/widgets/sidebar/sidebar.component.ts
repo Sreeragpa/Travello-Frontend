@@ -30,14 +30,16 @@ export class SidebarComponent {
       this.socketioService.on<INotification>('notification').subscribe({
         next:(res)=>{
           this.notificationCount++;
+          console.log(res.data.username);
+          
           if(res.data.type == NOTIFICATION_TYPE.FOLLOW){
-            this.toastService.showToast("User started following you",ToastType.Normal)
+            this.toastService.showToast(`${res.data.username} started following you`,ToastType.Normal)
           }
           if(res.data.type == NOTIFICATION_TYPE.POSTLIKE){
-            this.toastService.showToast("User liked your post",ToastType.Normal)
+            this.toastService.showToast(`${res.data.username} liked your post`,ToastType.Normal)
           }
           if(res.data.type == NOTIFICATION_TYPE.JOINREQUEST){
-            this.toastService.showToast("User send a Join Request",ToastType.Normal)
+            this.toastService.showToast(`${res.data.username} send a Join Request`,ToastType.Normal)
           }
         },
         error:(err)=>{

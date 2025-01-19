@@ -29,5 +29,7 @@
     
 
 <!-- Chat Modal -->
-<app-chat-modal [chatvisible]="chatModal" (toggle)="sharetoChatModal()" [message]="link" title="Trip"></app-chat-modal>
+@if (chatModal) {
+    <app-chat-modal [chatvisible]="chatModal" (toggle)="sharetoChatModal()" [message]="link" title="Trip"></app-chat-modal>
+}
 </div>

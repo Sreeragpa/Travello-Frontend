@@ -11,6 +11,7 @@ export interface INotification  {
     createdAt?: Date;
     updatedAt?: Date;
     senderDetails?: IUser;
-    tripDetails?: ITrip
+    tripDetails?: ITrip;
+    username: string
     
 }
