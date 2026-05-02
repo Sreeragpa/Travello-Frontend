@@ -29,9 +29,7 @@
               "node_modules/cropperjs/dist/cropper.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/flowbite/dist/datepicker.js"  
-            ],
+            "scripts": [],
             "allowedCommonJsDependencies": [
             "apexcharts",
             "cropperjs"
@@ -116,5 +114,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

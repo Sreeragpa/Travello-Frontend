@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MessageService } from '../../core/services/message.service';
 import { ConversationService } from '../../core/services/conversation.service';
@@ -13,7 +13,8 @@ import { DateFormatPipe } from "../../shared/pipes/date-format.pipe";
 import { TimeFormatPipe } from "../../shared/pipes/time-format.pipe";
 import { NavbarVisibilityService } from '../../core/services/navbar-visibility.service';
 import { EmojiComponent, EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { PickerComponent,PickerModule} from '@ctrl/ngx-emoji-mart';
+import data from '@emoji-mart/data';
   
 
 @Component({
@@ -21,9 +22,11 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
     standalone: true,
     templateUrl: './singlechat.component.html',
     styleUrl: './singlechat.component.css',
-    imports: [RouterLink, FormsModule, CommonModule, LinkifyPipe, ChatMembersComponent, DateFormatPipe, TimeFormatPipe,PickerComponent]
+    imports: [RouterLink, FormsModule, CommonModule, LinkifyPipe, ChatMembersComponent, DateFormatPipe, TimeFormatPipe,PickerComponent,EmojiModule,PickerModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SinglechatComponent {
+  emojiData = data;
 
   text: string = '';
 membersTab: boolean = false;
@@ -36,6 +39,7 @@ membersTab: boolean = false;
   showEmojiPicker: boolean = false;
 
   toggleEmojiPicker() {
+    console.log('toggleEmojiPicker');
     this.showEmojiPicker = !this.showEmojiPicker;
   }
 

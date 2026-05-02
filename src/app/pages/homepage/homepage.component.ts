@@ -9,7 +9,7 @@ import { SocketioService } from '../../core/services/socketio.service';
 import { NavbarVisibilityService } from '../../core/services/navbar-visibility.service';
 import { IInfiniteScrollEvent, InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ScrollService } from '../../core/services/scroll.service';
-
+import { AiChatComponent } from '../../shared/widgets/ai-chat/ai-chat.component';
 
 export const componentFadeInAnimation = animation([
     style({ opacity: 0 }), // Initial state: 0 opacity (invisible)
@@ -28,7 +28,7 @@ export const componentFadeInAnimation = animation([
     standalone: true,
     templateUrl: './homepage.component.html',
     styleUrl: './homepage.component.css',
-    imports: [SidebarComponent, RouterOutlet, HeaderComponent, MytoastComponent, InfiniteScrollDirective]
+    imports: [SidebarComponent, RouterOutlet, HeaderComponent, MytoastComponent, InfiniteScrollDirective, AiChatComponent]
 })
 export class HomepageComponent implements OnInit,OnDestroy {
 

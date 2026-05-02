@@ -1,0 +1,77 @@
+<div class="chat-wrap">
+ 
+    <!-- Minimised tab -->
+    <button class="chat-tab" (click)="toggle()" [attr.aria-expanded]="isOpen()">
+      <span class="dot"></span>
+      <span>Travello AI</span>
+      <svg class="chevron" [class.up]="isOpen()"
+           width="10" height="10" viewBox="0 0 10 6" fill="none">
+        <path d="M1 5L5 1L9 5" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <!-- Slide-up panel -->
+    <div class="chat-panel" [class.open]="isOpen()">
+
+      <!-- Header -->
+      <div class="chat-header">
+        <div class="avatar">AI</div>
+        <div class="hinfo">
+          <p>Travello AI</p>
+          <span>Online</span>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages" #msgList>
+        @for (msg of messages(); track $index) {
+          <div class="msg" [class.me]="msg.from === 'me'" [class.them]="msg.from === 'them'">
+            <div class="bubble">{{ msg.text }}</div>
+            @if (msg.trips?.length) {
+              <div class="trip-suggestions">
+                @for (trip of msg.trips!; track trip._id ?? $index) {
+                  <div class="trip-suggestion">
+                    <div class="t-title">{{ trip.title }}</div>
+                    <div class="t-sub">
+                      {{ trip.startingPoint.name }} → {{ trip.destination.name }}
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+            <span class="time">{{ msg.time }}</span>
+          </div>
+        }
+
+        <!-- Typing indicator -->
+        @if (isTyping()) {
+        <div class="msg them">
+          <div class="bubble typing">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        }
+
+        <div #bottomAnchor class="bottom-anchor" aria-hidden="true"></div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input">
+        <input
+          type="text"
+          placeholder="Type a message…"
+          [(ngModel)]="draft"
+          (keydown.enter)="send()"
+        />
+        <button class="send-btn" (click)="send()" [disabled]="!draft.trim()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M14 8L2 2L5.5 8L2 14L14 8Z"
+                  fill="currentColor" stroke="currentColor"
+                  stroke-width="0.5" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
