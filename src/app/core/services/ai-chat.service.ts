@@ -7,6 +7,9 @@ import { ITrip } from '../models/trip.model';
 
 export interface IAiTripChatRequest {
   message: string;
+  lat?: number;
+  lng?: number;
+  radius?: number;
   // Add optional context fields here if your backend supports them (e.g. tripId, history, userId).
 }
 
@@ -23,9 +26,14 @@ export class AiChatService {
 
   constructor(private http: HttpClient) {}
 
-  tripChat(message: string): Observable<IResponse<IAiTripChatResponse>> {
-    const body: IAiTripChatRequest = { message };
+  tripChat(
+    message: string,
+    location?: { lat: number; lng: number; radius?: number }
+  ): Observable<IResponse<IAiTripChatResponse>> {
+    const body: IAiTripChatRequest = {
+      message,
+      ...(location ?? {})
+    };
     return this.http.post<IResponse<IAiTripChatResponse>>(this.apiUrl, body);
   }
 }
-

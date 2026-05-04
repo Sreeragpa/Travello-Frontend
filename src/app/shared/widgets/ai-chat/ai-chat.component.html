@@ -23,6 +23,44 @@
         </div>
       </div>
 
+      @if (!userLocation()) {
+        <div class="location-card">
+          <div class="location-copy">
+            <div class="location-title">Share location for nearby trips</div>
+            <div class="location-text">{{ locationNotice() }}</div>
+          </div>
+          <button
+            class="location-btn"
+            (click)="enableLocation()"
+            [disabled]="isLocating()"
+          >
+            {{ isLocating() ? 'Requesting...' : 'Allow location' }}
+          </button>
+        </div>
+      } @else if (showLocationInfo()) {
+        <div class="location-card granted">
+          <div class="location-copy">
+            <div class="location-title">Location enabled</div>
+            <div class="location-text">{{ locationNotice() }}</div>
+          </div>
+          <button
+            type="button"
+            class="location-close"
+            (click)="dismissLocationInfo()"
+            aria-label="Close location info"
+          >
+            <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+              <path
+                d="M3 3L13 13M13 3L3 13"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+      }
+
       <!-- Messages -->
       <div class="messages" #msgList>
         @for (msg of messages(); track $index) {

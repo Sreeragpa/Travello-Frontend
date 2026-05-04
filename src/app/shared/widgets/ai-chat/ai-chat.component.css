@@ -90,6 +90,93 @@
   .hinfo p { font-size: 13px; font-weight: 500; color: #111; margin: 0; }
   .hinfo span { font-size: 11px; color: #22c55e; }
 
+  .location-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.08);
+    background: linear-gradient(135deg, rgba(239,246,255,0.95), rgba(255,255,255,0.98));
+  }
+
+  .location-card.granted {
+    background: linear-gradient(135deg, rgba(236,253,245,0.95), rgba(255,255,255,0.98));
+  }
+
+  .location-card.granted .location-copy {
+    padding-right: 4px;
+  }
+
+  .location-copy {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .location-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .location-text {
+    font-size: 11px;
+    line-height: 1.4;
+    color: #4b5563;
+  }
+
+  .location-btn {
+    border: none;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.12s ease, background 0.15s ease, opacity 0.15s ease;
+  }
+
+  .location-btn:hover {
+    background: #333;
+  }
+
+  .location-btn:active {
+    transform: scale(0.97);
+  }
+
+  .location-btn:disabled {
+    opacity: 0.65;
+    cursor: default;
+  }
+
+  .location-close {
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(17, 17, 17, 0.06);
+    color: #4b5563;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+  }
+
+  .location-close:hover {
+    background: rgba(17, 17, 17, 0.12);
+    color: #111;
+  }
+
+  .location-close:active {
+    transform: scale(0.96);
+  }
+
   /* ── messages ── */
   .messages {
     flex: 1;

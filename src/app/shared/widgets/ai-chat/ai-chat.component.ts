@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, ViewChild, effect, signal } from 
 import { FormsModule } from '@angular/forms';
 import { AiChatService } from '../../../core/services/ai-chat.service';
 import { ITrip } from '../../../core/models/trip.model';
+import { GeolocationService } from '../../../core/services/geolocation.service';
+import { finalize, map } from 'rxjs';
 interface Message {
   text: string;
   from: 'me' | 'them';
@@ -21,6 +23,11 @@ export class AiChatComponent {
 
   isOpen = signal(false);
   isTyping = signal(false);
+  isLocating = signal(false);
+  locationStatus = signal<'idle' | 'granted' | 'denied'>('idle');
+  locationNotice = signal('Share your location for better nearby trip suggestions.');
+  showLocationInfo = signal(true);
+  userLocation = signal<{ lat: number; lng: number } | undefined>(undefined);
   draft = '';
  
   messages = signal<Message[]>([
@@ -32,7 +39,10 @@ export class AiChatComponent {
     }
   ]);
  
-  constructor(private aiChatService: AiChatService) {}
+  constructor(
+    private aiChatService: AiChatService,
+    private geolocationService: GeolocationService
+  ) {}
 
   toggle() {
     this.isOpen.update(v => !v);
@@ -49,6 +59,39 @@ export class AiChatComponent {
       this.scheduleScrollToBottom();
     });
   }
+
+  enableLocation() {
+    this.isLocating.set(true);
+    this.locationNotice.set('Requesting location permission...');
+
+    this.geolocationService.getCurrentPosition().pipe(
+      map((position) => ({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })),
+      finalize(() => {
+        this.isLocating.set(false);
+      })
+    ).subscribe({
+      next: (location) => {
+        this.userLocation.set(location);
+        this.showLocationInfo.set(true);
+        this.locationStatus.set('granted');
+        this.locationNotice.set('Location enabled. We’ll use it for nearby trip suggestions.');
+        this.scheduleScrollToBottom();
+      },
+      error: () => {
+        this.userLocation.set(undefined);
+        this.locationStatus.set('denied');
+        this.locationNotice.set('Location access was blocked. You can still chat without it.');
+        this.scheduleScrollToBottom();
+      }
+    });
+  }
+
+  dismissLocationInfo() {
+    this.showLocationInfo.set(false);
+  }
  
   send() {
     const text = this.draft.trim();
@@ -60,9 +103,9 @@ export class AiChatComponent {
     ]);
     this.draft = '';
     this.scheduleScrollToBottom();
- 
+
     this.isTyping.set(true);
-    this.aiChatService.tripChat(text).subscribe({
+    this.aiChatService.tripChat(text, this.userLocation()).subscribe({
       next: (res) => {
         const reply = res?.data?.reply ?? 'Sorry, I could not generate a response right now.';
         const trips = res?.data?.trips ?? [];
