@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-img-upload',
@@ -11,29 +11,51 @@ export class ImgUploadComponent {
   @Output() imgFile: EventEmitter<string> = new EventEmitter()
   @Output() imgError: EventEmitter<string> = new EventEmitter();
 
+  isDragOver = signal(false);
   
-  onFile(event: any){
-    const file = event.target.files[0];
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver.set(true);
+  }
 
-    if (!file) {
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver.set(false);
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver.set(false);
+
+    const file = event.dataTransfer?.files?.[0];
+    this.handleFile(file);
+  }
+
+  onFile(event: Event) {
+    const input = event.target as HTMLInputElement | null;
+    const file = input?.files?.[0];
+    this.handleFile(file);
+
+    // allow re-selecting same file
+    if (input) input.value = '';
+  }
+
+  private handleFile(file?: File) {
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      this.imgError.emit('The selected file is not an image.');
       return;
     }
 
-        // Check if the file type is an image
-        if (!file.type.startsWith('image/')) {
-          console.error('The selected file is not an image.');
-          this.imgError.emit("The selected file is not an image.")
-          return; 
-        }else{
-          this.imgError.emit('')
-        }
-    
-
+    this.imgError.emit('');
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.imgFile.emit(reader.result as string)
+      this.imgFile.emit(reader.result as string);
     };
-    
   }
 }
