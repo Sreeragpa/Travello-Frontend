@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { SocketioService } from '../../../core/services/socketio.service';
 import { INotification } from '../../../core/models/notification.model';
@@ -6,6 +6,7 @@ import { NOTIFICATION_TYPE } from '../../../core/enums/notification.enums';
 import { ToastService, ToastType } from '../../../core/services/toast.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { NavbarVisibilityService } from '../../../core/services/navbar-visibility.service';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,7 +15,7 @@ import { NavbarVisibilityService } from '../../../core/services/navbar-visibilit
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements AfterViewInit {
   notificationCount: number = 0;
   navBarVisible: boolean = true;
   constructor(private router: Router,
@@ -24,6 +25,10 @@ export class SidebarComponent {
     private navbarVisibiltyService: NavbarVisibilityService){
 
   } 
+
+  ngAfterViewInit(): void {
+    initFlowbite();
+  }
 
   ngOnInit() {
     setTimeout(()=>{

@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IJoinTrip, ITrip } from '../../../core/models/trip.model';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { DatePipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-trip-item',
@@ -12,6 +12,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './trip-item.component.css'
 })
 export class TripItemComponent {
+  private router = inject(Router)
 preventClose($event: MouseEvent) {
   $event.stopPropagation()
 }
@@ -50,6 +51,11 @@ toggleOff(){
       
     }
     this.JoinButton.emit(data)
+  }
+
+  goToEdit(id: string, event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['/edit-trip', id]);
   }
 
 }

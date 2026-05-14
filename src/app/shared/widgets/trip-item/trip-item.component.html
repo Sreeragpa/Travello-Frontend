@@ -1,94 +1,135 @@
-<div class="trip-item bg-secondary m-auto h-auto rounded-2xl  relative" (click)="toggleOff()">
-    <div class="user-details py-4 px-4 flex items-center justify-between" (click)="preventClose($event)">
-        <div class="flex items-center gap-2">
-            <div >
-                <img class="w-10 h-10 rounded-full" [src]="tripData.creator?.profileimg" alt="Rounded avatar">
-            </div>
-            <div class=" flex flex-col">
-                <span class="font-semibold dark:text-white cursor-pointer flex gap-1" [routerLink]="['/profile',tripData.creator_id]"> {{tripData.creator?.name}}
-                    @if (tripData.creator?.isPremium) {
-                        <svg aria-label="Verified" class="IGDSSVGIconBase x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="18" role="img" viewBox="0 0 40 40" width="18"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>
-                    }
-                </span>
-                <span class="dark:text-white text-xs">{{postdata.place}}</span>
-            </div>
-            @if(!tripData.issameuser) {
-            <div class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
-                @if (tripData.isuserfollowing) {
-                <span (click)="unfollow(tripData.creator_id)">Unfollow</span>
-                }@else{
-                <span (click)="follow(tripData.creator_id)">Follow</span>
-                }
-            </div>
-            }
-        </div>
-    
-        @if (tripData.issameuser) {          
-            <div class="relative  cursor-pointer p-2 " (click)="toggleSettings()" >
-                <i class="fa-solid fa-ellipsis-vertical text-lg text-black dark:text-white" ></i>
-                
-            <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2" 
-            [class.active]="toggleStatus" #settings_menu (click)="preventClose($event)">
-            <a [routerLink]="['/edit-trip',tripData._id]">
-                <span class="cursor-pointer p-1 hover:text-gray-600">Edit</span>
-            </a>
-        
-        </div>
-            </div>
-        }
+<div 
+  class="trip-item bg-secondary m-auto rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 cursor-pointer"
+  (click)="toggleOff()"
+>
 
-    </div>
-    <div class="img-container">
-        <img [src]="tripData.imageUrl" alt="image">
-    </div>
-    <div class="py-4 px-4 space-y-2">
-        <div class="font-semibold text-lg">{{tripData.title}}</div>
-        <div class="flex flex-col gap-2">
-            <span class="text-sm p-1.5 rounded-xl border-2 border-sky-300 w-fit shadow-md  ">
-                <i class="fa-solid fa-location-dot"></i>
-                From: {{tripData.startingPoint.name}} <br> to {{tripData.destination.name}}
-            </span>
-            <div class="flex flex-col gap-2 ">
-                <span class="text-sm p-1.5 rounded-xl border-2 border-sky-300 w-fit shadow-md  ">
-                    <i class="fa-solid fa-calendar" ></i>
-                    Date: {{tripData.startDate | date}} to {{tripData.endDate | date}}
-                </span>
-                <div class="flex gap-2">
-                    <span class="text-sm p-1.5 rounded-xl border-2 border-sky-300 w-fit shadow-md  ">
-                        <i class="fa-solid fa-person-walking-luggage" ></i>
-                        Members: {{tripData.members?.length}}
-                    </span>
-                    <span class="text-sm p-1.5 rounded-xl border-2 border-sky-300 w-fit shadow-md  ">
-                        <i class="fa-solid fa-person-walking-luggage" ></i>
-                        Max Members: {{tripData.memberlimit}}
-                    </span>
-                </div>
-            </div>
-            <div>
-                <span>
-                   {{tripData.description}}
-                </span>
-            </div>
-            <div class="flex justify-between items-center p-2">
-                <div class="cursor-pointer" (click)="onShare(tripData._id)"><i class="fa-solid fa-share-nodes text-2xl" style="color: #000000;"></i></div>
-                <div >
-                    @if (tripData.issameuser || tripData.isuserjoined) {
-                        <button disabled class="bg-black px-6 py-2 w-56 text-white rounded-md" >
-                            Joined <i class="fa-solid fa-circle-check" style="color: #ffffff;"></i>
-                        </button>
-                    }@else if (tripData.istripfull) {
-                        <button disabled class="bg-red-600 px-6 py-2 w-56 text-white rounded-md" >
-                            Full
-                        </button>
-                    }@else {
-                        <button class="bg-black px-6 py-2 w-56 text-white rounded-md" (click)="onJoin(tripData.creator_id,'JOIN_REQUEST',tripData._id)">Join</button>
-                        
-                    }
-                </div>
-            </div>
-       
-        </div>
+  <!-- 👤 HEADER -->
+  <div 
+    class="flex items-center justify-between px-4 py-3"
+    (click)="preventClose($event)"
+  >
+    <div class="flex items-center gap-3">
+      <img class="w-10 h-10 rounded-full" [src]="tripData.creator?.profileimg">
 
+      <div class="flex flex-col leading-tight">
+        <span class="font-semibold text-sm flex items-center gap-1 cursor-pointer"
+              [routerLink]="['/profile',tripData.creator_id]">
+          {{tripData.creator?.name}}
+          @if (tripData.creator?.isPremium) {
+            <i class="fa-solid fa-circle-check text-blue-500 text-xs"></i>
+          }
+        </span>
+        <span class="text-xs text-gray-500">{{postdata.place}}</span>
+      </div>
     </div>
+
+    <!-- Follow -->
+    @if(!tripData.issameuser) {
+      <button 
+        class="text-xs px-3 py-1 rounded-full bg-blue-600 text-white"
+        (click)="tripData.isuserfollowing ? unfollow(tripData.creator_id) : follow(tripData.creator_id); $event.stopPropagation()"
+      >
+        {{tripData.isuserfollowing ? 'Following' : 'Follow'}}
+      </button>
+    }
+
+<!-- SETTINGS -->
+@if (tripData.issameuser) {
+    <div 
+      class="relative p-2 cursor-pointer"
+      (click)="toggleSettings(); $event.stopPropagation()"
+    >
+      <i class="fa-solid fa-ellipsis-vertical"></i>
   
+      <!-- MENU -->
+      @if (toggleStatus) {
+        <div 
+          class="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-28 py-2 z-50"
+          (click)="preventClose($event)"
+        >
+          <a 
+            (click)="goToEdit(tripData._id!, $event)"
+            class="block px-3 py-1 hover:bg-gray-100 cursor-pointer"
+          >
+            Edit
+          </a>
+        </div>
+      }
+    </div>
+  }
+  </div>
+
+  <!-- 🌄 IMAGE -->
+  <div class="relative" (click)="preventClose($event)">
+    <img class="w-full h-56 object-cover" [src]="tripData.imageUrl">
+
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+
+    <div class="absolute bottom-3 left-4 text-white">
+      <h2 class="font-semibold text-lg">{{tripData.title}}</h2>
+      <p class="text-xs">
+        📍 {{tripData.startingPoint.name}} → {{tripData.destination.name}}
+      </p>
+    </div>
+
+    <div 
+      class="absolute top-3 right-3 bg-black/50 p-2 rounded-full"
+      (click)="onShare(tripData._id); $event.stopPropagation()"
+    >
+      <i class="fa-solid fa-share-nodes text-white"></i>
+    </div>
+  </div>
+
+  <!-- 🤖 AI TAG -->
+  <div class="px-4 pt-3" (click)="preventClose($event)">
+    <!-- <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">
+      ✨ AI Recommended
+    </span> -->
+  </div>
+
+  <!-- 📊 INFO -->
+  <div class="px-4 pt-2 text-sm text-gray-600 flex flex-wrap gap-3"
+       (click)="preventClose($event)">
+    <span>📅 {{tripData.startDate | date:'MMM d'}} - {{tripData.endDate | date:'MMM d'}}</span>
+    <span>👥 {{tripData.members?.length}} / {{tripData.memberlimit}}</span>
+  </div>
+
+  <!-- 📝 DESC -->
+  <div class="px-4 pt-2 text-sm text-gray-700 line-clamp-2"
+       (click)="preventClose($event)">
+    {{tripData.description}}
+  </div>
+
+  <!-- ⚡ ACTIONS -->
+  <div class="flex items-center justify-between px-4 py-4"
+       (click)="preventClose($event)">
+
+    <div class="flex gap-4 text-lg">
+      <i class="fa-solid fa-share-nodes cursor-pointer"
+         (click)="onShare(tripData._id); $event.stopPropagation()"></i>
+
+      <!-- <i class="fa-solid fa-robot cursor-pointer"
+         (click)="openAIChat(tripData); $event.stopPropagation()"></i> -->
+    </div>
+
+    <!-- CTA -->
+    @if (tripData.issameuser || tripData.isuserjoined) {
+      <button disabled class="bg-gray-400 px-5 py-2 text-white rounded-full text-sm">
+        Joined ✓
+      </button>
+    } @else if (tripData.istripfull) {
+      <button disabled class="bg-red-500 px-5 py-2 text-white rounded-full text-sm">
+        Full
+      </button>
+    } @else {
+      <button 
+        class="bg-black px-5 py-2 text-white rounded-full text-sm"
+        (click)="onJoin(tripData.creator_id,'JOIN_REQUEST',tripData._id); $event.stopPropagation()"
+      >
+        Join Trip
+      </button>
+    }
+
+  </div>
+
 </div>

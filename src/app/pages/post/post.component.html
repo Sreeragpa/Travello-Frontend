@@ -1,11 +1,25 @@
-<div class="flex gap-6 flex-col overflow-y-auto ">
+<div class="flex flex-col gap-6 overflow-y-auto h-full min-h-0">
     @defer (when isLoading===false) {
+        @if (!isLoading && posts.length === 0) {
+            <div class="w-full flex items-center justify-center py-16 px-4">
+                <div class="max-w-md w-full rounded-2xl border border-slate-200/70 dark:border-slate-700/60 bg-white/80 dark:bg-slate-900/40 shadow-sm p-6 text-center">
+                    <div class="text-lg font-semibold text-slate-900 dark:text-white">No posts yet</div>
+                    <div class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                        When people share their travel moments, they’ll show up here.
+                    </div>
+                    <!-- <div class="mt-4 text-sm text-slate-500 dark:text-slate-400">
+                        Try switching tabs or pull to refresh.
+                    </div> -->
+                </div>
+            </div>
+        } @else {
         @for (post of posts; track post._id) {
             <app-post-item [postdata]="post" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)"
                 (likeButton)="likePost($event)" (unlikeButton)="unlikePost($event) " (shareButton)="sharetoChatModal($event)"
                 (saveButton)="savePost($event)" (unsaveButton)="unsavePost($event)"
                 (commentButton)="showComment($event)">
             </app-post-item>
+        }
         }
     }@placeholder(minimum 500ms) {
         <app-post-item-skeleton></app-post-item-skeleton>

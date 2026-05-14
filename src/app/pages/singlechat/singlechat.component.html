@@ -3,7 +3,7 @@
         <div class="flex gap-2 items-center">
             <i class="fa-solid fa-angle-left text-xl cursor-pointer" routerLink="/chats"></i>
             @if (conversation) {
-                @if (conversation.memberDetails[0].profileimg) {
+                @if (conversation.memberDetails?.[0]?.profileimg) {
                     @if (conversation.memberDetails.length>1) {
                         <div class="flex -space-x-4 rtl:space-x-reverse">
                             <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" [src]="conversation.memberDetails[0].profileimg" alt="">
@@ -13,7 +13,7 @@
                             }
                         </div>
                        }@else {
-                            <img [src]="conversation.memberDetails[0].profileimg" class="w-10 h-10 rounded-full" alt="">
+                            <img [src]="conversation.memberDetails?.[0]?.profileimg" class="w-10 h-10 rounded-full" alt="">
                        }
                 }@else {
                     <img  class="w-12 h-12 rounded-full bg-gray-500" alt="">
@@ -21,7 +21,7 @@
                 }
                 <div class="flex flex-col myline justify-center">
                     <span>
-                        {{conversation.memberDetails[0].name}}
+                        {{conversation?.memberDetails?.[0]?.name}}
                         @if (conversation.memberDetails.length>1) {
                             +{{conversation.memberDetails.length-1}} People
                         }
@@ -70,32 +70,53 @@
 
         <form (ngSubmit)="sendMessage()">
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Message</label>
-            <div class="flex gap-2 chat-container">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                </div>
-                <button type="button" (click)="toggleEmojiPicker()"
-                class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z" />
-                </svg>
-                <span class="sr-only">Add emoji</span>
-            </button>
-                <input type="search" id="search" [(ngModel)]="text" name="text" autocomplete="off"
-                    class="block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Message" />
-                <button type="submit" 
-                    class="text-white w-12 h-12 relative  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <i class="fa-solid fa-paper-plane text-lg absolute top-3 left-3"></i>
+          
+            <div class="flex gap-2 chat-container relative overflow-visible">
+              <div class="relative">
+                <button
+                  type="button"
+                  (click)="toggleEmojiPicker()"
+                  class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                  <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z" />
+                  </svg>
+                  <span class="sr-only">Add emoji</span>
                 </button>
-           
                 @if (showEmojiPicker) {
-                    <emoji-mart (emojiClick)="addEmoji($event)" set="apple"  ></emoji-mart>
-                }
+                    <div class="emoji-picker absolute z-50 w-[320px] h-[420px]">
+                        <emoji-mart
+                          [set]="'apple'"
+                          [data]="emojiData"
+                          [darkMode]="false"
+                          (emojiSelect)="addEmoji($event)">
+                        </emoji-mart>
+                      </div>
+                  }
+                  
+              </div>
+          
+              <input
+                type="search"
+                id="search"
+                [(ngModel)]="text"
+                name="text"
+                autocomplete="off"
+                class="block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Message" />
+          
+              <button
+                type="submit"
+                class="text-white w-12 h-12 relative bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <i class="fa-solid fa-paper-plane text-lg absolute top-3 left-3"></i>
+              </button>
             </div>
-        </form>
+          </form>
+          
 
     </div>
 </div>
