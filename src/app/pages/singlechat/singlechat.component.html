@@ -3,31 +3,35 @@
         <div class="flex gap-2 items-center">
             <i class="fa-solid fa-angle-left text-xl cursor-pointer" routerLink="/chats"></i>
             @if (conversation) {
-                @if (conversation.memberDetails?.[0]?.profileimg) {
-                    @if (conversation.memberDetails.length>1) {
-                        <div class="flex -space-x-4 rtl:space-x-reverse">
-                            <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" [src]="conversation.memberDetails[0].profileimg" alt="">
-                            <img class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" [src]="conversation.memberDetails[1].profileimg" alt="">
-                            @if ((conversation.memberDetails.length-2)>0) {
-                                <a class="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800" href="#">{{conversation.memberDetails.length-2}}</a>
-                            }
-                        </div>
-                       }@else {
-                            <img [src]="conversation.memberDetails?.[0]?.profileimg" class="w-10 h-10 rounded-full" alt="">
-                       }
+                @if (conversation.isGroup) {
+                    @if (conversation.groupProfile) {
+                        <img [src]="conversation.groupProfile" class="w-10 h-10 rounded-full" alt="">
+                    }@else {
+                        <img class="w-10 h-10 rounded-full bg-gray-500" alt="">
+                    }
                 }@else {
-                    <img  class="w-12 h-12 rounded-full bg-gray-500" alt="">
-                    
+                    @if (conversation.memberDetails[0]?.profileimg) {
+                        <img [src]="conversation.memberDetails[0]?.profileimg" class="w-10 h-10 rounded-full" alt="">
+                    }@else {
+                        <img class="w-10 h-10 rounded-full bg-gray-500" alt="">
+                    }
                 }
                 <div class="flex flex-col myline justify-center">
                     <span>
-                        {{conversation?.memberDetails?.[0]?.name}}
-                        @if (conversation.memberDetails.length>1) {
-                            +{{conversation.memberDetails.length-1}} People
+                        @if (conversation.isGroup) {
+                            {{conversation.groupName}}
+                        }@else {
+                            {{conversation.memberDetails[0]?.name}}
                         }
 
                     </span>
-                    <span>Online</span>
+                    <span>
+                        @if (conversation.isGroup) {
+                            Group Chat
+                        }@else {
+                            Online
+                        }
+                    </span>
                 </div>
             }
         </div>
@@ -72,7 +76,7 @@
             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Message</label>
           
             <div class="flex gap-2 chat-container relative overflow-visible">
-              <div class="relative">
+              <div class="relative flex">
                 <button
                   type="button"
                   (click)="toggleEmojiPicker()"

@@ -13,82 +13,35 @@
 
         </form>
         <div class="w-auto sm:w-2/3 m-auto flex flex-col justify-center mt-4  gap-2">
-            @if (!isSearch) {
-                @for (conversation of conversations; track conversation._id) {
-                    @if (conversation.isGroup) {
-                        <div class="bg-primary flex justify-between rounded-lg p-3 text-sm sm:text-md cursor-pointer"  (click)="getChat(conversation._id)">
-                            <div class="flex gap-2 items-center">
-                                <div>
-                                    @if (conversation.memberDetails[0]) {
-                                        <img [src]="conversation.memberDetails[0].profileimg" class="w-12 h-12 rounded-full bg-gray-500" alt="">
-                                    }@else {
-                                        <img  class="w-12 h-12 rounded-full bg-gray-500" alt="">
-                                        
-                                    }
-                                </div>
-                                <div class="flex flex-col">
-                                    <span>{{conversation.groupName}}</span>
-                                    @if (conversation.latestMessage.text) {
-                                        <span class="font-semibold">{{conversation.latestMessage.text| textslice:25}}</span>
-                                    }
-                                </div>
+            @if (filteredConversations.length) {
+                @for (conversation of filteredConversations; track conversation._id) {
+                    <div class="bg-primary flex justify-between gap-4 rounded-lg p-3 text-sm sm:text-md cursor-pointer transition hover:opacity-90" (click)="getChat(conversation._id)">
+                        <div class="flex min-w-0 gap-3 items-center">
+                            <div class="shrink-0">
+                                @if (getConversationAvatar(conversation)) {
+                                    <img [src]="getConversationAvatar(conversation)" class="w-12 h-12 rounded-full bg-gray-500 object-cover" alt="">
+                                }@else {
+                                    <img class="w-12 h-12 rounded-full bg-gray-500" alt="">
+                                }
                             </div>
-                            <div>
-                                <span>{{conversation.createdAt | dateFormat}}</span>
+                            <div class="flex flex-col min-w-0">
+                                <span class="truncate font-medium">{{getConversationTitle(conversation)}}</span>
+                                <span class="font-semibold truncate">
+                                    {{getConversationPreview(conversation) | textslice:25}}
+                                </span>
                             </div>
                         </div>
-                    }@else {
-                        <div class="bg-primary flex justify-between rounded-lg p-3 text-sm sm:text-md cursor-pointer"  (click)="getChat(conversation._id)">
-                            <div class="flex gap-2 items-center">
-                                <div>
-                                    @if (conversation.memberDetails[0].profileimg) {
-                                        <img [src]="conversation.memberDetails[0].profileimg" class="w-12 h-12 rounded-full bg-gray-500" alt="">
-                                    }@else {
-                                        <img  class="w-12 h-12 rounded-full bg-gray-500" alt="">
-                                        
-                                    }
-                                </div>
-                                <div class="flex flex-col">
-                                    <span>{{conversation.memberDetails[0].name}}</span>
-                                    @if (conversation.latestMessage.text) {
-                                        <span class="font-semibold">{{conversation.latestMessage.text| textslice:25}}</span>
-                                    }
-                                </div>
-                            </div>
-                            <div>
-                                <span>{{conversation.latestMessage.createdAt | dateFormat}}</span>
-                            </div>
+                        <div class="shrink-0 text-right whitespace-nowrap text-xs sm:text-sm text-gray-300">
+                            <span>{{getConversationTime(conversation) | dateFormat}}</span>
                         </div>
-                    }
+                    </div>
              
                 }
             }@else {
-             
-                @for (searchResult of searchResults; track searchResult._id) {
-                    <div class="bg-primary flex justify-between rounded-lg p-3 text-sm sm:text-md cursor-pointer" (click)="createConversation(searchResult._id)">
-                        <div class="flex gap-2 items-center">
-                            <div>
-                                <img class="w-11 h-11 sm:w-12 sm:h-12 rounded-full" [src]="searchResult.profileimg" alt="" srcset="">
-                            </div>
-                            <div class="flex flex-col">
-                                <span>{{searchResult.name}}</span>
-                                <span class="font-semibold"></span>
-                            </div>
-                        </div>
-                        <div>
-                            9:18pm
-                        </div>
-                    </div>
-                }
+                <div class="text-center text-sm text-gray-400 py-6">
+                    No chats found
+                </div>
             }
-           
-            
-
-      
-
-
         </div>
-
     </div>
-
 </div>

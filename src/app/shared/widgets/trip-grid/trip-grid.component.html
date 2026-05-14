@@ -1,35 +1,49 @@
-<div class="grid grid-cols-1  lg:grid-cols-2 gap-2 ">
-@for (trip of trips; track trips) {
-    <a [routerLink]="['/trips',trip._id]">
-        <div class="bg-secondary h-50 md:h-72 rounded-2xl cursor-pointer relative md:text-md text-sm">
-            <div class="img-container">
-                <img class="rounded-2xl"  [src]="trip.imageUrl" alt="">
-            </div>
-            <div class="p-5 gap-2 flex flex-col absolute bottom-0 glass-effect w-full">
-                <div class="text-md font-semibold flex  ">
-                    <span class="bg-secondary p-1.5 rounded-xl">{{trip.title}}</span>
-                </div>
-                <div class="">
-                    <span class="text-sm bg-secondary p-1.5 rounded-xl 
-                     w-fit shadow-md  ">
-                        <i class="fa-solid fa-calendar" ></i>
-                        Date: {{trip.startDate | date }} to {{trip.endDate | date }}
-                    </span>
-                </div>
-                <div class="flex gap-2">
-                    <span class="text-sm bg-secondary p-1.5 rounded-xl 
-                     w-fit shadow-md  ">
-                        <i class="fa-solid fa-person-walking-luggage" ></i>
-                        Members: {{trip.members?.length}}
-                    </span>
-                    <span class="text-sm bg-secondary p-1.5 rounded-xl 
-                     w-fit shadow-md  ">
-                        <i class="fa-solid fa-person-walking-luggage" ></i>
-                        Max Members: {{trip.memberlimit}}
-                    </span>
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+    @for (trip of trips; track trip._id) {
+        <a [routerLink]="['/trips', trip._id]" class="group overflow-hidden rounded-2xl border border-white/10 bg-secondary shadow-sm transition duration-300 hover:-translate-y-1 shadow-xl hover:shadow-xl">
+            <div class="relative h-52 w-full overflow-hidden bg-slate-800/50">
+                @if (trip.imageUrl) {
+                    <img
+                        class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                        [src]="trip.imageUrl"
+                        [alt]="trip.title"
+                    />
+                } @else {
+                    <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-slate-300">
+                        <div class="text-center">
+                            <i class="fa-solid fa-route text-2xl"></i>
+                            <div class="mt-2 text-sm">Trip image unavailable</div>
+                        </div>
+                    </div>
+                }
+
+                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                    <div class="line-clamp-2 text-lg font-semibold leading-tight">
+                        {{ trip.title }}
+                    </div>
+                    <div class="mt-1 text-xs text-white/80">
+                        {{ trip.startingPoint.name }} → {{ trip.destination.name }}
+                    </div>
                 </div>
             </div>
-        </div>
-    </a>
-}
+
+            <div class="space-y-3 p-4 text-black-100">
+                <div class="flex items-center justify-between gap-3 text-xs text-black-100">
+                    <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-black-100">
+                        <i class="fa-solid fa-calendar text-xs"></i>
+                        {{ trip.startDate | date:'MMM d' }} - {{ trip.endDate | date:'MMM d' }}
+                    </span>
+                    <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-black-100">
+                        <i class="fa-solid fa-user-group text-xs"></i>
+                        {{ trip.members?.length || 0 }} / {{ trip.memberlimit }}
+                    </span>
+                </div>
+
+                <p class="line-clamp-2 text-sm leading-6 text-black-200">
+                    {{ trip.description }}
+                </p>
+            </div>
+        </a>
+    }
 </div>

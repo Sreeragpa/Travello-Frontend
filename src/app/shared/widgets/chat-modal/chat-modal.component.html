@@ -70,30 +70,15 @@
                 class="inline-flex items-center justify-between w-full p-2 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500"
               >
                 <div class="flex text-sm justify-center items-center gap-3">
-                  @if (conversation.memberDetails.length>1) {
-                  <div class="flex -space-x-4 rtl:space-x-reverse">
-                    <img
-                      class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                      [src]="conversation.memberDetails[0].profileimg"
-                      alt=""
-                    />
-                    <img
-                      class="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                      [src]="conversation.memberDetails[1].profileimg"
-                      alt=""
-                    />
-                    @if ((conversation.memberDetails.length-2)>0) {
-                    <a
-                      class="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-gray-700 border-2 border-white rounded-full hover:bg-gray-600 dark:border-gray-800"
-                      href="#"
-                      >{{ conversation.memberDetails.length - 2 }}</a
-                    >
-                    }
-                  </div>
+                  @if (conversation.groupProfile) {
+                  <img
+                    [src]="conversation.groupProfile"
+                    class="w-10 h-10 rounded-full"
+                    alt=""
+                  />
                   }@else {
                   <img
-                    [src]="conversation.memberDetails[0].profileimg"
-                    class="w-10 h-10 rounded-full"
+                    class="w-10 h-10 rounded-full bg-gray-500"
                     alt=""
                   />
                   }
