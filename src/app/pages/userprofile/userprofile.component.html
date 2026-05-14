@@ -83,7 +83,36 @@
         @if (nav=='posts') {
                 <app-image-grid [imgData]="posts" [isLoading]="postLoading"></app-image-grid>
         }@else if(nav=="trips") {
-            <app-trip-grid [trips]="trips"></app-trip-grid>
+            @if (tripLoading) {
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    @for (_ of [1, 2, 3]; track $index) {
+                        <div class="overflow-hidden rounded-2xl border border-white/10 bg-secondary shadow-sm">
+                            <div class="h-52 w-full animate-pulse bg-slate-700/60"></div>
+                            <div class="space-y-3 p-4">
+                                <div class="h-4 w-2/3 animate-pulse rounded-full bg-slate-700/60"></div>
+                                <div class="h-3 w-1/2 animate-pulse rounded-full bg-slate-700/60"></div>
+                                <div class="flex items-center justify-between gap-3">
+                                    <div class="h-6 w-24 animate-pulse rounded-full bg-slate-700/60"></div>
+                                    <div class="h-6 w-20 animate-pulse rounded-full bg-slate-700/60"></div>
+                                </div>
+                                <div class="h-3 w-full animate-pulse rounded-full bg-slate-700/60"></div>
+                                <div class="h-3 w-5/6 animate-pulse rounded-full bg-slate-700/60"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            } @else if (trips.length === 0) {
+                <div class="w-full flex items-center justify-center py-16 px-4">
+                    <div class="max-w-md w-full rounded-2xl border border-slate-200/70 dark:border-slate-700/60 bg-white/80 dark:bg-slate-900/40 shadow-sm p-6 text-center">
+                        <div class="text-lg font-semibold text-slate-900 dark:text-white">No trips found</div>
+                        <div class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                            Trips will appear here once they’re created or joined.
+                        </div>
+                    </div>
+                </div>
+            } @else {
+                <app-trip-grid [trips]="trips"></app-trip-grid>
+            }
         }@else{
             <app-image-grid [imgData]="savedPosts" [isLoading]="savedLoading"></app-image-grid>
         }

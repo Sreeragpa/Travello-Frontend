@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { Subject, debounceTime, distinctUntilChanged, of, switchMap, tap } from 'rxjs';
-import { FollowService } from '../../core/services/follow.service';
-import IUser from '../../core/models/user.models';
-import { IResponse } from '../../core/models/httpResponse.models';
+import { Subject, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { ConversationService } from '../../core/services/conversation.service';
 import IConversation from '../../core/models/conversation.model';
+import IUser from '../../core/models/user.models';
 import { Router } from '@angular/router';
 import { DateFormatPipe } from "../../shared/pipes/date-format.pipe";
 import { TextslicePipe } from "../../shared/pipes/textslice.pipe";
@@ -21,27 +19,17 @@ import { NavbarVisibilityService } from '../../core/services/navbar-visibility.s
 })
 export class ChatpageComponent {
   private searchValue: Subject<string> = new Subject<string>();
-  searchResults: IUser[] = [];
   conversations: IConversation[] = [];
-  isSearch: boolean = false
-  constructor(private followService: FollowService,private navbarVisibiltyService:NavbarVisibilityService,private conversationService: ConversationService,private router: Router,private socketioService: SocketioService){}
+  searchQuery: string = '';
+
+  constructor(private navbarVisibiltyService:NavbarVisibilityService,private conversationService: ConversationService,private router: Router,private socketioService: SocketioService){}
   ngOnInit() {
     this.navbarVisibiltyService.showNavBar()
     this.searchValue.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      tap((searchkey: string)=>searchkey.trim()?this.isSearch=true:this.isSearch=false),
-      switchMap((searchkey: string)=>searchkey.trim()?this.followService.searchFollowingUsers(searchkey):of([]))
-    ).subscribe({
-      next:(res)=>{
-        const myres = res as IResponse<IUser[]>
-        this.searchResults = myres.data
-      },
-      error:(err)=>{
-        console.log(err);
-  
-      }
-    })
+      tap((searchkey: string)=>this.searchQuery = searchkey.trim())
+    ).subscribe()
 
     this.getCoversation()
 
@@ -60,18 +48,6 @@ export class ChatpageComponent {
     this.searchValue.next(query)
   }
 
-  createConversation(memberid: string){
-    this.conversationService.createConversation(memberid).subscribe({
-      next:(res)=>{
-        this.router.navigate(['/chats',res.data._id])
-      },
-      error:(err)=>{
-        console.log(err);
-        
-      }
-    })
-  }
-
   getChat(conversationid: string){
     this.router.navigate(['/chats',conversationid])
   }
@@ -87,6 +63,59 @@ export class ChatpageComponent {
         
       }
     })
+  }
+
+  getConversationTitle(conversation: IConversation): string {
+    if (conversation.isGroup) {
+      return conversation.groupName?.trim() || 'Group chat';
+    }
+
+    const otherMember = this.getOtherMember(conversation);
+    return otherMember?.name?.trim() || 'Chat';
+  }
+
+  getConversationAvatar(conversation: IConversation): string | undefined {
+    if (conversation.isGroup) {
+      return conversation.groupProfile;
+    }
+
+    return this.getOtherMember(conversation)?.profileimg;
+  }
+
+  getConversationPreview(conversation: IConversation): string {
+    return conversation.latestMessage?.text?.trim() || 'No messages yet';
+  }
+
+  getConversationTime(conversation: IConversation): Date {
+    return conversation.latestMessage?.createdAt || conversation.createdAt || new Date(0);
+  }
+
+  get filteredConversations(): IConversation[] {
+    const query = this.searchQuery.toLowerCase().trim();
+
+    if (!query) {
+      return this.conversations;
+    }
+
+    return this.conversations.filter((conversation) => {
+      const title = this.getConversationTitle(conversation).toLowerCase();
+      const preview = this.getConversationPreview(conversation).toLowerCase();
+
+      return title.includes(query) || preview.includes(query);
+    });
+  }
+
+  private getOtherMember(conversation: IConversation): IUser | undefined {
+    if (!conversation.memberDetails?.length) {
+      return undefined;
+    }
+
+    const currentUserId = conversation.currentUserId;
+    if (!currentUserId) {
+      return conversation.memberDetails[0];
+    }
+
+    return conversation.memberDetails.find((member) => member._id !== currentUserId) ?? conversation.memberDetails[0];
   }
 
 }

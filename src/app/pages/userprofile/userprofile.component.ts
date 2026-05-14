@@ -130,13 +130,15 @@ export class UserprofileComponent {
         },
       });
     } else if (nav == 'trips') {
+      this.tripLoading = true;
       this.tripService.getUserTrips(this.profileid).subscribe({
         next: (res) => {
-          this.trips = res.data
+          this.trips = res.data;
+          this.tripLoading = false;
         },
         error: (err) => {
           console.log(err);
-
+          this.tripLoading = false;
         }
       })
 
