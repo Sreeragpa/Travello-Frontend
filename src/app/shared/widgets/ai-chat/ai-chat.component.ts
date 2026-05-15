@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, effect, signal } from '@angular/core';
+import { Component, ElementRef, ViewChild, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AiChatService } from '../../../core/services/ai-chat.service';
 import { ITrip } from '../../../core/models/trip.model';
@@ -38,6 +38,15 @@ export class AiChatComponent {
       time: this.now()
     }
   ]);
+
+  private readonly scrollEffect = effect(() => {
+    // Re-run on open/close, message changes, and typing indicator.
+    // Scroll only when panel is open.
+    this.isOpen();
+    this.messages();
+    this.isTyping();
+    this.scheduleScrollToBottom();
+  });
  
   constructor(
     private aiChatService: AiChatService,
@@ -47,17 +56,6 @@ export class AiChatComponent {
   toggle() {
     this.isOpen.update(v => !v);
     this.scheduleScrollToBottom();
-  }
-
-  ngAfterViewInit() {
-    effect(() => {
-      // Re-run on open/close, message changes, and typing indicator.
-      // Scroll only when panel is open.
-      this.isOpen();
-      this.messages();
-      this.isTyping();
-      this.scheduleScrollToBottom();
-    });
   }
 
   enableLocation() {

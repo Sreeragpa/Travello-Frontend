@@ -13,6 +13,7 @@ import { TripService } from '../../core/services/trip.service';
 import { ITrip } from '../../core/models/trip.model';
 import { TripGridComponent } from "../../shared/widgets/trip-grid/trip-grid.component";
 import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-userprofile',
@@ -22,21 +23,27 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
   imports: [ImageGridComponent, ImageGridSkeletonComponent, RouterLink, TripGridComponent]
 })
 export class UserprofileComponent {
-  user!: IUser;
-  posts!: IPost[];
-  trips!: ITrip[];
-  savedPosts!: IPost[];
+  user?: IUser;
+  posts: IPost[] = [];
+  trips: ITrip[] = [];
+  savedPosts: IPost[] = [];
   postLoading: boolean = true;
   tripLoading: boolean = true;
   savedLoading: boolean = true;
   nav: string = 'posts';
-  followCount!: { followingCount: number; followersCount: number };
+  followCount: { followingCount: number; followersCount: number } = {
+    followingCount: 0,
+    followersCount: 0,
+  };
   toggleStatus: boolean = false;
   postCount: number = 0;
   tripCount: number = 0;
-  profileid!: string
-  @ViewChild('underline') underline!: ElementRef;
+  profileid = '';
   @ViewChild('settings_menu') settingsmenu!: ElementRef;
+
+  @ViewChild('pill') pill!: ElementRef;
+  @ViewChild('tabsContainer') tabsContainer!: ElementRef;
+
   constructor(
     private postService: PostService,
     private followService: FollowService,
@@ -51,7 +58,7 @@ export class UserprofileComponent {
   ) { }
   ngOnInit() {
     this.route.paramMap.subscribe((param) => {
-      this.profileid = param.get('id') as string ;
+      this.profileid = param.get('id') ?? '';
       this.loadCurrentUserData();
     });
   }
@@ -118,7 +125,8 @@ export class UserprofileComponent {
     // this.postLoading = true;
 
     this.nav = nav;
-    this.updateUnderlinePosition();
+
+    setTimeout(() => this.movePill(), 0);
     if (nav == 'saved') {
       this.postService.getSavedPost().subscribe({
         next: (res) => {
@@ -130,32 +138,28 @@ export class UserprofileComponent {
         },
       });
     } else if (nav == 'trips') {
-      this.tripLoading = true;
-      this.tripService.getUserTrips(this.profileid).subscribe({
-        next: (res) => {
-          this.trips = res.data;
-          this.tripLoading = false;
-        },
-        error: (err) => {
-          console.log(err);
-          this.tripLoading = false;
-        }
-      })
+      this.loadUserTrips();
 
     } else {
       this.postLoading = false;
     }
   }
 
-  updateUnderlinePosition() {
-
-    if (this.nav === 'posts') {
-      this.underline.nativeElement.style.transform = 'translateX(0%)';
-    } else if (this.nav === 'trips') {
-      this.underline.nativeElement.style.transform = 'translateX(420%)';
-    } else {
-      this.underline.nativeElement.style.transform = 'translateX(790%)';
-    }
+  private loadUserTrips() {
+    this.tripLoading = true;
+    this.tripService.getUserTrips(this.profileid).pipe(
+      finalize(() => {
+        this.tripLoading = false;
+      })
+    ).subscribe({
+      next: (res) => {
+        this.trips = res.data ?? [];
+      },
+      error: (err) => {
+        console.log(err);
+        this.trips = [];
+      }
+    });
   }
 
   toggleSettings() {
@@ -177,7 +181,9 @@ export class UserprofileComponent {
   follow(userid: string){
     this.followService.followAccount(userid).subscribe({
       next:(res)=>{
-        this.user.isFollowing = true
+        if (this.user) {
+          this.user.isFollowing = true
+        }
       },
       error:(err)=>{
         console.log(err);
@@ -189,12 +195,34 @@ export class UserprofileComponent {
   unfollow(userid: string){
     this.followService.unfollowAccount  (userid).subscribe({
       next:(res)=>{
-        this.user.isFollowing = false
+        if (this.user) {
+          this.user.isFollowing = false
+        }
       },
       error:(err)=>{
         console.log(err);
         
       }
     })
+  }
+
+
+  
+  movePill() {
+    const container = this.tabsContainer.nativeElement;
+    const active = container.querySelector('.tab-btn.active') as HTMLElement;
+    if (!active) return;
+    const containerLeft = container.getBoundingClientRect().left;
+    const btnLeft = active.getBoundingClientRect().left;
+    this.pill.nativeElement.style.left = (btnLeft - containerLeft - 4) + 'px';
+    this.pill.nativeElement.style.width = active.offsetWidth + 'px';
+  }
+  
+  ngAfterViewInit() {
+    this.pill.nativeElement.style.transition = 'none';
+    this.movePill();
+    requestAnimationFrame(() => {
+      this.pill.nativeElement.style.transition = '';
+    });
   }
 }

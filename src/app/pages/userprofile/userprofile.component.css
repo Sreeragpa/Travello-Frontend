@@ -50,6 +50,46 @@
   transform: rotate(20deg);
 }
 
+.nav-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+  }
+  .nav-tabs {
+    display: inline-flex;
+    align-items: center;
+    background: #f3f3f2;
+    border-radius: 100px;
+    padding: 4px;
+    position: relative;
+    border: 0.5px solid rgba(0,0,0,0.1);
+  }
+  .tab-pill {
+    position: absolute;
+    top: 4px;
+    height: calc(100% - 8px);
+    background: #ffffff;
+    border-radius: 100px;
+    border: 0.5px solid rgba(0,0,0,0.15);
+    transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+  .tab-btn {
+    position: relative;
+    padding: 7px 20px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #888;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: color 0.2s ease;
+    user-select: none;
+    z-index: 1;
+  }
+  .tab-btn.active { color: #111; font-weight: 500; }
+  .tab-btn .count { font-size: 12px; margin-left: 4px; color: #bbb; }
+
 @media (max-width:640px) {
     .profile-main{
         width: 90vw;
