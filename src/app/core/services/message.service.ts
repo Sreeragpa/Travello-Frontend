@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IResponse } from '../models/httpResponse.models';
 import { IMessage } from '../models/message.model';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { API_URLS } from '../constants/apiurl.constants';
 
 @Injectable({
