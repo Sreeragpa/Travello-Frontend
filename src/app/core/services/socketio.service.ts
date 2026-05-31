@@ -43,9 +43,13 @@ export class SocketioService {
       return new Observable<IResponse<T>>(observer => {
         this.socket.on(event, (response: IResponse<T>) => {
            observer.next(response);
-        });
       });
-    }
+    });
+  }
+
+  emitEvent<T>(event: string, data?: T): void {
+    this.socket.emit(event, data);
+  }
 
   disconnectSocket() {
     if (this.socket) {

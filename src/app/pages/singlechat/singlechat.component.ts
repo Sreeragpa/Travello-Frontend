@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MessageService } from '../../core/services/message.service';
 import { ConversationService } from '../../core/services/conversation.service';
@@ -15,6 +15,9 @@ import { NavbarVisibilityService } from '../../core/services/navbar-visibility.s
 import { EmojiComponent, EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerComponent,PickerModule} from '@ctrl/ngx-emoji-mart';
 import data from '@emoji-mart/data';
+import { UserService } from '../../core/services/user.service';
+import IUser from '../../core/models/user.models';
+import { Subject, takeUntil } from 'rxjs';
   
 
 @Component({
@@ -25,18 +28,28 @@ import data from '@emoji-mart/data';
     imports: [RouterLink, FormsModule, CommonModule, LinkifyPipe, ChatMembersComponent, DateFormatPipe, TimeFormatPipe,PickerComponent,EmojiModule,PickerModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SinglechatComponent {
+export class SinglechatComponent implements OnDestroy {
   emojiData = data;
 
   text: string = '';
-membersTab: boolean = false;
-  constructor(private route: ActivatedRoute,private navbarVisibiltyService: NavbarVisibilityService, private messageService: MessageService, private conversationService: ConversationService, private socketioService: SocketioService) { }
+  membersTab: boolean = false;
+  constructor(
+    private route: ActivatedRoute,
+    private navbarVisibiltyService: NavbarVisibilityService,
+    private messageService: MessageService,
+    private conversationService: ConversationService,
+    private socketioService: SocketioService,
+    private userService: UserService
+  ) { }
   private conversationid!: string
   conversation!: IConversation
-  messages!: IMessage[]
-  currentUserId!: string
+  messages: IMessage[] = []
+  currentUserId: string = ''
+  otherMember?: IUser
+  otherMemberOnline: boolean = false
   @ViewChild('chatContainer') private chatContainerRef!: ElementRef;
   showEmojiPicker: boolean = false;
+  private destroy$ = new Subject<void>();
 
   toggleEmojiPicker() {
     console.log('toggleEmojiPicker');
@@ -50,47 +63,108 @@ membersTab: boolean = false;
   }
 
   ngOnInit() {
-    this.navbarVisibiltyService.hideNavBar()
-    this.route.paramMap.subscribe((params) => {
-      this.conversationid = params.get('id')!
-    })
-    setTimeout(() => {
-      this.socketioService.on<IMessage>('message').subscribe((res) => {
+    this.navbarVisibiltyService.hideNavBar();
+
+    this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe((params) => {
+      const nextConversationId = params.get('id')!;
+
+      if (this.conversationid && this.conversationid !== nextConversationId) {
+        this.leaveConversation(this.conversationid);
+      }
+
+      this.conversationid = nextConversationId;
+
+      if (this.conversationid) {
+        this.loadConversation(this.conversationid);
+      }
+    });
+
+    this.socketioService.on<IMessage>('message')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
         this.messages.push(res.data);
         setTimeout(() => {
           this.scrollChatToBottom();
         }, 100);
-      })
-    }, 100)
+      });
 
-    if (this.conversationid) {
-      this.messageService.getMessages(this.conversationid).subscribe({
-        next: (res) => {
-          this.messages = res.data;
-          setTimeout(()=>{
-            this.scrollChatToBottom();
-           },10)
-        },
-        error: (err) => {
-          console.log(err);
+    this.socketioService.on<{ conversationId: string; userId: string; isActive: boolean }>('conversationParticipantStatus')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        const payload = res.data;
+
+        if (
+          payload.conversationId !== this.conversationid ||
+          !this.otherMember?._id ||
+          payload.userId !== this.otherMember._id
+        ) {
+          return;
         }
-      })
 
-      this.conversationService.getSingleConversation(this.conversationid).subscribe({
-        next: (res) => {
-          this.conversation = res.data
-          this.currentUserId = this.conversation.currentUserId as string
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      })
+        this.otherMemberOnline = payload.isActive;
+      });
 
-      this.joinConversation()
+  }
+
+  private loadConversation(conversationid: string) {
+    this.messageService.getMessages(conversationid).subscribe({
+      next: (res) => {
+        this.messages = res.data;
+        setTimeout(() => {
+          this.scrollChatToBottom();
+        }, 10);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+
+    this.conversationService.getSingleConversation(conversationid).subscribe({
+      next: (res) => {
+        this.conversation = res.data;
+        this.currentUserId = this.conversation.currentUserId as string;
+        this.setOtherMemberPresence();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+
+    this.joinConversation();
+  }
+
+  private setOtherMemberPresence() {
+    if (!this.conversation || this.conversation.isGroup) {
+      this.otherMemberOnline = false;
+      this.otherMember = undefined;
+      return;
     }
 
-  
+    const otherMember = this.conversation.memberDetails?.find(
+      (member) => member._id !== this.currentUserId
+    ) ?? this.conversation.memberDetails?.[0];
 
+    this.otherMember = otherMember;
+
+    if (!otherMember?._id) {
+      this.otherMemberOnline = false;
+      return;
+    }
+
+    this.otherMember = otherMember;
+    this.userService.getUser(otherMember._id).subscribe({
+      next: (res) => {
+        this.otherMemberOnline = !!res.data?.isOnline;
+        this.otherMember = {
+          ...this.otherMember,
+          ...res.data
+        };
+      },
+      error: (err) => {
+        console.log(err);
+        this.otherMemberOnline = !!this.otherMember?.isOnline;
+      }
+    });
   }
 
   
@@ -111,15 +185,15 @@ membersTab: boolean = false;
   }
 
   joinConversation() {
-    setTimeout(() => {
-      this.socketioService.emit('joinConversation', this.conversationid).subscribe({
-        next: (res) => {
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      });
-    }, 1000)
+    if (!this.conversationid) {
+      return;
+    }
+
+    this.socketioService.emitEvent('joinConversation', this.conversationid);
+  }
+
+  private leaveConversation(conversationid: string) {
+    this.socketioService.emitEvent('leaveConversation', conversationid);
   }
 
   scrollChatToBottom(): void {
@@ -128,6 +202,14 @@ membersTab: boolean = false;
     } catch(err) {
       console.error('Error scrolling chat container:', err);
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.conversationid) {
+      this.leaveConversation(this.conversationid);
+    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

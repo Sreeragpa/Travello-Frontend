@@ -10,8 +10,8 @@
                         <img class="w-10 h-10 rounded-full bg-gray-500" alt="">
                     }
                 }@else {
-                    @if (conversation.memberDetails[0]?.profileimg) {
-                        <img [src]="conversation.memberDetails[0]?.profileimg" class="w-10 h-10 rounded-full" alt="">
+                    @if (otherMember?.profileimg) {
+                        <img [src]="otherMember?.profileimg" class="w-10 h-10 rounded-full" alt="">
                     }@else {
                         <img class="w-10 h-10 rounded-full bg-gray-500" alt="">
                     }
@@ -21,7 +21,7 @@
                         @if (conversation.isGroup) {
                             {{conversation.groupName}}
                         }@else {
-                            {{conversation.memberDetails[0]?.name}}
+                            {{otherMember?.name}}
                         }
 
                     </span>
@@ -29,7 +29,10 @@
                         @if (conversation.isGroup) {
                             Group Chat
                         }@else {
-                            Online
+                            <span class="inline-flex items-center gap-2">
+                                <span class="status-dot" [class.online]="otherMemberOnline" [class.offline]="!otherMemberOnline"></span>
+                                {{ otherMemberOnline ? 'Online' : 'Offline' }}
+                            </span>
                         }
                     </span>
                 </div>

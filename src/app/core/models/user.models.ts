@@ -23,6 +23,7 @@ export default interface IUser {
     isFollowing: boolean
     isBlocked: boolean
     isPremium: boolean
+    isOnline?: boolean
     
   }
   export interface ILikedUser{

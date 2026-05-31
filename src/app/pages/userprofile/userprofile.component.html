@@ -25,15 +25,25 @@
        
          @if(profileid && user) {
             <!-- Follow Button -->
-             @if (user.isFollowing) {
-                <div (click)="unfollow(user._id)" class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
-                    <span >Unfollow</span>
-                </div>
-             }@else {
-                <div (click)="follow(user._id)" class="font-medium text-xs text-white bg-blue-600 px-2 py-1 rounded-lg flex cursor-pointer ">
-                    <span >Follow</span>
-                </div>
-             }
+             <div class="flex items-center gap-2">
+                <button
+                    type="button"
+                    (click)="startChat(user._id)"
+                    [disabled]="openingChat"
+                    class="font-medium text-xs text-white bg-gray-800 px-3 py-2 rounded-lg flex items-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <span>{{ openingChat ? 'Opening...' : 'Message' }}</span>
+                </button>
+                @if (user.isFollowing) {
+                    <div (click)="unfollow(user._id)" class="font-medium text-xs text-white bg-blue-600 px-3 py-2 rounded-lg flex cursor-pointer ">
+                        <span>Unfollow</span>
+                    </div>
+                }@else {
+                    <div (click)="follow(user._id)" class="font-medium text-xs text-white bg-blue-600 px-3 py-2 rounded-lg flex cursor-pointer ">
+                        <span>Follow</span>
+                    </div>
+                }
+             </div>
             <!-- Follow Button -->
            
          }@else {
