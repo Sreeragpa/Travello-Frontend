@@ -14,6 +14,8 @@ import { ITrip } from '../../core/models/trip.model';
 import { TripGridComponent } from "../../shared/widgets/trip-grid/trip-grid.component";
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { finalize } from 'rxjs';
+import { ConversationService } from '../../core/services/conversation.service';
+import { SocketioService } from '../../core/services/socketio.service';
 
 @Component({
   selector: 'app-userprofile',
@@ -39,6 +41,7 @@ export class UserprofileComponent {
   postCount: number = 0;
   tripCount: number = 0;
   profileid = '';
+  openingChat: boolean = false;
   @ViewChild('settings_menu') settingsmenu!: ElementRef;
 
   @ViewChild('pill') pill!: ElementRef;
@@ -52,6 +55,8 @@ export class UserprofileComponent {
     private router: Router,
     private toastService: ToastService,
     private tripService: TripService,
+    private conversationService: ConversationService,
+    private socketioService: SocketioService,
     private route: ActivatedRoute,
     private googleAuthService:SocialAuthService
    
@@ -167,8 +172,10 @@ export class UserprofileComponent {
   }
 
   onLogout() {
-    this.authService.logout().subscribe((res) => {
-      this.googleSignOut()
+    this.socketioService.emitEvent('logout');
+    this.authService.logout().subscribe(() => {
+      this.socketioService.disconnectSocket();
+      this.googleSignOut();
       this.router.navigate(['/signin']);
     });
   }
@@ -204,6 +211,31 @@ export class UserprofileComponent {
         
       }
     })
+  }
+
+  startChat(userid: string) {
+    if (!userid || this.openingChat) {
+      return;
+    }
+
+    this.openingChat = true;
+
+    this.conversationService.createConversation(userid).subscribe({
+      next: (res) => {
+        const conversationId = res.data?._id;
+        if (conversationId) {
+          this.router.navigate(['/chats', conversationId]);
+        } else {
+          this.toastService.showToast('Could not open chat', ToastType.Failure);
+        }
+        this.openingChat = false;
+      },
+      error: (err) => {
+        console.log(err);
+        this.toastService.showToast('Could not open chat', ToastType.Failure);
+        this.openingChat = false;
+      }
+    });
   }
 
 
