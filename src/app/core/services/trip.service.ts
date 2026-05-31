@@ -4,7 +4,7 @@ import { ToastService } from './toast.service';
 import { IJoinTrip, ITrip, ITripEditForm } from '../models/trip.model';
 import { Observable } from 'rxjs';
 import { IResponse } from '../models/httpResponse.models';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { IUserLocation } from './geolocation.service';
 import { API_URLS } from '../constants/apiurl.constants';
 

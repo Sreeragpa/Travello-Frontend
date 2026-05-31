@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IPost, IPostLike } from '../models/post.models';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { Observable, catchError, map, of } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { IResponse } from '../models/httpResponse.models';

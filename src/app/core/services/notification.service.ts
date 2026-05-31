@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { IResponse } from '../models/httpResponse.models';
 import { INotification } from '../models/notification.model';
 import { Observable, Subject } from 'rxjs';

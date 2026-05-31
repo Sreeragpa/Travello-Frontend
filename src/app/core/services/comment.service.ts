@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { IComment } from '../models/comment.model';
 import { HttpClient } from '@angular/common/http';
 import { IResponse } from '../models/httpResponse.models';
