@@ -17,7 +17,6 @@ import { ScrollService } from '../../core/services/scroll.service';
 
 @Component({
     selector: 'app-post',
-    standalone: true,
     templateUrl: './post.component.html',
     styleUrl: './post.component.css',
     imports: [PostItemComponent, PostItemSkeletonComponent, CommentModalComponent, ScrollLoadDirective, ChatModalComponent]

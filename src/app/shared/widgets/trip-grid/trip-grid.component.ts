@@ -4,12 +4,11 @@ import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-trip-grid',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe,RouterLink],
-  templateUrl: './trip-grid.component.html',
-  styleUrl: './trip-grid.component.css'
+    selector: 'app-trip-grid',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [DatePipe, RouterLink],
+    templateUrl: './trip-grid.component.html',
+    styleUrl: './trip-grid.component.css'
 })
 export class TripGridComponent {
   @Input({required: true}) trips: ITrip[] = []

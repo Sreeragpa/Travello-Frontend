@@ -5,11 +5,10 @@ import { MessageService } from '../../../core/services/message.service';
 import { ToastService, ToastType } from '../../../core/services/toast.service';
 
 @Component({
-  selector: 'app-chat-modal',
-  standalone: true,
-  imports: [],
-  templateUrl: './chat-modal.component.html',
-  styleUrl: './chat-modal.component.css'
+    selector: 'app-chat-modal',
+    imports: [],
+    templateUrl: './chat-modal.component.html',
+    styleUrl: './chat-modal.component.css'
 })
 export class ChatModalComponent {
 

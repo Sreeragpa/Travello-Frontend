@@ -3,11 +3,10 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AdminService } from '../../../../core/services/admin.service';
 
 @Component({
-  selector: 'app-admin-sidebar',
-  standalone: true,
-  imports: [RouterLink,RouterLinkActive],
-  templateUrl: './admin-sidebar.component.html',
-  styleUrl: './admin-sidebar.component.css'
+    selector: 'app-admin-sidebar',
+    imports: [RouterLink, RouterLinkActive],
+    templateUrl: './admin-sidebar.component.html',
+    styleUrl: './admin-sidebar.component.css'
 })
 export class AdminSidebarComponent {
   constructor(private router: Router, private adminService: AdminService){}

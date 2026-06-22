@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-admin-dash',
-    standalone: true,
     templateUrl: './admin-dash.component.html',
     styleUrl: './admin-dash.component.css',
     imports: [GraphComponent]

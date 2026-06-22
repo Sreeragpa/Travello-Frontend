@@ -3,11 +3,10 @@ import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChil
 import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-otp-form',
-  standalone: true,
-  imports: [ReactiveFormsModule,CommonModule],
-  templateUrl: './otp-form.component.html',
-  styleUrl: './otp-form.component.css'
+    selector: 'app-otp-form',
+    imports: [ReactiveFormsModule, CommonModule],
+    templateUrl: './otp-form.component.html',
+    styleUrl: './otp-form.component.css'
 })
 export class OtpFormComponent {
 clearInput(idx: number) {

@@ -16,7 +16,6 @@ enum tabs {
 
 @Component({
     selector: 'app-search',
-    standalone: true,
     templateUrl: './search.component.html',
     styleUrl: './search.component.css',
     imports: [CommonModule, FormsModule, SearchProfileCardComponent, SearchTripCardComponent]

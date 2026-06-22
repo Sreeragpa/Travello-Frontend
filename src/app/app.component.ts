@@ -10,7 +10,6 @@ import { MytoastComponent } from "./shared/widgets/mytoast/mytoast.component";
 
 @Component({
     selector: 'app-root',
-    standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
     imports: [RouterOutlet, SidebarComponent, MytoastComponent]

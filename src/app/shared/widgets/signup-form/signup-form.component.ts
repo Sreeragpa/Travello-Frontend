@@ -5,11 +5,10 @@ import { confirmPasswordValidator } from '../../validators/passwordValidator';
 import { ISignup } from '../../../core/models/auth.models';
 
 @Component({
-  selector: 'app-signup-form',
-  standalone: true,
-  imports: [RouterLink,ReactiveFormsModule],
-  templateUrl: './signup-form.component.html',
-  styleUrl: './signup-form.component.css'
+    selector: 'app-signup-form',
+    imports: [RouterLink, ReactiveFormsModule],
+    templateUrl: './signup-form.component.html',
+    styleUrl: './signup-form.component.css'
 })
 export class SignupFormComponent {
   signupForm!: FormGroup;

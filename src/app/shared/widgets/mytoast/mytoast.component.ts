@@ -3,11 +3,10 @@ import { ToastService, ToastType } from '../../../core/services/toast.service';
 import { of, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-mytoast',
-  standalone: true,
-  imports: [],
-  templateUrl: './mytoast.component.html',
-  styleUrl: './mytoast.component.css'
+    selector: 'app-mytoast',
+    imports: [],
+    templateUrl: './mytoast.component.html',
+    styleUrl: './mytoast.component.css'
 })
 export class MytoastComponent {
   type!: ToastType | null

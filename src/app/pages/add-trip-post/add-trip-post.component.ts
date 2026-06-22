@@ -6,7 +6,6 @@ import { SlideNavComponent } from "../../shared/widgets/slide-nav/slide-nav.comp
 
 @Component({
     selector: 'app-add-trip-post',
-    standalone: true,
     templateUrl: './add-trip-post.component.html',
     styleUrl: './add-trip-post.component.css',
     imports: [AddPostComponent, AddTripComponent, CommonModule, SlideNavComponent]

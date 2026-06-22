@@ -5,11 +5,10 @@ import { SocketioService } from '../../../core/services/socketio.service';
 import { IMessage } from '../../../core/models/message.model';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [RouterLink],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+    selector: 'app-header',
+    imports: [RouterLink],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.css'
 })
 export class HeaderComponent {
   constructor(private conversationService: ConversationService,private socketioService: SocketioService){}

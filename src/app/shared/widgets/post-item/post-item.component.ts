@@ -10,7 +10,6 @@ import { TextslicePipe } from "../../pipes/textslice.pipe";
 
 @Component({
     selector: 'app-post-item',
-    standalone: true,
     templateUrl: './post-item.component.html',
     styleUrl: './post-item.component.css',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -4,11 +4,10 @@ import IUser from '../../../../core/models/user.models';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-usermanagement',
-  standalone: true,
-  imports: [],
-  templateUrl: './usermanagement.component.html',
-  styleUrl: './usermanagement.component.css'
+    selector: 'app-usermanagement',
+    imports: [],
+    templateUrl: './usermanagement.component.html',
+    styleUrl: './usermanagement.component.css'
 })
 export class UsermanagementComponent {
 

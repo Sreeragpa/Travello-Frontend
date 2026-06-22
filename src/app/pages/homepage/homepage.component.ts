@@ -25,7 +25,6 @@ export const componentFadeInAnimation = animation([
 
 @Component({
     selector: 'app-homepage',
-    standalone: true,
     templateUrl: './homepage.component.html',
     styleUrl: './homepage.component.css',
     imports: [SidebarComponent, RouterOutlet, HeaderComponent, MytoastComponent, InfiniteScrollDirective, AiChatComponent]

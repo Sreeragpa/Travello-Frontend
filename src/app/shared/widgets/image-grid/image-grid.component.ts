@@ -6,10 +6,9 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-image-grid',
-    standalone: true,
     templateUrl: './image-grid.component.html',
     styleUrl: './image-grid.component.css',
-    imports: [RouterLink, ImageGridSkeletonComponent,CommonModule]
+    imports: [RouterLink, ImageGridSkeletonComponent, CommonModule]
 })
 export class ImageGridComponent {
   @Input() imgData!: IPost[]

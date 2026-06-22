@@ -7,11 +7,10 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-comment-modal',
-  standalone: true,
-  imports: [CommonModule,FormsModule,DateFormatPipe],
-  templateUrl: './comment-modal.component.html',
-  styleUrl: './comment-modal.component.css'
+    selector: 'app-comment-modal',
+    imports: [CommonModule, FormsModule, DateFormatPipe],
+    templateUrl: './comment-modal.component.html',
+    styleUrl: './comment-modal.component.css'
 })
 export class CommentModalComponent {
   @Input() isModalVisible: boolean = false;

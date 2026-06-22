@@ -11,12 +11,11 @@ interface Message {
   trips?: ITrip[];
 }
 @Component({
-  selector: 'app-ai-chat',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule],
-  templateUrl: './ai-chat.component.html',
-  styleUrl: './ai-chat.component.css'
+    selector: 'app-ai-chat',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [FormsModule],
+    templateUrl: './ai-chat.component.html',
+    styleUrl: './ai-chat.component.css'
 })
 export class AiChatComponent {
   @ViewChild('msgList') private msgList?: ElementRef<HTMLElement>;

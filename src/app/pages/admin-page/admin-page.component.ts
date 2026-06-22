@@ -6,10 +6,9 @@ import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-admin-page',
-    standalone: true,
     templateUrl: './admin-page.component.html',
     styleUrl: './admin-page.component.css',
-    imports: [AdminHeaderComponent, AdminSidebarComponent,RouterOutlet]
+    imports: [AdminHeaderComponent, AdminSidebarComponent, RouterOutlet]
 })
 export class AdminPageComponent {
     showSidebar: boolean = true;
