@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IPost } from '../../../core/models/post.models';
 import {CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
@@ -39,16 +39,6 @@ onTouchStart($event: TouchEvent,postid: any) {
 }
 test($event: Event) {
 throw new Error('Method not implemented.');
-}
-  @ViewChild('popover') popovers!: ElementRef<HTMLDivElement>
-hidePopover() {
-  this.popovers.nativeElement.style.visibility = 'invisible';
-  this.popovers.nativeElement.style.opacity = '0';
-  
-}
-showPopover() {
-  this.popovers.nativeElement.style.visibility = 'visible';
-  this.popovers.nativeElement.style.opacity = '1';
 }
   constructor(private commentService: CommentService){}
   @Input({required:true}) postdata!: IPost;
@@ -94,10 +84,10 @@ showPopover() {
   }
 
   showLikedUsersModal(){
-    this.isLikeHover = true
+    this.isLikeHover = true;
   }
 
   hideLikedUsersModal(){
-    this.isLikeHover = false
+    this.isLikeHover = false;
   }
 }

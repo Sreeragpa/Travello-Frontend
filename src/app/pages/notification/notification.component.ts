@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NotificationService } from '../../core/services/notification.service';
 import { INotification } from '../../core/models/notification.model';
 import { TripService } from '../../core/services/trip.service';
@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-notification',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink],
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.css'

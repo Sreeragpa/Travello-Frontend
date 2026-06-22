@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, effect, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AiChatService } from '../../../core/services/ai-chat.service';
 import { ITrip } from '../../../core/models/trip.model';
@@ -13,6 +13,7 @@ interface Message {
 @Component({
   selector: 'app-ai-chat',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule],
   templateUrl: './ai-chat.component.html',
   styleUrl: './ai-chat.component.css'

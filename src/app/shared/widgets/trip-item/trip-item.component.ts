@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IJoinTrip, ITrip } from '../../../core/models/trip.model';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { DatePipe } from '@angular/common';
@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-trip-item',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DatePipe,RouterLink],
   templateUrl: './trip-item.component.html',
   styleUrl: './trip-item.component.css'
