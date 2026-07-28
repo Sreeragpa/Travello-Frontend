@@ -6,12 +6,11 @@ import { NOTIFICATION_TYPE } from '../../core/enums/notification.enums';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-notification',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
-  templateUrl: './notification.component.html',
-  styleUrl: './notification.component.css'
+    selector: 'app-notification',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [RouterLink],
+    templateUrl: './notification.component.html',
+    styleUrl: './notification.component.css'
 })
 export class NotificationComponent {
   constructor(private notificationService: NotificationService,private tripService: TripService){}

@@ -18,11 +18,10 @@ import { ConversationService } from '../../core/services/conversation.service';
 import { SocketioService } from '../../core/services/socketio.service';
 
 @Component({
-  selector: 'app-userprofile',
-  standalone: true,
-  templateUrl: './userprofile.component.html',
-  styleUrl: './userprofile.component.css',
-  imports: [ImageGridComponent, ImageGridSkeletonComponent, RouterLink, TripGridComponent]
+    selector: 'app-userprofile',
+    templateUrl: './userprofile.component.html',
+    styleUrl: './userprofile.component.css',
+    imports: [ImageGridComponent, ImageGridSkeletonComponent, RouterLink, TripGridComponent]
 })
 export class UserprofileComponent {
   user?: IUser;

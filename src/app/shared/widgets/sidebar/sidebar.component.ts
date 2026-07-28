@@ -9,11 +9,10 @@ import { NavbarVisibilityService } from '../../../core/services/navbar-visibilit
 import { initFlowbite } from 'flowbite';
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [RouterLink,RouterLinkActive],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+    selector: 'app-sidebar',
+    imports: [RouterLink, RouterLinkActive],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent implements AfterViewInit {
   notificationCount: number = 0;

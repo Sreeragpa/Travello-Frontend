@@ -14,11 +14,10 @@ interface editPassword{
 }
 
 @Component({
-  selector: 'app-editprofile-form',
-  standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './editprofile-form.component.html',
-  styleUrl: './editprofile-form.component.css'
+    selector: 'app-editprofile-form',
+    imports: [ReactiveFormsModule],
+    templateUrl: './editprofile-form.component.html',
+    styleUrl: './editprofile-form.component.css'
 })
 export class EditprofileFormComponent {
   @Input() user!:IUser

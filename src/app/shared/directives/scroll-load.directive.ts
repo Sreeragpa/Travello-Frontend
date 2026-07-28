@@ -9,7 +9,7 @@ export class ScrollLoadDirective {
   private prevScrollTop = 0;
   constructor(private el: ElementRef) {}
 
-  @HostListener('scroll', ['$event'])
+  @HostListener('scroll')
   onScroll() {
     // if (this.shouldLoad()) {
     //   console.log("Should load");

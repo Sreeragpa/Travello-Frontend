@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import Cropper from 'cropperjs';
 import { MapService } from '../../core/services/map.service';
@@ -14,10 +14,9 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-add-post',
-    standalone: true,
     templateUrl: './add-post.component.html',
     styleUrl: './add-post.component.css',
-    imports: [CommonModule, FormsModule, ImgUploadComponent]
+    imports: [FormsModule, ImgUploadComponent]
 })
 export class AddPostComponent {
   @ViewChild('selectedimage',{static: true}) imageRef!: ElementRef<HTMLImageElement>

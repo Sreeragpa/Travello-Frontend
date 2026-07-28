@@ -4,11 +4,10 @@ import { AdminService } from '../../../../core/services/admin.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-login',
-  standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './admin-login.component.html',
-  styleUrl: './admin-login.component.css'
+    selector: 'app-admin-login',
+    imports: [ReactiveFormsModule],
+    templateUrl: './admin-login.component.html',
+    styleUrl: './admin-login.component.css'
 })
 export class AdminLoginComponent {
   loginForm!: FormGroup

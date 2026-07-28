@@ -1,13 +1,12 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, ElementRef, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-otp-form',
-  standalone: true,
-  imports: [ReactiveFormsModule,CommonModule],
-  templateUrl: './otp-form.component.html',
-  styleUrl: './otp-form.component.css'
+    selector: 'app-otp-form',
+    imports: [ReactiveFormsModule],
+    templateUrl: './otp-form.component.html',
+    styleUrl: './otp-form.component.css'
 })
 export class OtpFormComponent {
 clearInput(idx: number) {

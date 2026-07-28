@@ -5,12 +5,11 @@ import { DatePipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-trip-item',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe,RouterLink],
-  templateUrl: './trip-item.component.html',
-  styleUrl: './trip-item.component.css'
+    selector: 'app-trip-item',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [DatePipe, RouterLink],
+    templateUrl: './trip-item.component.html',
+    styleUrl: './trip-item.component.css'
 })
 export class TripItemComponent {
   private router = inject(Router)

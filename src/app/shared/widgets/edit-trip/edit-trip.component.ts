@@ -15,7 +15,6 @@ import Cropper from 'cropperjs';
 
 @Component({
     selector: 'app-edit-trip',
-    standalone: true,
     templateUrl: './edit-trip.component.html',
     styleUrl: './edit-trip.component.css',
     imports: [ReactiveFormsModule, ImgUploadComponent]

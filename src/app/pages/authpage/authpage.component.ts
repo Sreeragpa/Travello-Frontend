@@ -16,7 +16,6 @@ import { MytoastComponent } from "../../shared/widgets/mytoast/mytoast.component
 
 @Component({
     selector: 'app-authpage',
-    standalone: true,
     templateUrl: './authpage.component.html',
     styleUrl: './authpage.component.css',
     animations: [

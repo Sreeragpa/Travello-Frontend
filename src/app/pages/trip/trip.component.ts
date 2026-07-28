@@ -14,7 +14,6 @@ import { ScrollService } from '../../core/services/scroll.service';
 
 @Component({
     selector: 'app-trip',
-    standalone: true,
     templateUrl: './trip.component.html',
     styleUrl: './trip.component.css',
     imports: [SlideNavComponent, TripItemComponent, TripItemSkeletonComponent, ChatModalComponent]

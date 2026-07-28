@@ -2,11 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-slide-nav',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './slide-nav.component.html',
-  styleUrl: './slide-nav.component.css'
+    selector: 'app-slide-nav',
+    imports: [CommonModule],
+    templateUrl: './slide-nav.component.html',
+    styleUrl: './slide-nav.component.css'
 })
 export class SlideNavComponent {
   @Input({required:true}) navNames: string[] = [];

@@ -12,7 +12,6 @@ import { NavbarVisibilityService } from '../../core/services/navbar-visibility.s
 
 @Component({
     selector: 'app-chatpage',
-    standalone: true,
     templateUrl: './chatpage.component.html',
     styleUrl: './chatpage.component.css',
     imports: [DateFormatPipe, TextslicePipe]

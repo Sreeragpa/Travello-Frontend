@@ -9,11 +9,10 @@ import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-editprofile',
-  standalone: true,
-  templateUrl: './editprofile.component.html',
-  styleUrl: './editprofile.component.css',
-  imports: [EditprofileFormComponent, RouterLink, AsyncPipe]
+    selector: 'app-editprofile',
+    templateUrl: './editprofile.component.html',
+    styleUrl: './editprofile.component.css',
+    imports: [EditprofileFormComponent, RouterLink, AsyncPipe]
 })
 export class EditprofileComponent {
   toggleStatus: boolean = true;

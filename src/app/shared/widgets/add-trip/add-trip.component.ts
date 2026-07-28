@@ -21,10 +21,9 @@ interface TripFormdata{
 
 @Component({
     selector: 'app-add-trip',
-    standalone: true,
     templateUrl: './add-trip.component.html',
     styleUrl: './add-trip.component.css',
-    imports: [FormsModule, ImgUploadComponent,ReactiveFormsModule]
+    imports: [FormsModule, ImgUploadComponent, ReactiveFormsModule]
 })
 export class AddTripComponent {
   

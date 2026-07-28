@@ -6,11 +6,10 @@ import { Ilogin } from '../../../core/models/auth.models';
 import { GoogleSigninButtonModule, SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
-  selector: 'app-signin-form',
-  standalone: true,
-  imports: [RouterLink,ReactiveFormsModule,GoogleSigninButtonModule],
-  templateUrl: './signin-form.component.html',
-  styleUrl: './signin-form.component.css'
+    selector: 'app-signin-form',
+    imports: [RouterLink, ReactiveFormsModule, GoogleSigninButtonModule],
+    templateUrl: './signin-form.component.html',
+    styleUrl: './signin-form.component.css'
 })
 export class SigninFormComponent {
   @Output() formdata: EventEmitter<Ilogin> = new EventEmitter();
