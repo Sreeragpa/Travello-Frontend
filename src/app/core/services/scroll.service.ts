@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { IInfiniteScrollEvent } from 'ngx-infinite-scroll';
 import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScrollService {
-  private scrollSubject = new Subject<IInfiniteScrollEvent>();
+  private scrollSubject = new Subject<void>();
   scroll$ = this.scrollSubject.asObservable();
 
-  emitScrollSubject(event: IInfiniteScrollEvent) {
-    this.scrollSubject.next(event);
+  emitScrollSubject() {
+    this.scrollSubject.next();
   }
 }

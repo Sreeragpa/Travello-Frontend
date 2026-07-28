@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-6 overflow-y-auto h-full min-h-0">
-    @defer (when isLoading===false) {
-        @if (!isLoading && posts.length === 0) {
+    @defer (when isLoading()===false) {
+        @if (!isLoading() && posts().length === 0) {
             <div class="w-full flex items-center justify-center py-16 px-4">
                 <div class="max-w-md w-full rounded-2xl border border-slate-200/70 dark:border-slate-700/60 bg-white/80 dark:bg-slate-900/40 shadow-sm p-6 text-center">
                     <div class="text-lg font-semibold text-slate-900 dark:text-white">No posts yet</div>
@@ -13,7 +13,7 @@
                 </div>
             </div>
         } @else {
-        @for (post of posts; track post._id) {
+        @for (post of posts(); track post._id) {
             <app-post-item [postdata]="post" (followButton)="followAccount($event)" (unfollowButton)="unfollowAccount($event)"
                 (likeButton)="likePost($event)" (unlikeButton)="unlikePost($event) " (shareButton)="sharetoChatModal($event)"
                 (saveButton)="savePost($event)" (unsaveButton)="unsavePost($event)"
@@ -30,10 +30,10 @@
 </div>
 
 <!-- Comment Modal -->
-<app-comment-modal [isModalVisible]="iscommentVisible"></app-comment-modal>
+<app-comment-modal [isModalVisible]="iscommentVisible()"></app-comment-modal>
 
 
 <!-- Chat Modal -->
- @if (chatModal) {
-     <app-chat-modal [chatvisible]="chatModal" (toggle)="sharetoChatModal()" [message]="link" title="Post"></app-chat-modal>
+ @if (chatModal()) {
+     <app-chat-modal [chatvisible]="chatModal()" (toggle)="sharetoChatModal()" [message]="link()" title="Post"></app-chat-modal>
  }

@@ -3,7 +3,7 @@
         <span class="text-lg font-semibold">Notifications</span>
     </div>
     <div class="mt-5 flex flex-col gap-2">
-        @for (notification of notifications; track notification._id) {
+        @for (notification of notifications(); track notification._id) {
   
             <div class="notification-item flex bg-primary rounded-2xl p-5 gap-3 items-center justify-between cursor-pointer" [routerLink]="['/profile',notification.senderDetails?._id]">
                 <div class="flex items-center gap-3">

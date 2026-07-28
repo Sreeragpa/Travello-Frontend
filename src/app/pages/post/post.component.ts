@@ -1,15 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { PostItemComponent } from "../../shared/widgets/post-item/post-item.component";
 import { PostService } from '../../core/services/post.service';
 import { IPost } from '../../core/models/post.models';
-import { IResponse } from '../../core/models/httpResponse.models';
 import { FollowService } from '../../core/services/follow.service';
 import { Subject, debounceTime, switchMap } from 'rxjs';
 import { PostItemSkeletonComponent } from "../../shared/widgets/post-item-skeleton/post-item-skeleton.component";
 import { ActivatedRoute } from '@angular/router';
 import { ToastService, ToastType } from '../../core/services/toast.service';
 import { CommentModalComponent } from "../../shared/widgets/comment-modal/comment-modal.component";
-import { ScrollLoadDirective } from '../../shared/directives/scroll-load.directive';
 import { ChatModalComponent } from "../../shared/widgets/chat-modal/chat-modal.component";
 import { ScrollService } from '../../core/services/scroll.service';
 
@@ -19,23 +17,23 @@ import { ScrollService } from '../../core/services/scroll.service';
     selector: 'app-post',
     templateUrl: './post.component.html',
     styleUrl: './post.component.css',
-    imports: [PostItemComponent, PostItemSkeletonComponent, CommentModalComponent, ScrollLoadDirective, ChatModalComponent]
+    imports: [PostItemComponent, PostItemSkeletonComponent, CommentModalComponent, ChatModalComponent]
 })
 export class PostComponent {
-    chatModal: boolean = false;
-    link!: string
+    chatModal = signal(false);
+    link = signal('');
     sharetoChatModal(postId?: string) {
-        this.link= `${window.location.origin}/posts/${postId}`;
-        this.chatModal = !this.chatModal
+        this.link.set(`${window.location.origin}/posts/${postId}`);
+        this.chatModal.update((value) => !value);
     }
 
 
-    posts!: IPost[]
-    isLoading: boolean = true
+    posts = signal<IPost[]>([]);
+    isLoading = signal(true);
     private likeSubject = new Subject<string>();
     private unlikeSubject = new Subject<string>();
     postid!: string;
-    iscommentVisible: boolean = false;
+    iscommentVisible = signal(false);
     currentPage: number = 1;
 
 
@@ -48,25 +46,17 @@ export class PostComponent {
         private scrollService: ScrollService
     ) { }
     ngOnInit() {
-        this.route.paramMap.subscribe((params) => {
-            this.postid = params.get('id')!
-        })
-
-      
+        this.postid = this.route.snapshot.paramMap.get('id') ?? '';
 
         if (this.postid) {
-   
             this.postService.getSinglePost(this.postid).subscribe((res) => {
-   
                 if (res) {
+                    this.posts.set(res.data);
                     setTimeout(() => {
-                        this.isLoading = false
+                        this.isLoading.set(false);
                     }, 1000)
-                    this.posts = res.data;
-
                 }
             })
-
         } else {
             this.getAllPosts()
             this.scrollService.scroll$.subscribe((res)=>{
@@ -83,12 +73,17 @@ export class PostComponent {
             next: (res) => {
 
                 if (res) {
-                    this.posts.map((post) => {
+                    this.posts.update((posts) => posts.map((post) => {
                         if (post._id == res.data.post_id) {
-                            post.isLiked = !post.isLiked
-                            post.likes += 1
+                            return {
+                                ...post,
+                                isLiked: !post.isLiked,
+                                likes: post.likes + 1
+                            };
                         }
+                        return post;
                     })
+                    );
                 }
 
             },
@@ -104,12 +99,16 @@ export class PostComponent {
             next: (res) => {
   
                 if (res) {
-                    this.posts.map((post) => {
+                    this.posts.update((posts) => posts.map((post) => {
                         if (post._id == res.data.post_id) {
-                            post.isLiked = !post.isLiked
-                            post.likes -= 1
+                            return {
+                                ...post,
+                                isLiked: !post.isLiked,
+                                likes: post.likes - 1
+                            };
                         }
-                    })
+                        return post;
+                    }))
                 }
 
             },
@@ -126,10 +125,10 @@ export class PostComponent {
     getAllPosts(){
         this.postService.getAllPosts(this.currentPage).subscribe((res) => {
             if (res) {
+                this.posts.set(res.data);
                 setTimeout(() => {
-                    this.isLoading = false
+                    this.isLoading.set(false);
                 }, 1000)
-                this.posts = res.data
             }
         })
     }
@@ -137,17 +136,17 @@ export class PostComponent {
     loadmorePosts(){
         this.postService.getAllPosts(this.currentPage).subscribe((res) => {
             if (res) {
+                this.posts.update((posts) => [...posts, ...res.data]);
                 setTimeout(() => {
-                    this.isLoading = false
+                    this.isLoading.set(false);
                 }, 1000)
-                this.posts = [...this.posts,...res.data]
             }
         })
     }
 
     likePost(postid: string) {
 
-        const likedpost = this.posts.find((post)=>{return post._id == postid})
+        const likedpost = this.posts().find((post)=>{return post._id == postid})
         if(!likedpost?.isLiked){
             this.likeSubject.next(postid)
         }
@@ -162,11 +161,9 @@ export class PostComponent {
             next: (res) => {
     
                 if (res) {
-                    this.posts.map((post) => {
-                        if (post.creator_id == followingid) {
-                            post.isFollowing = true
-                        }
-                    })
+                    this.posts.update((posts) => posts.map((post) => post.creator_id == followingid
+                        ? { ...post, isFollowing: true }
+                        : post));
                 }
 
             },
@@ -179,11 +176,9 @@ export class PostComponent {
         this.followService.unfollowAccount(followingid).subscribe({
             next: (res) => {
                 if (res) {
-                    this.posts.map((post) => {
-                        if (post.creator_id == followingid) {
-                            post.isFollowing = false
-                        }
-                    })
+                    this.posts.update((posts) => posts.map((post) => post.creator_id == followingid
+                        ? { ...post, isFollowing: false }
+                        : post));
                 }
 
             },
@@ -206,11 +201,9 @@ export class PostComponent {
         this.postService.savePost(postid).subscribe({
             next: (res) => {
 
-                this.posts.map(post => {
-                    if (res.data.post_id == post._id) {
-                        post.isSaved = true
-                    }
-                })
+                this.posts.update((posts) => posts.map((post) => res.data.post_id == post._id
+                    ? { ...post, isSaved: true }
+                    : post));
             },
             error: (err) => {
                 console.log(err);
@@ -221,11 +214,9 @@ export class PostComponent {
     unsavePost(postid: string) {
         this.postService.unsavePost(postid).subscribe({
             next: (res) => {
-                this.posts.map(post => {
-                    if (res.data.post_id == post._id) {
-                        post.isSaved = false
-                    }
-                })
+                this.posts.update((posts) => posts.map((post) => res.data.post_id == post._id
+                    ? { ...post, isSaved: false }
+                    : post));
             },
             error: (err) => {
                 console.log(err);
@@ -235,7 +226,7 @@ export class PostComponent {
     }
 
     showComment(postid: string) {
-        this.iscommentVisible = true
+        this.iscommentVisible.set(true);
 
     }
 }
