@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, ViewChild, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MessageService } from '../../core/services/message.service';
 import { ConversationService } from '../../core/services/conversation.service';
@@ -31,7 +31,7 @@ export class SinglechatComponent implements OnDestroy {
   emojiData = data;
 
   text: string = '';
-  membersTab: boolean = false;
+  membersTab = signal(false);
   constructor(
     private route: ActivatedRoute,
     private navbarVisibiltyService: NavbarVisibilityService,
@@ -41,24 +41,24 @@ export class SinglechatComponent implements OnDestroy {
     private userService: UserService
   ) { }
   private conversationid!: string
-  conversation!: IConversation
-  messages: IMessage[] = []
-  currentUserId: string = ''
-  otherMember?: IUser
-  otherMemberOnline: boolean = false
+  conversation = signal<IConversation | undefined>(undefined)
+  messages = signal<IMessage[]>([])
+  currentUserId = signal('')
+  otherMember = signal<IUser | undefined>(undefined)
+  otherMemberOnline = signal(false)
   @ViewChild('chatContainer') private chatContainerRef!: ElementRef;
-  showEmojiPicker: boolean = false;
+  showEmojiPicker = signal(false);
   private destroy$ = new Subject<void>();
 
   toggleEmojiPicker() {
     console.log('toggleEmojiPicker');
-    this.showEmojiPicker = !this.showEmojiPicker;
+    this.showEmojiPicker.update((value) => !value);
   }
 
   addEmoji(event: any) {
     const emoji = event.emoji.native;
     this.text += emoji;
-    this.showEmojiPicker = false;
+    this.showEmojiPicker.set(false);
   }
 
   ngOnInit() {
@@ -78,10 +78,10 @@ export class SinglechatComponent implements OnDestroy {
       }
     });
 
-    this.socketioService.on<IMessage>('message')
+      this.socketioService.on<IMessage>('message')
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
-        this.messages.push(res.data);
+        this.messages.update((messages) => [...messages, res.data]);
         setTimeout(() => {
           this.scrollChatToBottom();
         }, 100);
@@ -94,13 +94,13 @@ export class SinglechatComponent implements OnDestroy {
 
         if (
           payload.conversationId !== this.conversationid ||
-          !this.otherMember?._id ||
-          payload.userId !== this.otherMember._id
+          !this.otherMember()?._id ||
+          payload.userId !== this.otherMember()?._id
         ) {
           return;
         }
 
-        this.otherMemberOnline = payload.isActive;
+        this.otherMemberOnline.set(payload.isActive);
       });
 
   }
@@ -108,7 +108,7 @@ export class SinglechatComponent implements OnDestroy {
   private loadConversation(conversationid: string) {
     this.messageService.getMessages(conversationid).subscribe({
       next: (res) => {
-        this.messages = res.data;
+        this.messages.set(res.data);
         setTimeout(() => {
           this.scrollChatToBottom();
         }, 10);
@@ -120,8 +120,8 @@ export class SinglechatComponent implements OnDestroy {
 
     this.conversationService.getSingleConversation(conversationid).subscribe({
       next: (res) => {
-        this.conversation = res.data;
-        this.currentUserId = this.conversation.currentUserId as string;
+        this.conversation.set(res.data);
+        this.currentUserId.set(res.data.currentUserId as string);
         this.setOtherMemberPresence();
       },
       error: (err) => {
@@ -133,35 +133,35 @@ export class SinglechatComponent implements OnDestroy {
   }
 
   private setOtherMemberPresence() {
-    if (!this.conversation || this.conversation.isGroup) {
-      this.otherMemberOnline = false;
-      this.otherMember = undefined;
+    const conversation = this.conversation();
+    if (!conversation || conversation.isGroup) {
+      this.otherMemberOnline.set(false);
+      this.otherMember.set(undefined);
       return;
     }
 
-    const otherMember = this.conversation.memberDetails?.find(
-      (member) => member._id !== this.currentUserId
-    ) ?? this.conversation.memberDetails?.[0];
+    const otherMember = conversation.memberDetails?.find(
+      (member) => member._id !== this.currentUserId()
+    ) ?? conversation.memberDetails?.[0];
 
-    this.otherMember = otherMember;
+    this.otherMember.set(otherMember);
 
     if (!otherMember?._id) {
-      this.otherMemberOnline = false;
+      this.otherMemberOnline.set(false);
       return;
     }
 
-    this.otherMember = otherMember;
     this.userService.getUser(otherMember._id).subscribe({
       next: (res) => {
-        this.otherMemberOnline = !!res.data?.isOnline;
-        this.otherMember = {
-          ...this.otherMember,
+        this.otherMemberOnline.set(!!res.data?.isOnline);
+        this.otherMember.update((value) => ({
+          ...(value ?? {}),
           ...res.data
-        };
+        }));
       },
       error: (err) => {
         console.log(err);
-        this.otherMemberOnline = !!this.otherMember?.isOnline;
+        this.otherMemberOnline.set(!!this.otherMember()?.isOnline);
       }
     });
   }

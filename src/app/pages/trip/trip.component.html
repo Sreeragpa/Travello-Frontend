@@ -3,47 +3,41 @@
         <app-slide-nav [navNames]="navItems" (navChange)="onNavChange($event)"></app-slide-nav>
     }
     <div class="flex gap-2 flex-col">
-        @defer(when isLoading == false) {
-            @if (isLoading) {
+        @defer (when isLoading() == false) {
+            @if (isLoading()) {
                 <app-trip-item-skeleton></app-trip-item-skeleton>
-              }@else {   
-                  @if (!isLoading && trips.length === 0) {
-                      <div class="w-full flex items-center justify-center py-16 px-4">
-                          <div class="max-w-md w-full rounded-2xl border border-slate-200/70 dark:border-slate-700/60 bg-white/80 dark:bg-slate-900/40 shadow-sm p-6 text-center">
-                              <div class="text-lg font-semibold text-slate-900 dark:text-white">No trips found</div>
-                              <div class="mt-2 text-sm text-slate-600 dark:text-slate-300">
-                                  Trips will appear here once they’re created or you join one.
-                              </div>
-                              <!-- <div class="mt-4 text-sm text-slate-500 dark:text-slate-400">
-                                  Try switching tabs or refreshing.
-                              </div> -->
-                          </div>
-                      </div>
-                  } @else {
-                  @for (trip of trips; track trip._id) {
-                      <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)" 
-                      (followButton)="followAccount($event)" 
-                      (unfollowButton)="unfollowAccount($event)"
-                      (shareButton)="sharetoChatModal($event)"
-                      
-                      ></app-trip-item>
-                  }
-                  }
-              }
-        }@placeholder(minimum 500ms) {
+            } @else {
+                @if (!isLoading() && trips().length === 0) {
+                    <div class="w-full flex items-center justify-center py-16 px-4">
+                        <div class="max-w-md w-full rounded-2xl border border-slate-200/70 dark:border-slate-700/60 bg-white/80 dark:bg-slate-900/40 shadow-sm p-6 text-center">
+                            <div class="text-lg font-semibold text-slate-900 dark:text-white">No trips found</div>
+                            <div class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+                                Trips will appear here once they’re created or you join one.
+                            </div>
+                            <!-- <div class="mt-4 text-sm text-slate-500 dark:text-slate-400">
+                                Try switching tabs or refreshing.
+                            </div> -->
+                        </div>
+                    </div>
+                } @else {
+                    @for (trip of trips(); track trip._id) {
+                        <app-trip-item [tripData]="trip" (JoinButton)="joinTrip($event)"
+                            (followButton)="followAccount($event)"
+                            (unfollowButton)="unfollowAccount($event)"
+                            (shareButton)="sharetoChatModal($event)">
+                        </app-trip-item>
+                    }
+                }
+            }
+        } @placeholder(minimum 500ms) {
             <app-trip-item-skeleton></app-trip-item-skeleton>
-        }
-        @loading {
+        } @loading {
             loading..
         }
-  
- 
     </div>
 
-    
-
-<!-- Chat Modal -->
-@if (chatModal) {
-    <app-chat-modal [chatvisible]="chatModal" (toggle)="sharetoChatModal()" [message]="link" title="Trip"></app-chat-modal>
-}
+    <!-- Chat Modal -->
+    @if (chatModal()) {
+        <app-chat-modal [chatvisible]="chatModal()" (toggle)="sharetoChatModal()" [message]="link()" title="Trip"></app-chat-modal>
+    }
 </div>

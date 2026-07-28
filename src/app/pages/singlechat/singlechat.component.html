@@ -2,36 +2,36 @@
     <div class="chat-header">
         <div class="flex gap-2 items-center">
             <i class="fa-solid fa-angle-left text-xl cursor-pointer" routerLink="/chats"></i>
-            @if (conversation) {
-                @if (conversation.isGroup) {
-                    @if (conversation.groupProfile) {
-                        <img [src]="conversation.groupProfile" class="w-10 h-10 rounded-full" alt="">
+            @if (conversation()) {
+                @if (conversation()?.isGroup) {
+                    @if (conversation()?.groupProfile) {
+                        <img [src]="conversation()?.groupProfile" class="w-10 h-10 rounded-full" alt="">
                     }@else {
                         <img class="w-10 h-10 rounded-full bg-gray-500" alt="">
                     }
                 }@else {
-                    @if (otherMember?.profileimg) {
-                        <img [src]="otherMember?.profileimg" class="w-10 h-10 rounded-full" alt="">
+                    @if (otherMember()?.profileimg) {
+                        <img [src]="otherMember()?.profileimg" class="w-10 h-10 rounded-full" alt="">
                     }@else {
                         <img class="w-10 h-10 rounded-full bg-gray-500" alt="">
                     }
                 }
                 <div class="flex flex-col myline justify-center">
                     <span>
-                        @if (conversation.isGroup) {
-                            {{conversation.groupName}}
+                        @if (conversation()?.isGroup) {
+                            {{conversation()?.groupName}}
                         }@else {
-                            {{otherMember?.name}}
+                            {{otherMember()?.name}}
                         }
 
                     </span>
                     <span>
-                        @if (conversation.isGroup) {
+                        @if (conversation()?.isGroup) {
                             Group Chat
                         }@else {
                             <span class="inline-flex items-center gap-2">
-                                <span class="status-dot" [class.online]="otherMemberOnline" [class.offline]="!otherMemberOnline"></span>
-                                {{ otherMemberOnline ? 'Online' : 'Offline' }}
+                                <span class="status-dot" [class.online]="otherMemberOnline()" [class.offline]="!otherMemberOnline()"></span>
+                                {{ otherMemberOnline() ? 'Online' : 'Offline' }}
                             </span>
                         }
                     </span>
@@ -40,10 +40,10 @@
         </div>
     </div>
     <div #chatContainer class="chat-items mt-5 flex flex-col gap-2 px-2">
-        @for (message of messages; track message._id) {
+        @for (message of messages(); track message._id) {
             <div class="chatbubble flex  "
-            [ngClass]="{ 'right': message.sender === currentUserId, 'left': message.sender !== currentUserId }"
-            >   @if (conversation.isGroup) {
+            [ngClass]="{ 'right': message.sender === currentUserId(), 'left': message.sender !== currentUserId() }"
+            >   @if (conversation()?.isGroup) {
                 <div class="m-1">
                     <img [src]="message.senderDetails?.profileimg" class="w-10 h-10 rounded-full" alt="">
                 </div>
@@ -58,8 +58,8 @@
                 </div>
               
             </div>
-            @if (conversation.isGroup) {           
-                <div class="flex text-sm " [ngClass]="{ 'right': message.sender === currentUserId, 'left': message.sender !== currentUserId }">
+            @if (conversation()?.isGroup) {           
+                <div class="flex text-sm " [ngClass]="{ 'right': message.sender === currentUserId(), 'left': message.sender !== currentUserId() }">
                     <div >
                         {{message.senderDetails?.name?.toLocaleLowerCase()}}
                     </div>
@@ -70,7 +70,7 @@
 
     </div>
     
-    <app-chat-members [class.hidden]="!membersTab"></app-chat-members>
+    <app-chat-members [class.hidden]="!membersTab()"></app-chat-members>
 </div>
 <div class="bg-secondary mt-2 p-2 rounded-xl">
     <div>
@@ -81,9 +81,9 @@
             <div class="flex gap-2 chat-container relative overflow-visible">
               <div class="relative flex">
                 <button
-                  type="button"
-                  (click)="toggleEmojiPicker()"
-                  class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                type="button"
+                (click)="toggleEmojiPicker()"
+                class="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                   <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path
                       stroke="currentColor"
@@ -94,7 +94,7 @@
                   </svg>
                   <span class="sr-only">Add emoji</span>
                 </button>
-                @if (showEmojiPicker) {
+                @if (showEmojiPicker()) {
                     <div class="emoji-picker absolute z-50 w-[320px] h-[420px]">
                         <emoji-mart
                           [set]="'apple'"

@@ -7,7 +7,6 @@ import { animation, style, animate, trigger, transition, useAnimation } from '@a
 import { AuthService } from '../../core/services/auth.service';
 import { SocketioService } from '../../core/services/socketio.service';
 import { NavbarVisibilityService } from '../../core/services/navbar-visibility.service';
-import { IInfiniteScrollEvent, InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { ScrollService } from '../../core/services/scroll.service';
 import { AiChatComponent } from '../../shared/widgets/ai-chat/ai-chat.component';
 
@@ -27,10 +26,9 @@ export const componentFadeInAnimation = animation([
     selector: 'app-homepage',
     templateUrl: './homepage.component.html',
     styleUrl: './homepage.component.css',
-    imports: [SidebarComponent, RouterOutlet, HeaderComponent, MytoastComponent, InfiniteScrollDirective, AiChatComponent]
+    imports: [SidebarComponent, RouterOutlet, HeaderComponent, MytoastComponent, AiChatComponent]
 })
 export class HomepageComponent implements OnInit,OnDestroy {
-
   constructor(
     private authService: AuthService,
     private socketIOService: SocketioService,
@@ -42,8 +40,19 @@ export class HomepageComponent implements OnInit,OnDestroy {
     this.socketIOService.disconnectSocket()
   }
 
-  onScroll($event: IInfiniteScrollEvent) {
-    this.scrollService.emitScrollSubject($event)
+  onScroll(event: Event) {
+    const container = event.target as HTMLElement | null;
+    if (!container) {
+      return;
+    }
+
+    const threshold = 200;
+    const reachedBottom =
+      container.scrollTop + container.clientHeight >= container.scrollHeight - threshold;
+
+    if (reachedBottom) {
+      this.scrollService.emitScrollSubject();
+    }
   }
   
   ngOnInit(): void {

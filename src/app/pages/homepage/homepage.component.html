@@ -1,10 +1,9 @@
-<div class="main-container bg-primary place-items-center h-screen relative w-screen overflow-x-hidden" infinite-scroll  [infiniteScrollDistance]="2"
-[infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolled)="onScroll($event)">
+<div class="main-container bg-primary place-items-center h-screen relative w-screen overflow-x-hidden" (scroll)="onScroll($event)">
     <app-header class="flex justify-center"></app-header>
     <app-sidebar class="absolute"></app-sidebar>
 
     <!-- <app-mytoast class="flex justify-center "></app-mytoast> -->
-    <main class="flex justify-center mt-24 w-screen mb-24 overflow-y-auto "  >
+    <main class="flex justify-center mt-24 w-screen mb-24">
         <router-outlet></router-outlet>
     </main>
     <app-ai-chat class="absolute bottom-5 right-5"></app-ai-chat>

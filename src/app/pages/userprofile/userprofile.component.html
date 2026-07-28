@@ -4,18 +4,18 @@
 
         <!-- Profile Details -->
         <div>
-            @if (user) {
+            @if (user()) {
               
                 <div class="profile-img-container bg-primary rounded-full">
-                    <img [src]="user.profileimg" alt="" class="rounded-full">
+                    <img [src]="user()?.profileimg" alt="" class="rounded-full">
                 </div>
                 <div class="mt-4 text-sm dark:text-white">
-                    <div class="font-medium flex gap-1">{{user.name}}
-                        @if (user.isPremium) {
+                    <div class="font-medium flex gap-1">{{user()?.name}}
+                        @if (user()?.isPremium) {
                             <svg aria-label="Verified" class="IGDSSVGIconBase x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="18" role="img" viewBox="0 0 40 40" width="18"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>
                         }
                     </div>
-                    <div>{{user.bio}}</div>
+                    <div>{{user()?.bio}}</div>
                 </div>
             }
         </div>
@@ -23,23 +23,23 @@
 
 
        
-         @if(profileid && user) {
+         @if(profileid && user()) {
             <!-- Follow Button -->
              <div class="flex items-center gap-2">
                 <button
                     type="button"
-                    (click)="startChat(user._id)"
-                    [disabled]="openingChat"
+                    (click)="startChat(user()?._id ?? '')"
+                    [disabled]="openingChat()"
                     class="font-medium text-xs text-white bg-gray-800 px-3 py-2 rounded-lg flex items-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
                     <i class="fa-solid fa-comment-dots"></i>
-                    <span>{{ openingChat ? 'Opening...' : 'Message' }}</span>
+                    <span>{{ openingChat() ? 'Opening...' : 'Message' }}</span>
                 </button>
-                @if (user.isFollowing) {
-                    <div (click)="unfollow(user._id)" class="font-medium text-xs text-white bg-blue-600 px-3 py-2 rounded-lg flex cursor-pointer ">
+                @if (user()?.isFollowing) {
+                    <div (click)="unfollow(user()?._id ?? '')" class="font-medium text-xs text-white bg-blue-600 px-3 py-2 rounded-lg flex cursor-pointer ">
                         <span>Unfollow</span>
                     </div>
                 }@else {
-                    <div (click)="follow(user._id)" class="font-medium text-xs text-white bg-blue-600 px-3 py-2 rounded-lg flex cursor-pointer ">
+                    <div (click)="follow(user()?._id ?? '')" class="font-medium text-xs text-white bg-blue-600 px-3 py-2 rounded-lg flex cursor-pointer ">
                         <span>Follow</span>
                     </div>
                 }
@@ -49,12 +49,12 @@
          }@else {
             <!-- Settings -->
              <div class="relative">
-                 <div>
+                    <div>
                      <i class="settings-icon fa-solid fa-gear cursor-pointer text-xl" style="color: #0a0a0a;"
-                         (click)="toggleSettings()" [class.active]="toggleStatus"></i>
+                         (click)="toggleSettings()" [class.active]="toggleStatus()"></i>
                  </div>
                  <div class="settings-menu absolute right-6 bg-primary rounded-xl w-32 items-center flex flex-col py-2"
-                     [class.active]="toggleStatus" #settings_menu>
+                     [class.active]="toggleStatus()" #settings_menu>
                      <a routerLink="/edit-profile">
                          <span class="cursor-pointer p-1 hover:text-gray-600">Edit Profile</span>
                      </a>
@@ -71,9 +71,9 @@
 
     </div>
     <div class="flex justify-center gap-10 font-bold dark:text-white">
-        @if (followCount) {
-            <div>Followers: {{followCount.followersCount}}</div>
-            <div>Following: {{followCount.followingCount}}</div>
+        @if (followCount()) {
+            <div>Followers: {{followCount().followersCount}}</div>
+            <div>Following: {{followCount().followingCount}}</div>
         }
     </div>
 
@@ -82,10 +82,10 @@
         <div class="nav-tabs" #tabsContainer>
           <div class="tab-pill" #pill></div>
           <span class="tab-btn" [class.active]="nav === 'posts'" (click)="changeNav('posts')">
-            Posts <span class="count">{{postCount}}</span>
+            Posts <span class="count">{{postCount()}}</span>
           </span>
           <span class="tab-btn" [class.active]="nav === 'trips'" (click)="changeNav('trips')">
-            Trips <span class="count">{{tripCount}}</span>
+            Trips <span class="count">{{tripCount()}}</span>
           </span>
           @if (!profileid) {
             <span class="tab-btn" [class.active]="nav === 'saved'" (click)="changeNav('saved')">
@@ -97,9 +97,9 @@
 
     <div class="w-full">
         @if (nav=='posts') {
-                <app-image-grid [imgData]="posts" [isLoading]="postLoading"></app-image-grid>
+                <app-image-grid [imgData]="posts()" [isLoading]="postLoading()"></app-image-grid>
         }@else if(nav=="trips") {
-            @if (tripLoading) {
+            @if (tripLoading()) {
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                     @for (_ of [1, 2, 3]; track $index) {
                         <div class="overflow-hidden rounded-2xl border border-white/10 bg-secondary shadow-sm">
@@ -117,7 +117,7 @@
                         </div>
                     }
                 </div>
-            } @else if (trips.length === 0) {
+            } @else if (trips().length === 0) {
                 <div class="w-full flex items-center justify-center py-16 px-4">
                     <div class="max-w-md w-full rounded-2xl border border-slate-200/70 dark:border-slate-700/60 bg-white/80 dark:bg-slate-900/40 shadow-sm p-6 text-center">
                         <div class="text-lg font-semibold text-slate-900 dark:text-white">No trips found</div>
@@ -127,10 +127,10 @@
                     </div>
                 </div>
             } @else {
-                <app-trip-grid [trips]="trips"></app-trip-grid>
+                <app-trip-grid [trips]="trips()"></app-trip-grid>
             }
         }@else{
-            <app-image-grid [imgData]="savedPosts" [isLoading]="savedLoading"></app-image-grid>
+            <app-image-grid [imgData]="savedPosts()" [isLoading]="savedLoading()"></app-image-grid>
         }
     </div>
     <!-- /Trips & Posts -->

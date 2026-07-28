@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, signal } from '@angular/core';
 import { ImageGridComponent } from '../../shared/widgets/image-grid/image-grid.component';
 import { PostService } from '../../core/services/post.service';
 import { IPost } from '../../core/models/post.models';
@@ -24,23 +24,23 @@ import { SocketioService } from '../../core/services/socketio.service';
     imports: [ImageGridComponent, ImageGridSkeletonComponent, RouterLink, TripGridComponent]
 })
 export class UserprofileComponent {
-  user?: IUser;
-  posts: IPost[] = [];
-  trips: ITrip[] = [];
-  savedPosts: IPost[] = [];
-  postLoading: boolean = true;
-  tripLoading: boolean = true;
-  savedLoading: boolean = true;
+  user = signal<IUser | undefined>(undefined);
+  posts = signal<IPost[]>([]);
+  trips = signal<ITrip[]>([]);
+  savedPosts = signal<IPost[]>([]);
+  postLoading = signal(true);
+  tripLoading = signal(true);
+  savedLoading = signal(true);
   nav: string = 'posts';
-  followCount: { followingCount: number; followersCount: number } = {
+  followCount = signal<{ followingCount: number; followersCount: number }>({
     followingCount: 0,
     followersCount: 0,
-  };
-  toggleStatus: boolean = false;
-  postCount: number = 0;
-  tripCount: number = 0;
+  });
+  toggleStatus = signal(false);
+  postCount = signal(0);
+  tripCount = signal(0);
   profileid = '';
-  openingChat: boolean = false;
+  openingChat = signal(false);
   @ViewChild('settings_menu') settingsmenu!: ElementRef;
 
   @ViewChild('pill') pill!: ElementRef;
@@ -70,9 +70,9 @@ export class UserprofileComponent {
     this.postService.getUserPosts(this.profileid).subscribe((res) => {
 
       if (res) {
-        this.posts = res.data;
+        this.posts.set(res.data);
         setTimeout(() => {
-          this.postLoading = false;
+          this.postLoading.set(false);
         }, 1500);
       }
     });
@@ -81,10 +81,10 @@ export class UserprofileComponent {
       next: (res) => {
         if (res) {
 
-          this.followCount = res.data || {
+          this.followCount.set(res.data || {
             followingCount: 0,
             followersCount: 0,
-          };
+          });
         }
       },
       error: (err) => {
@@ -95,7 +95,7 @@ export class UserprofileComponent {
     this.userService.getUser(this.profileid).subscribe({
       next: (res) => {
         if (res) {
-          this.user = res.data;
+          this.user.set(res.data);
         }
       },
       error: (err) => {
@@ -105,7 +105,7 @@ export class UserprofileComponent {
 
     this.postService.getPostCount(this.profileid).subscribe({
       next: (res) => {
-        this.postCount = res.data.count;
+        this.postCount.set(res.data.count);
       },
       error: (err) => {
         this.toastService.showToast('Error', ToastType.Failure);
@@ -114,7 +114,7 @@ export class UserprofileComponent {
 
     this.tripService.getTripCount(this.profileid).subscribe({
       next: (res) => {
-        this.tripCount = res.data.count
+        this.tripCount.set(res.data.count)
       },
       error: (err) => {
         console.log(err);
@@ -134,8 +134,8 @@ export class UserprofileComponent {
     if (nav == 'saved') {
       this.postService.getSavedPost().subscribe({
         next: (res) => {
-          this.savedPosts = res.data;
-          this.savedLoading = false;
+          this.savedPosts.set(res.data);
+          this.savedLoading.set(false);
         },
         error: (err) => {
           console.log(err);
@@ -145,29 +145,29 @@ export class UserprofileComponent {
       this.loadUserTrips();
 
     } else {
-      this.postLoading = false;
+      this.postLoading.set(false);
     }
   }
 
   private loadUserTrips() {
-    this.tripLoading = true;
+    this.tripLoading.set(true);
     this.tripService.getUserTrips(this.profileid).pipe(
       finalize(() => {
-        this.tripLoading = false;
+        this.tripLoading.set(false);
       })
     ).subscribe({
       next: (res) => {
-        this.trips = res.data ?? [];
+        this.trips.set(res.data ?? []);
       },
       error: (err) => {
         console.log(err);
-        this.trips = [];
+        this.trips.set([]);
       }
     });
   }
 
   toggleSettings() {
-    this.toggleStatus = !this.toggleStatus;
+    this.toggleStatus.update((value) => !value);
   }
 
   onLogout() {
@@ -187,9 +187,7 @@ export class UserprofileComponent {
   follow(userid: string){
     this.followService.followAccount(userid).subscribe({
       next:(res)=>{
-        if (this.user) {
-          this.user.isFollowing = true
-        }
+        this.user.update((user) => user ? { ...user, isFollowing: true } : user);
       },
       error:(err)=>{
         console.log(err);
@@ -201,9 +199,7 @@ export class UserprofileComponent {
   unfollow(userid: string){
     this.followService.unfollowAccount  (userid).subscribe({
       next:(res)=>{
-        if (this.user) {
-          this.user.isFollowing = false
-        }
+        this.user.update((user) => user ? { ...user, isFollowing: false } : user);
       },
       error:(err)=>{
         console.log(err);
@@ -213,11 +209,11 @@ export class UserprofileComponent {
   }
 
   startChat(userid: string) {
-    if (!userid || this.openingChat) {
+    if (!userid || this.openingChat()) {
       return;
     }
 
-    this.openingChat = true;
+    this.openingChat.set(true);
 
     this.conversationService.createConversation(userid).subscribe({
       next: (res) => {
@@ -227,12 +223,12 @@ export class UserprofileComponent {
         } else {
           this.toastService.showToast('Could not open chat', ToastType.Failure);
         }
-        this.openingChat = false;
+        this.openingChat.set(false);
       },
       error: (err) => {
         console.log(err);
         this.toastService.showToast('Could not open chat', ToastType.Failure);
-        this.openingChat = false;
+        this.openingChat.set(false);
       }
     });
   }

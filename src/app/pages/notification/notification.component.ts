@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { NotificationService } from '../../core/services/notification.service';
 import { INotification } from '../../core/models/notification.model';
 import { TripService } from '../../core/services/trip.service';
@@ -14,13 +14,13 @@ import { RouterLink } from '@angular/router';
 })
 export class NotificationComponent {
   constructor(private notificationService: NotificationService,private tripService: TripService){}
-  notifications!:INotification[];
+  notifications = signal<INotification[]>([]);
   notificationType = NOTIFICATION_TYPE
   ngOnInit() {
     this.notificationService.getNotification().subscribe({
       next:(res)=>{
         console.log(res.data);
-        this.notifications = res.data
+        this.notifications.set(res.data)
       },
       error:(err)=>{
         console.log(err);
@@ -53,9 +53,9 @@ export class NotificationComponent {
         this.notificationService.decrementNotification()
 
         const id = res.data._id;
-        this.notifications = this.notifications.filter((notification)=>{
-          return notification._id!=id
-        })
+        this.notifications.update((notifications) =>
+          notifications.filter((notification) => notification._id != id)
+        )
       },
       error:(err)=>{
 
