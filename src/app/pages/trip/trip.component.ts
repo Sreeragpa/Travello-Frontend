@@ -29,6 +29,7 @@ export class TripComponent {
   link = signal('');
   currentPageFollow: number = 1
   currentPageNearby: number = 1
+  private isLoadingMore = false;
   private routeSubscription?: Subscription;
   private scrollSubscription?: Subscription;
   constructor(
@@ -105,6 +106,7 @@ export class TripComponent {
   private resetState() {
     this.currentPageFollow = 1;
     this.currentPageNearby = 1;
+    this.isLoadingMore = false;
     this.trips.set([]);
     this.isLoading.set(true);
     this.scrollSubscription?.unsubscribe();
@@ -125,15 +127,23 @@ export class TripComponent {
     });
   }
   loadMoreTrips() {
+    if (this.isLoadingMore || this.isLoading()) {
+      return;
+    }
+
+    this.isLoadingMore = true;
     if(this.currentNav == "Following"){
       this.currentPageFollow++;
-      this.getFollowingTrips()
+      this.getFollowingTrips();
+      return;
     }else{
       this.currentPageNearby++;
       this.tripService.getTrips('nearby',this.currentPageNearby, this.userLocation).subscribe({
         next:(res)=>{
           this.trips.update((trips) => [...trips, ...res.data]);
         }
+      }).add(() => {
+        this.isLoadingMore = false;
       })
 
     }
@@ -150,6 +160,8 @@ export class TripComponent {
       error: (err) => {
         console.log(err);
       },
+    }).add(() => {
+      this.isLoadingMore = false;
     });
   }
 

@@ -35,6 +35,7 @@ export class PostComponent {
     postid!: string;
     iscommentVisible = signal(false);
     currentPage: number = 1;
+    private isLoadingMore = false;
     private routeSubscription?: Subscription;
     private scrollSubscription?: Subscription;
 
@@ -134,6 +135,7 @@ export class PostComponent {
 
     private resetState() {
         this.currentPage = 1;
+        this.isLoadingMore = false;
         this.isLoading.set(true);
         this.posts.set([]);
         this.scrollSubscription?.unsubscribe();
@@ -154,19 +156,27 @@ export class PostComponent {
     private loadFeed() {
         this.getAllPosts();
         this.scrollSubscription = this.scrollService.scroll$.subscribe(() => {
+            if (this.isLoadingMore || this.isLoading()) {
+                return;
+            }
             this.currentPage++;
             this.loadmorePosts();
         });
     }
 
     loadmorePosts(){
+        this.isLoadingMore = true;
         this.postService.getAllPosts(this.currentPage).subscribe((res) => {
             if (res) {
-                this.posts.update((posts) => [...posts, ...res.data]);
-                setTimeout(() => {
-                    this.isLoading.set(false);
-                }, 1000)
+                if (res.data.length > 0) {
+                    this.posts.update((posts) => [...posts, ...res.data]);
+                }
+                if (res.data.length === 0) {
+                    this.currentPage--;
+                }
             }
+        }).add(() => {
+            this.isLoadingMore = false;
         })
     }
 
