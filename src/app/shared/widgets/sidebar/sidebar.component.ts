@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SocketioService } from '../../../core/services/socketio.service';
 import { INotification } from '../../../core/models/notification.model';
 import { NOTIFICATION_TYPE } from '../../../core/enums/notification.enums';
@@ -17,8 +17,7 @@ import { initFlowbite } from 'flowbite';
 export class SidebarComponent implements AfterViewInit {
   notificationCount: number = 0;
   navBarVisible: boolean = true;
-  constructor(private router: Router,
-    private socketioService: SocketioService,
+  constructor(private socketioService: SocketioService,
     private toastService: ToastService,
     private notificationService: NotificationService,
     private navbarVisibiltyService: NavbarVisibilityService){
@@ -78,14 +77,4 @@ export class SidebarComponent implements AfterViewInit {
 
 
   }
-  currentUrl: string = ''
-
-  changeURL(route: string) {
-    
-  }
-
-
-
-
-  
 }

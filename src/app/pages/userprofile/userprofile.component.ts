@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild, signal } from '@angular/core';
 import { ImageGridComponent } from '../../shared/widgets/image-grid/image-grid.component';
 import { PostService } from '../../core/services/post.service';
 import { IPost } from '../../core/models/post.models';
@@ -13,7 +13,7 @@ import { TripService } from '../../core/services/trip.service';
 import { ITrip } from '../../core/models/trip.model';
 import { TripGridComponent } from "../../shared/widgets/trip-grid/trip-grid.component";
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { finalize } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { ConversationService } from '../../core/services/conversation.service';
 import { SocketioService } from '../../core/services/socketio.service';
 
@@ -23,7 +23,7 @@ import { SocketioService } from '../../core/services/socketio.service';
     styleUrl: './userprofile.component.css',
     imports: [ImageGridComponent, ImageGridSkeletonComponent, RouterLink, TripGridComponent]
 })
-export class UserprofileComponent {
+export class UserprofileComponent implements OnDestroy {
   user = signal<IUser | undefined>(undefined);
   posts = signal<IPost[]>([]);
   trips = signal<ITrip[]>([]);
@@ -41,6 +41,7 @@ export class UserprofileComponent {
   tripCount = signal(0);
   profileid = '';
   openingChat = signal(false);
+  private profileRouteSubscription?: Subscription;
   @ViewChild('settings_menu') settingsmenu!: ElementRef;
 
   @ViewChild('pill') pill!: ElementRef;
@@ -61,12 +62,24 @@ export class UserprofileComponent {
    
   ) { }
   ngOnInit() {
-    this.route.paramMap.subscribe((param) => {
+    this.profileRouteSubscription = this.route.paramMap.subscribe((param) => {
       this.profileid = param.get('id') ?? '';
       this.loadCurrentUserData();
     });
   }
   loadCurrentUserData() {
+    this.nav = 'posts';
+    this.user.set(undefined);
+    this.posts.set([]);
+    this.trips.set([]);
+    this.savedPosts.set([]);
+    this.postLoading.set(true);
+    this.tripLoading.set(true);
+    this.savedLoading.set(true);
+    this.followCount.set({ followingCount: 0, followersCount: 0 });
+    this.postCount.set(0);
+    this.tripCount.set(0);
+
     this.postService.getUserPosts(this.profileid).subscribe((res) => {
 
       if (res) {
@@ -120,6 +133,8 @@ export class UserprofileComponent {
         console.log(err);
       }
     })
+
+    setTimeout(() => this.movePill(), 0);
   }
 
 
@@ -251,5 +266,9 @@ export class UserprofileComponent {
     requestAnimationFrame(() => {
       this.pill.nativeElement.style.transition = '';
     });
+  }
+
+  ngOnDestroy(): void {
+    this.profileRouteSubscription?.unsubscribe();
   }
 }

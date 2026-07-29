@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 import { SlideNavComponent } from '../../shared/widgets/slide-nav/slide-nav.component';
 import { TripItemComponent } from '../../shared/widgets/trip-item/trip-item.component';
 import { TripService } from '../../core/services/trip.service';
@@ -8,7 +8,7 @@ import { FollowService } from '../../core/services/follow.service';
 import { TripItemSkeletonComponent } from '../../shared/widgets/trip-item-skeleton/trip-item-skeleton.component';
 import { ActivatedRoute } from '@angular/router';
 import { GeolocationService, IGeolocationPosition, IUserLocation } from '../../core/services/geolocation.service';
-import { map, switchMap, catchError, of } from 'rxjs';
+import { map, switchMap, catchError, of, Subscription } from 'rxjs';
 import { ChatModalComponent } from "../../shared/widgets/chat-modal/chat-modal.component";
 import { ScrollService } from '../../core/services/scroll.service';
 
@@ -29,6 +29,8 @@ export class TripComponent {
   link = signal('');
   currentPageFollow: number = 1
   currentPageNearby: number = 1
+  private routeSubscription?: Subscription;
+  private scrollSubscription?: Subscription;
   constructor(
     private tripService: TripService,
     private toastService: ToastService,
@@ -78,30 +80,49 @@ export class TripComponent {
   }
 
   ngOnInit() {
-    this.tripid = this.route.snapshot.paramMap.get('id') ?? '';
-    if(this.tripid){
-        
-        this.tripService.getSingleTrip(this.tripid).subscribe({
-            next:(res)=>{
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
+      this.tripid = params.get('id') ?? '';
+      this.resetState();
 
-              this.trips.set(res.data);
-                setTimeout(() => {
-                    this.isLoading.set(false);
-                  }, 1000);
-            },
-            error:(err)=>{
-                console.log(err);
-            }
-        })
-    }else{
-      this.getFollowingTrips()
-      this.scrollService.scroll$.subscribe(() => {
-        if(!this.isLoading()){
-          this.loadMoreTrips();
-        }
-      })
-    }
+      if (this.tripid) {
+        this.loadSingleTrip(this.tripid);
+      } else {
+        this.currentNav = 'Following';
+        this.getFollowingTrips();
+        this.scrollSubscription = this.scrollService.scroll$.subscribe(() => {
+          if (!this.isLoading()) {
+            this.loadMoreTrips();
+          }
+        });
+      }
+    });
  
+  }
+  ngOnDestroy(): void {
+    this.routeSubscription?.unsubscribe();
+    this.scrollSubscription?.unsubscribe();
+  }
+  private resetState() {
+    this.currentPageFollow = 1;
+    this.currentPageNearby = 1;
+    this.trips.set([]);
+    this.isLoading.set(true);
+    this.scrollSubscription?.unsubscribe();
+    this.scrollSubscription = undefined;
+  }
+
+  private loadSingleTrip(tripid: string) {
+    this.tripService.getSingleTrip(tripid).subscribe({
+      next: (res) => {
+        this.trips.set(res.data);
+        setTimeout(() => {
+          this.isLoading.set(false);
+        }, 1000);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
   loadMoreTrips() {
     if(this.currentNav == "Following"){
