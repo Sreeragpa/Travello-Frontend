@@ -4,7 +4,7 @@ import { AdminService } from '../../../../core/services/admin.service';
 
 @Component({
     selector: 'app-admin-sidebar',
-    imports: [RouterLink, RouterLinkActive],
+    imports: [RouterLink],
     templateUrl: './admin-sidebar.component.html',
     styleUrl: './admin-sidebar.component.css'
 })

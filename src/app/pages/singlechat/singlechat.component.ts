@@ -24,7 +24,7 @@ import { Subject, takeUntil } from 'rxjs';
     selector: 'app-singlechat',
     templateUrl: './singlechat.component.html',
     styleUrl: './singlechat.component.css',
-    imports: [RouterLink, FormsModule, CommonModule, LinkifyPipe, ChatMembersComponent, DateFormatPipe, TimeFormatPipe, PickerComponent, EmojiModule, PickerModule],
+    imports: [RouterLink, FormsModule, CommonModule, LinkifyPipe, ChatMembersComponent, DateFormatPipe, PickerComponent, EmojiModule, PickerModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SinglechatComponent implements OnDestroy {
