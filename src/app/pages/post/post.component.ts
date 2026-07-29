@@ -1,9 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 import { PostItemComponent } from "../../shared/widgets/post-item/post-item.component";
 import { PostService } from '../../core/services/post.service';
 import { IPost } from '../../core/models/post.models';
 import { FollowService } from '../../core/services/follow.service';
-import { Subject, debounceTime, switchMap } from 'rxjs';
+import { Subject, Subscription, debounceTime, switchMap } from 'rxjs';
 import { PostItemSkeletonComponent } from "../../shared/widgets/post-item-skeleton/post-item-skeleton.component";
 import { ActivatedRoute } from '@angular/router';
 import { ToastService, ToastType } from '../../core/services/toast.service';
@@ -35,6 +35,8 @@ export class PostComponent {
     postid!: string;
     iscommentVisible = signal(false);
     currentPage: number = 1;
+    private routeSubscription?: Subscription;
+    private scrollSubscription?: Subscription;
 
 
 
@@ -46,24 +48,16 @@ export class PostComponent {
         private scrollService: ScrollService
     ) { }
     ngOnInit() {
-        this.postid = this.route.snapshot.paramMap.get('id') ?? '';
+        this.routeSubscription = this.route.paramMap.subscribe((params) => {
+            this.postid = params.get('id') ?? '';
+            this.resetState();
 
-        if (this.postid) {
-            this.postService.getSinglePost(this.postid).subscribe((res) => {
-                if (res) {
-                    this.posts.set(res.data);
-                    setTimeout(() => {
-                        this.isLoading.set(false);
-                    }, 1000)
-                }
-            })
-        } else {
-            this.getAllPosts()
-            this.scrollService.scroll$.subscribe((res)=>{
-                this.currentPage++;
-                this.loadmorePosts()
-            })
-        }
+            if (this.postid) {
+                this.loadSinglePost(this.postid);
+            } else {
+                this.loadFeed();
+            }
+        });
 
 
         this.likeSubject.pipe(
@@ -131,6 +125,38 @@ export class PostComponent {
                 }, 1000)
             }
         })
+    }
+
+    ngOnDestroy(): void {
+        this.routeSubscription?.unsubscribe();
+        this.scrollSubscription?.unsubscribe();
+    }
+
+    private resetState() {
+        this.currentPage = 1;
+        this.isLoading.set(true);
+        this.posts.set([]);
+        this.scrollSubscription?.unsubscribe();
+        this.scrollSubscription = undefined;
+    }
+
+    private loadSinglePost(postid: string) {
+        this.postService.getSinglePost(postid).subscribe((res) => {
+            if (res) {
+                this.posts.set(res.data);
+                setTimeout(() => {
+                    this.isLoading.set(false);
+                }, 1000)
+            }
+        });
+    }
+
+    private loadFeed() {
+        this.getAllPosts();
+        this.scrollSubscription = this.scrollService.scroll$.subscribe(() => {
+            this.currentPage++;
+            this.loadmorePosts();
+        });
     }
 
     loadmorePosts(){
