@@ -29,6 +29,7 @@ export const componentFadeInAnimation = animation([
     imports: [SidebarComponent, RouterOutlet, HeaderComponent, AiChatComponent]
 })
 export class HomepageComponent implements OnInit,OnDestroy {
+  private isAtBottom = false;
   constructor(
     private authService: AuthService,
     private socketIOService: SocketioService,
@@ -50,8 +51,14 @@ export class HomepageComponent implements OnInit,OnDestroy {
     const reachedBottom =
       container.scrollTop + container.clientHeight >= container.scrollHeight - threshold;
 
-    if (reachedBottom) {
+    if (reachedBottom && !this.isAtBottom) {
+      this.isAtBottom = true;
       this.scrollService.emitScrollSubject();
+      return;
+    }
+
+    if (!reachedBottom) {
+      this.isAtBottom = false;
     }
   }
   
