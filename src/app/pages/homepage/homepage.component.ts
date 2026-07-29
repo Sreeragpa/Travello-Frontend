@@ -26,7 +26,7 @@ export const componentFadeInAnimation = animation([
     selector: 'app-homepage',
     templateUrl: './homepage.component.html',
     styleUrl: './homepage.component.css',
-    imports: [SidebarComponent, RouterOutlet, HeaderComponent, MytoastComponent, AiChatComponent]
+    imports: [SidebarComponent, RouterOutlet, HeaderComponent, AiChatComponent]
 })
 export class HomepageComponent implements OnInit,OnDestroy {
   constructor(

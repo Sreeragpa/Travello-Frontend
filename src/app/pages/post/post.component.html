@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-6 overflow-y-auto h-full min-h-0">
+<div class="feed-shell flex w-full flex-col gap-6 overflow-y-auto h-full min-h-0">
     @defer (when isLoading()===false) {
         @if (!isLoading() && posts().length === 0) {
             <div class="w-full flex items-center justify-center py-16 px-4">

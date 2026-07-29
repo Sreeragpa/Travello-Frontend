@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
     selector: 'app-editprofile',
     templateUrl: './editprofile.component.html',
     styleUrl: './editprofile.component.css',
-    imports: [EditprofileFormComponent, RouterLink, AsyncPipe]
+    imports: [EditprofileFormComponent, RouterLink]
 })
 export class EditprofileComponent {
   toggleStatus: boolean = true;

@@ -21,7 +21,7 @@ import { SocketioService } from '../../core/services/socketio.service';
     selector: 'app-userprofile',
     templateUrl: './userprofile.component.html',
     styleUrl: './userprofile.component.css',
-    imports: [ImageGridComponent, ImageGridSkeletonComponent, RouterLink, TripGridComponent]
+    imports: [ImageGridComponent, RouterLink, TripGridComponent]
 })
 export class UserprofileComponent implements OnDestroy {
   user = signal<IUser | undefined>(undefined);

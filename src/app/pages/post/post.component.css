@@ -1,0 +1,16 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.feed-shell {
+    width: 100%;
+    max-width: 560px;
+    margin-inline: auto;
+}
+
+@media (max-width: 640px) {
+    .feed-shell {
+        max-width: 95vw;
+    }
+}

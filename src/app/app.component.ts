@@ -12,7 +12,7 @@ import { MytoastComponent } from "./shared/widgets/mytoast/mytoast.component";
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, SidebarComponent, MytoastComponent]
+    imports: [RouterOutlet, MytoastComponent]
 })
 export class AppComponent implements AfterViewInit {
   title = 'Travello-Frontend';

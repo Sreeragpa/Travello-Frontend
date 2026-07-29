@@ -39,7 +39,7 @@ import { MytoastComponent } from "../../shared/widgets/mytoast/mytoast.component
             ]),
         ]),
     ],
-    imports: [RouterOutlet, SigninFormComponent, SignupFormComponent, OtpFormComponent, MytoastComponent]
+    imports: [ SigninFormComponent, SignupFormComponent, OtpFormComponent, MytoastComponent]
 })
 export class AuthpageComponent {
   darkmode: boolean = false;

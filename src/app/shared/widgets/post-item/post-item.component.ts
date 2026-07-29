@@ -16,9 +16,11 @@ import { TextslicePipe } from "../../pipes/textslice.pipe";
     imports: [DateFormatPipe, LikesWithMutualPipe, RouterLink, TextslicePipe]
 })
 export class PostItemComponent {
+  @Input({required:true}) postdata!: IPost;
+
   lastTap: number = 0;
   doubleTapTimeout: any;
-onTouchStart($event: TouchEvent,postid: any) {
+  onTouchStart($event: TouchEvent,postid: any) {
   const currentTime = new Date().getTime();
   const tapLength = currentTime - this.lastTap;
 
@@ -35,12 +37,8 @@ onTouchStart($event: TouchEvent,postid: any) {
   }
 
   this.lastTap = currentTime;
-}
-test($event: Event) {
-throw new Error('Method not implemented.');
-}
+  }
   constructor(private commentService: CommentService){}
-  @Input({required:true}) postdata!: IPost;
   @Output() likeButton: EventEmitter<string> = new EventEmitter()
   @Output() unlikeButton: EventEmitter<string> = new EventEmitter()
   @Output() followButton: EventEmitter<string> = new EventEmitter()

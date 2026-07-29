@@ -24,7 +24,6 @@
 
     </div>
     <div class="image-container" (dblclick)="like(postdata._id)" (touchstart)="onTouchStart($event, postdata._id)">
-        <!-- <img [src]="postdata.images[0]" alt="" > -->
         <swiper-container navigation="true" pagination="true">
             @for (image of postdata.images; track image) {
             <swiper-slide>
@@ -33,7 +32,7 @@
             }
         </swiper-container>
     </div>
-    <div class="flex flex-col p-2 relative" (mouseenter)="showLikedUsersModal()" (mouseleave)="hideLikedUsersModal()">
+    <div class="flex flex-col p-2 relative overflow-visible z-20" (mouseenter)="showLikedUsersModal()" (mouseleave)="hideLikedUsersModal()">
         <div class="likes flex flex-col">
             <span class="font-medium text-sm dark:text-white cursor-pointer" (click)="showLikedUsersModal()">
             {{postdata.likes}} Likes</span>
@@ -44,7 +43,6 @@
 
         <!-- Popover -->
         <div
-            id="popover"
             class="popover absolute left-0 top-full z-50 mt-2 inline-block w-44 rounded-lg border border-gray-200 bg-white text-sm text-gray-500 shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
             [class.hidden]="!isLikeHover"
             >
