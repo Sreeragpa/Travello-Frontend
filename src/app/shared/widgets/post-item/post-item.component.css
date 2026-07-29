@@ -42,7 +42,7 @@
 
 .post-item {
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* .likes:hover + .liked-users-modal,
