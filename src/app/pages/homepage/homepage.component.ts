@@ -47,9 +47,10 @@ export class HomepageComponent implements OnInit,OnDestroy {
       return;
     }
 
-    const threshold = 200;
-    const reachedBottom =
-      container.scrollTop + container.clientHeight >= container.scrollHeight - threshold;
+    // Start loading before the user reaches the absolute end of the list.
+    const threshold = 600;
+    const remainingScroll = container.scrollHeight - (container.scrollTop + container.clientHeight);
+    const reachedBottom = remainingScroll <= threshold;
 
     if (reachedBottom && !this.isAtBottom) {
       this.isAtBottom = true;
